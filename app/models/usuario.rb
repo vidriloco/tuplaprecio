@@ -1,5 +1,5 @@
 require 'digest/sha1'
-
+require "#{RAILS_ROOT}/lib/authenticated_system.rb"
 class Usuario < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
