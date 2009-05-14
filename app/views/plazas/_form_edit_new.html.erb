@@ -1,0 +1,9 @@
+
+<p>
+  <%= f.label :nombre %><br />
+  <%= f.text_field :nombre %>
+</p>
+
+<%= render :partial => 'compartidos/form_reuse', :locals => {:obj => @plaza, :f => f} %>
+
+<div id="placeholder"></div>

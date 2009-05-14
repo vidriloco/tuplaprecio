@@ -1,0 +1,11 @@
+
+<div class='listing_controls' id=<%= "#{obj.class}#{obj.id}controls"%>>
+    <% unless (obj.class.eql?(Usuario) && session[:usuario_id] == obj.id) && obj.class.eql?(Usuario) %>                               
+        <div class='inlined'><%= button_to_remote("Eliminar", :url => {:controller => :administraciones, 
+                                   :action => :destroy_tuple, :id => obj}, :with => "'tipo=#{obj.class}'", 
+                                   :confirm => "¿Deseas eliminar éste registro?") %></div>
+        <% unless obj.class.eql? Usuario %>                           
+            <div class='inlined'><%= button_to "Modificar", eval("edit_#{obj.class.to_s.downcase}_path(obj)"), :method => :get  %></div>
+        <% end %>
+    <% end %>                               
+</div>

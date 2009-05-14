@@ -1,0 +1,27 @@
+<h3 class='container_title' id='form_title'>Nuevo</h3>
+<div class='form_container'>
+    
+<div class='form'>
+
+<% form_for(@paquete) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= label :paquete, :nombre %><br />
+    <%= text_field :paquete, :nombre %>
+  </p>
+  
+  <p>Servicios Incorporables</p>
+  <%= genera_checkboxes_para "incorporado", @paquete %>
+
+  <p>
+    <%= f.submit 'Crear' %>
+  </p>
+<% end %>
+</div>
+<div class='form_links_container'>
+    <p class='inlined' id='regresar'>Regresar a:</p>
+    <p class='inlined'><%= link_to 'Paquetes', paquetes_path %></p>
+    <p class='inlined'><%= render :partial => 'compartidos/link_to_admin' %></p>
+</div>
+</div>

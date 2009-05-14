@@ -1,0 +1,16 @@
+<%= f.label :Servicio %><br />
+<p>
+<%= f.select :servicio_id, lista_hash_objetos_de_modelo("servicio") %>
+</p>
+
+
+  <br/><%= f.label :costo %><br />
+<p>
+  $ <%= f.text_field :costo, :size => 5 %> pesos
+</p>
+
+    <br/>
+  <%= f.label :detalles %><br />
+<p>
+  <%= f.text_area :detalles, :cols => 50, :rows => 5 %>
+</p>

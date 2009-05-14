@@ -1,0 +1,42 @@
+<h3><%= hash[:origin].capitalize %></h3>
+
+<!-- Imprime las instancias de primer nivel -->
+<% extrae_origen(hash).each_value do |value| %>
+    <%= value %>
+<% end %>
+
+<!-- si es rol -->
+<% if obj.class.eql? Rol %>
+	<p><i> Cambiar nivel de rol a:</i>
+		<select id="options" onchange="<%= remote_function(:update => :rol_nivel, :url => { :controller => :administraciones, :action => :asigna_nivel, :id => obj.id}, :with => "'nivel_y_nombre='+this.options[this.selectedIndex].value+'-'+'#{obj.nombre}'") %>">
+		         <option value="0"></option>
+		         <option value="1">Nivel 1</option>
+		         <option value="2">Nivel 2</option>
+		         <option value="3">Nivel 3</option>
+		       </select> </p>
+	    <div id=<%= "aviso_importante_rol_#{obj.id}" %>>
+	    <% nivel_actual = busca_nivel_de(obj.nombre) %>
+	    <% if nivel_actual.nil? %>
+	        <p>Nivel no asignado aún</p>    
+	    <% else %>
+	        <p>(Actual <b><%= nivel_actual %></b>)</p>
+	    <% end %>
+	    </div>
+<% end %>
+
+<!-- Imprime las instancias de segundo nivel (objetos relacionados a la instancia origen)-->
+<% hash.each_key do |key| %>
+    <div id='attributes_of_related'>
+        <h4><%= cardinaliza key, hash %></h4>
+        <% hash[key].each_key do |inner_key| %>
+            <%= "<div id='#{inner_key}'>" %>
+                <%= excepcion_para_servicios_en_este_nivel inner_key %>
+                <%= hash[key][inner_key] %>
+                <% if logged_in_on?(["nivel 1", "nivel 2"])%>
+                    <%= link_eliminar_registro_relacionado inner_key, obj %>
+                <% end %>
+            </div>
+        <% end %>
+       
+    </div>
+<% end %>

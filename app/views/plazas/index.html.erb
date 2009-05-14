@@ -1,0 +1,59 @@
+<% if instance_variable_get("@estado") %>
+    <h3 class='container_title' id='related_object_title'>Relacionado</h3>
+    <div class='related_object_container' >
+        <h4>Estado</h4>
+        
+        <p><i>Nombre: </i><%=h @estado.nombre %></p>
+        
+        <div class='related_object_links'>
+            <%= link_to "Atrás", :back %>
+        </div>
+    </div>
+<% elsif instance_variable_get("@paquete") %>
+    <h3 class='container_title' id='related_object_title'>Relacionado</h3>
+    <div class='related_object_container' >
+        <h4>Paquete</h4>
+        
+        <p><i>Nombre: </i><%=h @paquete.nombre %></p>
+        <% @paquete.incorporados.each do |inc| %>
+            <div class='inner_related_object'>
+                <p><i>Concepto: </i><%= inc.concepto %></p>
+                <p><i>Categoria: </i><%= inc.categoria %></p>
+                <p><i>Detalles del servicio: </i><%= inc.detalles_del_servicio %></p>
+                
+                <p><i>Costo: </i><%= inc.costo_ %></p>
+                <p><i>Detalles dentro de paquete: </i><% inc.detalles_en_paquete %></p>  
+            </div>
+        <% end %>
+        <div class='related_object_links'>
+            <%= link_to "Atrás", :back %>
+        </div>
+    </div>
+<% end %>
+
+<h3 id='listing_title_for_table' class='container_title'>Plazas</h3>
+<br>
+<table>
+  <tr>
+    <th class='attribute_name_table' id='a_name1'>Nombre</th>
+  </tr>
+  
+<% @plazas.each do |plaza| %>
+  <tr>
+    <td class='attribute_value_table' id='a_value1'>
+        <div><%=h plaza.nombre %></div> <p> <%= link_to "Estado", :controller => :estados, :action => :some, :id => plaza, :tipo => "Plaza" %></p>
+                                        <p> <%= link_to "Paquetes", :controller => :paquetes, :action => :some, :id => plaza, :tipo => "Plaza" %></p>
+                                        <p> <%= link_to "Servicios", :controller => :servicios, :action => :some, :id => plaza, :tipo => "Plaza" %></p>
+    </td>
+    <td><%= button_to 'Mostrar', plaza, :method => :get %></td>
+    <td><%= if_es_admin do button_to 'Modificar', edit_plaza_path(plaza), :method => :get  end %></td>
+    <td><%= if_es_admin do button_to 'Eliminar', plaza, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+  </tr>
+  
+<% end %>
+</table>
+
+<%= will_paginate @plazas, :prev_label => "Anterior", :next_label => "Siguiente" %>
+
+
+<%= if_es_admin do button_to 'Nueva plaza', new_plaza_path, :method => :post end %>

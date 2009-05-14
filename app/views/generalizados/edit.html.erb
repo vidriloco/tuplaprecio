@@ -1,0 +1,19 @@
+<h1>Editing <%= @objmodelo.class.to_s %></h1>
+
+<% form_for(@objmodelo, :url => {:controller => :generalizados, :action => :update, :tipo => @objmodelo.class.to_s.downcase}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  
+  <%= genera_atributos_faltantes_forma_para(@objmodelo, f) %>
+  
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @objmodelo %> |
+<%= link_to 'Back', eval("#{@objmodelo.class.to_s.downcase.pluralize}_path") %>

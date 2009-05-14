@@ -1,0 +1,6 @@
+<p>
+  <%= f.label :nombre %><br />
+  <%= f.text_field :nombre %>
+</p>
+
+<%= render :partial => 'compartidos/form_reuse', :locals => {:obj => @concepto, :f => f} %>

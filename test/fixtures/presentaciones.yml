@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  combo: false
+  costo: 1
+  servicio_id: 1
+
+two:
+  combo: false
+  costo: 1
+  servicio_id: 1

@@ -1,0 +1,301 @@
+body { background-color: #fff; color: #333; }
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { color: black; text-decoration:none; }
+a:visited { color: black; }
+a:hover { font-style: italic;  }
+
+.fieldWithErrors {
+  color: red;
+  margin-bottom:-13px;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+input.boton_justificado {
+  margin-left: 20px;	
+  margin-bottom: 20px;
+}
+
+.modelo_admin {
+  width: 500px;
+  padding: 7px;
+  margin-bottom: 10px;
+  background-color: #CEBBDC;
+}
+
+.modelo_relacionado_admin {
+  width: 500px;
+  padding: 7px;
+  margin-bottom: 10px;
+  background-color: #A9F3A7;
+}
+
+.inlined_large {
+  display:inline-block;
+  width: 230px;
+}
+
+.inlined_medium {
+  display:inline-block;
+  width: 120px;
+}
+
+
+.inlined {
+  display:inline-block;
+  width: auto;	
+}
+
+.inlined_short {
+  display:inline-block;
+  width: 70px;	
+}
+
+#general_admin {
+  display:inline-block;
+  position:absolute;
+  top:0;
+  right:20px;
+}
+
+#seleccion_actual {
+  width: 430px;
+  display:inline-block;
+}
+
+/*
+* Estilos para controller: tablero
+*/
+
+#general-panel {
+  display:inline-block;
+  position:absolute;
+  top:0;	
+}
+
+.panel-izquierdo-tablero {
+  width: 360px;
+  display:inline-block;
+  background-color:#C9C047;
+}
+
+#titulo_del_panel {
+	margin:left;
+	width: 130px;
+	background-color:#C9C047;
+	color: ;
+}
+
+.atributo_en_panel {
+	background-color: #EBE999;
+	padding: 2px;
+	margin: 25px;
+}
+
+.tarea-izquierda-tablero {
+  width: 352px;
+  background-color:#EB6B4C;
+  margin-bottom: 10px;
+  padding:4px;
+}
+
+.tarea-anidada-izquierda-tablero {
+  width: 337px;
+  background-color:#D0EBCB;
+  margin-bottom: 10px;
+  padding:4px;
+}
+
+.contenedor_sub_tarea {
+  width: 340;
+  margin-left: 10px;
+}
+
+#tablero-recargable {
+  width: 540px;
+  position:absolute;
+  top:0;
+  right:50px;
+}
+
+#container {
+  margin-top:30px;
+  position: relative;
+}
+
+.form_container {
+	width:600px;	
+	margin-left: 375px;
+	background-color: #D1FFCC;
+}
+
+.container_title {	
+	padding: 5px;
+	text-align: center;
+}
+
+#form_title {
+	width: 100px;
+	background-color:#657d64;
+	margin-left: 375px;
+	color: #d1ffcc;
+}
+
+#listing_title {
+	margin:left;
+	width: 130px;
+	background-color:#E3E71E;
+	color: #EEFFD3;
+}
+
+.listing_container {
+	background-color: #E4E78D;
+	padding: 15px;
+}
+
+#attributes_of_related {
+	background-color: #EEFFD3;
+	padding: 10px;
+	margin-top: 3px;
+}
+
+.listing_controls {
+	margin-top:15px;
+}
+
+/*
+*  TODO: Que el container haga un autoresize de lo que está dentro
+*/
+
+.form_links_container {
+	margin: 15px;
+	background-color:#657D64;
+	width:330px;
+}
+
+#regresar {
+	color:#FFFFFF;
+}
+
+#regresar a{
+	color: white;
+}
+
+#related_object_title {
+	width: 100px;
+	background-color:#898F7E;
+	color: #BEC5AE;
+}
+
+.related_object_container {
+	width: 500px;
+	padding: 10px;
+	margin-bottom:10px;
+	background-color:#BEC5AE;
+}
+
+.related_object_links {
+	width: 80px;
+	background-color:#DBE3C8;
+	text-align: center;
+}
+
+.inner_related_object {
+	border:1px solid #979BA5;
+	margin: 10px;
+}
+
+/*
+* Estilos relacionados a la tabla
+*/
+
+#listing_title_for_table {
+	margin:left;
+	width: 130px;
+	background-color:#E77864;
+	color: #FFD8C4;
+}
+
+.attribute_name_table {
+	font-size: 12px;
+	padding: 2px;
+}
+
+#a_name1 {
+	background-color:#506650;
+	color:#B9CFA3;
+}
+
+#a_name2 {
+	background-color:#B9CFA3;
+	color:#506650;
+}
+
+.attribute_value_table {
+	font-size: 11px;
+	text-align: center;
+	padding-right: 14px;
+	padding:10px;
+	max-width: 130px;
+}
+
+#a_value1:hover {
+	background-color:#CDDAA9;
+}
+
+#a_value2:hover {
+	background-color:#819274;
+}
+
+#a_value1 p {
+	font-size: 10px;
+}
+
+#a_value1:hover a {
+	font-size: 10px;
+	color: #fff;
+}
+
+#a_value2 {
+	
+}

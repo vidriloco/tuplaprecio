@@ -1,0 +1,23 @@
+<h3 class='container_title' id='form_title'>Nuevo</h3>
+<div class='form_container'>
+
+<div class='form'>
+<% form_for(@estado) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.submit 'Crear' %>
+  </p>
+<% end %>
+
+</div>
+<div class='form_links_container'>
+    <p class='inlined' id='regresar'>Regresar a:</p>
+    <p class='inlined'><%= link_to 'Presentaciones', estados_path %></p>
+    <p class='inlined'><%= render :partial => 'compartidos/link_to_admin' %></p>
+</div>
+</div>

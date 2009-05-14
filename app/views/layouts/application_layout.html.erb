@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Administraciones: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults, 'niftycube' %>
+
+  <% javascript_tag do %>
+    NiftyLoad=function(){
+    Nifty("div.header");
+    Nifty("div#sesion");
+    Nifty("div.modelo_admin");
+    Nifty("div.modelo_relacionado_admin");
+    Nifty("div.form_container", "tr bottom");
+    Nifty("h3.container_title","top");
+    Nifty("div.form_links_container");
+    Nifty("h3#listing_title_for_table");
+    Nifty("th.attribute_name_table");
+    Nifty("div.related_object_container", "tr bottom");
+    Nifty("div.related_object_links", "tr bottom");
+    Nifty('h2.container_title','top'); 
+    Nifty('div.panel-izquierdo-tablero', "tr bottom");
+    Nifty('div.tarea-izquierda-tablero');
+    Nifty('div.atributo_en_panel', "tl br");
+    Nifty('div.tarea-anidada-izquierda-tablero');
+    
+    }
+  <% end %>
+  
+</head>
+<body>
+    <div id="wrapper">  
+        <div class="header" id="leftH">
+    	    <%= logged_in_as %>	 
+    	</div>
+    		 
+		<div class="header" id="rightH">
+		    <%= yield(:rightH) || "<p><b>#{controller.controller_name.singularize.capitalize}</b></p>" %>
+		</div>
+		 
+		<div id="container"> 
+            <%= yield %>
+        </div>
+        
+        <!--<p style="color: green"><%= flash[:notice] %></p>-->
+    </div>
+
+</body>
+</html>

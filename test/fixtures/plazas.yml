@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  nombre: Querétaro
+  estado_id: 1
+  presentacion_id: 1
+
+two:
+  nombre: San Luis Potosí
+  estado_id: 2
+  presentacion_id: 2
+  
+three: 
+  nombre: Villa Hermosa
+  estado_id: 3
