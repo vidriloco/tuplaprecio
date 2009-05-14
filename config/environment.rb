@@ -41,4 +41,5 @@ Rails::Initializer.run do |config|
 end
 
 require "will_paginate"
-require "restful_authentication"
+
+require "#{RAILS_ROOT}/app/models/usuario.rb"
