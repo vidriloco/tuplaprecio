@@ -1,0 +1,17 @@
+<% if nivel_1=logged_in_on?("nivel 1") %>
+    <div class='form_links_back'>
+<% else %>
+    <div class='form_links_container' id='tiny'>
+<% end %>
+    <p><%= link_to "Atrás", :back %></p>
+</div>
+
+<% if nivel_1 %>
+    <div class='form_links_container' id='medium'>
+        <p class='inlined' id='regresar'>Ver:</p>
+        <p class='inlined'><%= link_to genero_de(modelo, "Todo").pluralize, eval("#{modelo.pluralize}_path") %></p>
+    
+        <p class='inlined' id='regresar'>Ir a:</p>
+        <p class='inlined'><%= render :partial => 'compartidos/link_to_admin' %></p>
+    </div>
+<% end %>

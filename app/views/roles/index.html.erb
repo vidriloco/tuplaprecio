@@ -11,8 +11,8 @@
         <div><%=h rol.nombre %></div> <p> <%= link_to "Usuarios", :controller => :usuarios, :action => :some, :id => rol, :tipo => "Rol" %></p>
     </td>
     <td><%= button_to 'Mostrar', rol, :method => :get %></td>
-    <td><%= if_es_admin do button_to 'Modificar', edit_rol_path(rol), :method => :get  end %></td>
-    <td><%= if_es_admin do button_to 'Eliminar', rol, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+    <td><%= button_to 'Modificar', edit_rol_path(rol), :method => :get  %></td>
+    <td><%= button_to 'Eliminar', rol, :confirm => '¿Eliminar registro?', :method => :delete %></td>
   </tr>
   
 <% end %>
@@ -20,4 +20,4 @@
 
 <%= will_paginate @roles, :prev_label => "Anterior", :next_label => "Siguiente" %>
 
-<%= if_es_admin do button_to 'Nuevo rol', new_rol_path, :method => :post end %>
+<%= button_to 'Nuevo rol', new_rol_path, :method => :post %>

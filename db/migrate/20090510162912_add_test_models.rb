@@ -100,8 +100,8 @@ class AddTestModels < ActiveRecord::Migration
      administracion.nivel_medio="Encargado"
      administracion.nivel_bajo="Agente"
      administracion.save!
-     plaza1.agrega_nuevo_usuario usuario2
-     plaza2.agrega_nuevo_usuario usuario3
+     plaza1.agrega_nuevo_usuario usuario3
+     plaza2.agrega_nuevo_usuario usuario2
   end
 
   def self.down

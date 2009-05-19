@@ -1,17 +1,9 @@
 <% if instance_variable_get("@plaza") %>
-    <h3 class='container_title' id='related_object_title'>Relacionado</h3>
-    <div class='related_object_container' >
-        <h4>Plaza</h4>
-        
-        <p><i>Nombre: </i><%= @plaza.nombre %></p>
-        
-        <div class='related_object_links'>
-            <%= link_to "Atrás", plazas_path %>
-        </div>
-    </div>
+    <%= render :partial => 'compartidos/anterior_fue_plaza', :locals => {:plaza => @plaza}%>
 <% end %>
+<% c, modelo_plural_o_singular = modelo_info("Estado", @estados.length) %>
 
-<h3 id='listing_title_for_table' class='container_title'>Estados</h3>
+<h3 id='listing_title_for_table' class='container_title'><%= modelo_plural_o_singular %></h3>
 <br>
 <table>
   <tr>
@@ -24,13 +16,13 @@
         <div><%=h estado.nombre %></div> <p> <%= link_to "Plazas", :controller => :plazas, :action => :some, :id => estado, :tipo => "Estado" %></p>
     </td>
     <td><%= button_to 'Mostrar', estado, :method => :get %></td>
-    <td><%= if_es_admin do button_to 'Modificar', edit_estado_path(estado), :method => :get  end %></td>
-    <td><%= if_es_admin do button_to 'Eliminar', estado, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+    <td><%= button_to 'Modificar', edit_estado_path(estado), :method => :get %></td>
+    <td><%= button_to 'Eliminar', estado, :confirm => '¿Eliminar registro?', :method => :delete %></td>
   </tr>
   
 <% end %>
 </table>
 
-<%= will_paginate(@estados, :prev_label => "Anterior", :next_label => "Siguiente") if es_paginable?(@estados) %>
+<%= will_paginate(@estados, :prev_label => "Anterior", :next_label => "Siguiente") %>
 
-<%= if_es_admin do button_to 'Nuevo estado', new_estado_path, :method => :post end %>
+<%= button_to 'Nuevo estado', new_estado_path, :method => :post %>

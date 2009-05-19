@@ -24,9 +24,10 @@
 	    </div>
 <% end %>
 
+<%= javascript_tag "Nifty('div.attributes_of_related');" %>
 <!-- Imprime las instancias de segundo nivel (objetos relacionados a la instancia origen)-->
 <% hash.each_key do |key| %>
-    <div id='attributes_of_related'>
+    <div class='attributes_of_related'>
         <h4><%= cardinaliza key, hash %></h4>
         <% hash[key].each_key do |inner_key| %>
             <%= "<div id='#{inner_key}'>" %>

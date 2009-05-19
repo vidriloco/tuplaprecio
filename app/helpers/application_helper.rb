@@ -199,12 +199,7 @@ module ApplicationHelper
     out
   end
   
-  def if_es_admin(&block)
-    if Usuario.es_tipo session[:usuario_id], "administracion"
-      yield 
-    end
-  end
-  
+  # Verifica el nivel del usuario que está actualmente logeado
   def logged_in_on?(args)
     return false if session[:usuario_id].nil?
     
@@ -223,9 +218,5 @@ module ApplicationHelper
     true
   end
   
-  # Decide si una collección ha sido paginada o no. Ésto en base a su pertenencia a la clase WillPaginate::Collection
-  def es_paginable?(colleccion)
-    return true if colleccion.instance_of? WillPaginate::Collection
-  end
-  
+
 end

@@ -10,14 +10,16 @@ class TablerosController < ApplicationController
     @plaza = Plaza.find params[:id].gsub(/\D/,'')
     modelo = params[:modelo]
     if modelo.eql? 'Incorporado'
-      @instancias = @plaza.paquetes.inject([]) { |n,paquete| n+=paquete.incorporados }
-    else
-      @instancias =eval("@plaza.#{modelo.pluralize.downcase}")
+      @instancias = Incorporado.paginate :all, :joins => {:paquete => :plazas}, :conditions => {:paquetes_plazas => {:plaza_id => @plaza.id}}, :page => params[:page]
+    elsif modelo.eql? 'Paquete'
+      @instancias = Paquete.paginate :all, :joins => :plazas, :conditions => {:paquetes_plazas => {:plaza_id => @plaza.id}}, :page => params[:page]
+    elsif modelo.eql? 'Especializado'
+      @instancias = Especializado.paginate :all, :joins => :plaza, :conditions => {:plaza_id => @plaza.id}, :page => params[:page]
     end
     respond_to do |format|
       format.js do
         render :update do |page|
-          page.replace_html "tablero-recargable", :partial => 'compartidos/verModelo', :locals => {:obj_desp => @instancias, :tipo => modelo}
+          page.replace_html "tablero-recargable", :partial => 'verAsociados', :locals => {:obj_desp => @instancias, :modelo => modelo, :plaza_id=> @plaza.id}
         end
       end
     end

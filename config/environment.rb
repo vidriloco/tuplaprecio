@@ -41,5 +41,3 @@ Rails::Initializer.run do |config|
 end
 
 require "will_paginate"
-
-require "#{RAILS_ROOT}/app/models/usuario.rb"

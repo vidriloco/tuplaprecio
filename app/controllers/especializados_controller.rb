@@ -16,6 +16,19 @@ class EspecializadosController < ApplicationController
      end
    end
 
+   def index 
+     @especializados = Especializado.paginate :all, :page => params[:page]
+   end
+
+   def some
+     tipo = params[:tipo]
+     instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
+     @especializados = eval("Especializado.paginate_by_#{tipo.downcase}_id @#{tipo.downcase}.id, :page => params[:page]")
+     respond_to do |format|
+       format.html { render 'index.html.erb', :layout => 'application_layout' }
+     end
+   end
+
    # GET /especializados/1
    def show
       @especializado = Especializado.find(params[:id])

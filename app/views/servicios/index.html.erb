@@ -1,12 +1,20 @@
 <% if instance_variable_get("@categoria") %>
-    <%= render :partial => 'compartidos/anterior_fue_categoria', :locals => {:categoria => @categoria}%>
+    <%= render :partial => 'compartidos/anterior_fue_categoria', :locals => {:categoria => @categoria} %>
 <% elsif instance_variable_get("@concepto") %>
-    <%= render :partial => 'compartidos/anterior_fue_concepto', :locals => {:concepto => @concepto}%>
-<% elsif instance_variable_get("@presentacion") %>
-
+    <%= render :partial => 'compartidos/anterior_fue_concepto', :locals => {:concepto => @concepto} %>
+<% elsif instance_variable_get("@incorporado") %>
+    <%= render :partial => 'compartidos/anterior_fue_incorporado', :locals => {:incorporado => @incorporado} %>
+<% elsif instance_variable_get("@especializado") %>
+    <%= render :partial => 'compartidos/anterior_fue_especializado', :locals => {:especializado => @especializado} %>
+<% elsif instance_variable_get("@paquete") %>
+    <%= render :partial => 'compartidos/anterior_fue_paquete', :locals => {:paquete => @paquete} %>
+<% elsif instance_variable_get("@plaza") %>
+    <%= render :partial => 'compartidos/anterior_fue_plaza', :locals => {:plaza => @plaza} %>
 <% end %>
 
-<h3 id='listing_title_for_table' class='container_title'>Servicios</h3>
+<% c, modelo_plural_o_singular = modelo_info("Servicio", @servicios.length) %>
+
+<h3 id='listing_title_for_table' class='container_title'><%= modelo_plural_o_singular %></h3>
 <br>
 <table>
   <tr>
@@ -17,15 +25,26 @@
 <% @servicios.each do |servicio| %>
   <tr>
     <td class='attribute_value_table' id='a_value1'>
-        <div><%=h servicio.con_concepto %></div> <p> <%= link_to "Concepto", :controller => :conceptos, :action => :some, :id => servicio, :tipo => "Servicio" %></p><p><%= link_to "Categoria", :controller => :categorias, :action => :some, :id => servicio, :tipo => "Servicio" %></p>
+        <div><%=h servicio.con_concepto %></div> 
+        <p><%= link_to "Concepto", :controller => :conceptos, :action => :some, :id => servicio, :tipo => "Servicio" %></p>
+        <p><%= link_to "Categoria", :controller => :categorias, :action => :some, :id => servicio, :tipo => "Servicio" %></p>
+        <p>
+         <%= link_to "Incorporados", :controller => :incorporados, :action => :some, :id => servicio, :tipo => "Servicio" %>
+        </p>
+        <p>
+         <%= link_to "Especializados", :controller => :especializados, :action => :some, :id => servicio, :tipo => "Servicio" %>
+        </p>
+        <p><%= link_to "Paquetes", :controller => :paquetes, :action => :some, :id => servicio, :tipo => "Servicio" %></p>
+        <p><%= link_to "Plazas", :controller => :plazas, :action => :some, :id => servicio, :tipo => "Servicio" %></p>
+        
     </td>
 
     <td class='attribute_value_table' id='a_value2'>
         <div><%=h servicio.detalles_ %></div>
     </td>
     <td><%= button_to 'Mostrar', servicio, :method => :get %></td>
-    <td><%= if_es_admin do button_to 'Modificar', edit_servicio_path(servicio), :method => :get  end %></td>
-    <td><%= if_es_admin do button_to 'Eliminar', servicio, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+    <td><%= button_to 'Modificar', edit_servicio_path(servicio), :method => :get  %></td>
+    <td><%= button_to 'Eliminar', servicio, :confirm => '¿Eliminar registro?', :method => :delete %></td>
   </tr>
   
 <% end %>
@@ -33,4 +52,4 @@
 
 <%= will_paginate @servicios, :prev_label => "Anterior", :next_label => "Siguiente" %>
 
-<%= if_es_admin do button_to 'Nuevo servicio', new_servicio_path, :method => :post end %>
+<%= button_to 'Nuevo servicio', new_servicio_path, :method => :post %>

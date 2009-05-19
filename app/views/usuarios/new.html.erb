@@ -27,8 +27,15 @@
 <p><%= submit_tag 'Registrar' %></p>
 <% end -%>
 </div>
-<div class='form_links_container'>
-    <p class='inlined' id='regresar'>Regresar a:</p>
+
+<div class='form_links_back'>
+    <p><%= link_to "Atrás", :back %></p>
+</div>
+
+<div class='form_links_container' id='small'>    
+    <p class='inlined' id='regresar'>Ir a:</p>
     <p class='inlined'><%= render :partial => 'compartidos/link_to_admin' %></p>
 </div>
+
+
 </div>

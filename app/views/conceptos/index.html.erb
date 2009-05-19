@@ -5,7 +5,10 @@
     <%= render :partial => 'compartidos/anterior_fue_servicio', :locals => {:servicio => @servicio} %>
 <% end %>
 
-<h3 id='listing_title_for_table' class='container_title'>Conceptos</h3>
+<% c, modelo_plural_o_singular = modelo_info("Concepto", @conceptos.length) %>
+
+
+<h3 id='listing_title_for_table' class='container_title'><%= modelo_plural_o_singular %></h3>
 <br>
 <table>
   <tr>
@@ -17,15 +20,16 @@
     <td class='attribute_value_table' id='a_value1'>
         <div><%=h concepto.nombre %></div> 
         <p><%= link_to "Categorias", :controller => :categorias, :action => :some, :id => concepto, :tipo => "Concepto" %></p>
-        <p> <%= link_to "Servicios", :controller => :servicios, :action => :some, :id => concepto, :tipo => "Concepto" %></p>
+        <p><%= link_to "Servicios", :controller => :servicios, :action => :some, :id => concepto, :tipo => "Concepto" %></p>
     </td>
     <td><%= button_to 'Mostrar', concepto, :method => :get %></td>
-    <td><%= if_es_admin do button_to 'Modificar', edit_concepto_path(concepto), :method => :get  end %></td>
-    <td><%= if_es_admin do button_to 'Eliminar', concepto, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+    <td><%= button_to 'Modificar', edit_concepto_path(concepto), :method => :get %></td>
+    <td><%= button_to 'Eliminar', concepto, :confirm => '¿Eliminar registro?', :method => :delete %></td>
   </tr>
   
 <% end %>
 </table>
-<%= will_paginate(@conceptos, :prev_label => "Anterior", :next_label => "Siguiente") if es_paginable?(@conceptos) %>
 
-<%= if_es_admin do button_to 'Nuevo concepto', new_concepto_path, :method => :post end %>
+<%= will_paginate(@conceptos, :prev_label => "Anterior", :next_label => "Siguiente") %>
+
+<%= button_to 'Nuevo concepto', new_concepto_path, :method => :post %>

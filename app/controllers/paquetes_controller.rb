@@ -27,10 +27,9 @@ class PaquetesController < ApplicationController
     tipo = params[:tipo]
     instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
     if tipo.eql? "Plaza"
-      @paquetes = Paquete.paginate_by_sql ["SELECT * FROM 'paquetes' INNER JOIN 'paquetes_plazas' ON 
-        'paquetes'.id = 'paquetes_plazas'.paquete_id WHERE ('paquetes_plazas'.plaza_id = ? )", params[:id]], :page => params[:page]
+      @paquetes = Paquete.paginate :all, :joins => :plazas, :conditions => {:paquetes_plazas => {:plaza_id => params[:id]}}, :page => params[:page] 
     else
-      @paquetes = instance_variable_get("@#{tipo.downcase}").paquetes
+      @paquetes = Paquete.paginate :all, :joins => "#{tipo.downcase.pluralize}".to_sym, :conditions => {"#{tipo.downcase.pluralize}".to_sym => {:id => params[:id]}}, :page => params[:page]
     end
     respond_to do |format|
       format.html { render 'index.html.erb', :layout => 'application_layout' }

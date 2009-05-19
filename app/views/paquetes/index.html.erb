@@ -1,32 +1,14 @@
 <% if instance_variable_get("@plaza") %>
-    <h3 class='container_title' id='related_object_title'>Relacionado</h3>
-    <div class='related_object_container' >
-        <h4>Plaza</h4>
-        
-        <p><i>Nombre: </i><%=h @plaza.nombre %></p>
-        
-        <div class='related_object_links'>
-            <%= link_to "Atrás", plazas_path %>
-        </div>
-    </div>
+    <%= render :partial => 'compartidos/anterior_fue_plaza', :locals => {:plaza => @plaza} %>
 <% elsif instance_variable_get("@servicio") %>
-    <h3 class='container_title' id='related_object_title'>Relacionado</h3>
-    <div class='related_object_container' >
-        <h4>Servicio</h4>
-        
-        <p><i>Concepto de Servicio: </i><%= @servicio.con_concepto %></p>
-        <p><i>Costo sin Promoción: </i><%= @servicio.costo_sin_la_promocion %></p>
-        <p><i>Costo con Promoción: </i><%= @servicio.costo_con_la_promocion %></p>
-        <p><i>Detalles de la promoción </i><%= @servicio.detalles_de_la_promocion %></p>
-        <p><i>Duración de la promoción </i><%= @servicio.duracion_de_la_promocion %></p>
-        
-        <div class='related_object_links'>
-            <%= link_to "Atrás", servicios_path %>
-        </div>
-    </div>
+    <%= render :partial => 'compartidos/anterior_fue_servicio', :locals => {:servicio => @servicio} %>
+<% elsif instance_variable_get("@incorporado") %>
+    <%= render :partial => 'compartidos/anterior_fue_incorporado', :locals => {:incorporado => @incorporado} %>
 <% end %>
 
-<h3 id='listing_title_for_table' class='container_title'>Paquetes</h3>
+<% c, modelo_plural_o_singular = modelo_info("Paquete", @paquetes.length) %>
+
+<h3 id='listing_title_for_table' class='container_title'><%= modelo_plural_o_singular %></h3>
 <br>
 <table>
   <tr>
@@ -42,8 +24,8 @@
     </td>    
     
     <td><%= button_to 'Mostrar', paquete, :method => :get %></td>
-    <td><%= if_es_admin do button_to 'Modificar', edit_paquete_path(paquete), :method => :get  end %></td>
-    <td><%= if_es_admin do button_to 'Eliminar', paquete, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+    <td><%= button_to 'Modificar', edit_paquete_path(paquete), :method => :get  %></td>
+    <td><%= button_to 'Eliminar', paquete, :confirm => '¿Eliminar registro?', :method => :delete %></td>
   </tr>
   
 <% end %>
@@ -51,5 +33,4 @@
 
 <%= will_paginate @paquetes, :prev_label => "Anterior", :next_label => "Siguiente" %>
 
-
-<%= if_es_admin do button_to 'Nueva presentación', new_paquete_path, :method => :post end %>
+<%= button_to 'Nuevo paquete', new_paquete_path, :method => :post %>

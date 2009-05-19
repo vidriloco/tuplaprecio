@@ -35,12 +35,12 @@
         <div><%=h usuario.detalles_responsabilidad %></div>
     </td>
     <td><%= button_to 'Mostrar', usuario, :method => :get %></td>
-    <td><%= if_es_admin do button_to 'Modificar', edit_usuario_path(usuario), :method => :get  end %></td>
-    <td><%= if_es_admin do button_to 'Eliminar', usuario, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+    <td><%= button_to 'Modificar', edit_usuario_path(usuario), :method => :get  %></td>
+    <td><%= button_to 'Eliminar', usuario, :confirm => '¿Eliminar registro?', :method => :delete %></td>
   </tr>
   
 <% end %>
 </table>
 <%= will_paginate @usuarios, :prev_label => "Anterior", :next_label => "Siguiente" %>
 
-<%= if_es_admin do button_to 'Nuevo usuario', new_usuario_path, :method => :post end %>
+<%= button_to 'Nuevo usuario', new_usuario_path, :method => :post %>

@@ -6,6 +6,10 @@ class IncorporadosController < ApplicationController
     controller.nivel_logged_in(["nivel 1", "nivel 2"])
   end
   
+  def index
+    @incorporados = Incorporado.paginate :all, :page => params[:page]
+  end
+  
   # GET /incorporados/new
   def new
     @incorporado = Incorporado.new
@@ -13,6 +17,15 @@ class IncorporadosController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
     # format.xml  { render :xml => @plaza }
+    end
+  end
+  
+  def some
+    tipo = params[:tipo]
+    instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
+    @incorporados = eval("Incorporado.paginate_by_#{tipo.downcase}_id @#{tipo.downcase}.id, :page => params[:page]")
+    respond_to do |format|
+      format.html { render 'index.html.erb', :layout => 'application_layout' }
     end
   end
   

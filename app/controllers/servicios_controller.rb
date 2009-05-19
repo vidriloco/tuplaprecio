@@ -30,12 +30,9 @@ class ServiciosController < ApplicationController
     instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
     if tipo.eql?("Concepto") || tipo.eql?("Categoria")
       @servicios = eval("Servicio.paginate_by_#{tipo.downcase}_id @#{tipo.downcase}.id, :page => params[:page]")
-    elsif tipo.eql? "Paquete"
-      @servicios = Servicio.paginate_by_sql ["SELECT 'servicios'.* FROM 'servicios' INNER JOIN 'incorporados' ON 
-        'servicios'.id = 'incorporados'.servicio_id WHERE (('incorporados'.paquete_id = ?))", params[:id]], :page => params[:page]
-    elsif tipo.eql? "Plaza"
-      @servicios = Servicio.paginate_by_sql ["SELECT 'servicios'.* FROM 'servicios' INNER JOIN 'especializados' ON 
-        'servicios'.id = 'especializados'.servicio_id WHERE (('especializados'.plaza_id = ?))", params[:id]], :page => params[:page]
+    # paginación para: [paquete, especializado, plaza, incorporado]  
+    else
+      @servicios = Servicio.paginate :all, :joins => "#{tipo.downcase.pluralize}".to_sym, :conditions => {"#{tipo.downcase.pluralize}".to_sym => {:id => params[:id]}}, :page => params[:page]
     end
     respond_to do |format|
       format.html { render 'index.html.erb', :layout => 'application_layout' }

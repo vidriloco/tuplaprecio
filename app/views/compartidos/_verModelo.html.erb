@@ -1,4 +1,5 @@
-<%= javascript_tag  "Nifty('h3.container_title','top'); Nifty('div#attributes_of_related')" %>
+<%= javascript_tag "Nifty('h3.container_title','top');" %>
+<%= javascript_tag "Nifty('div.pagination');" %>
 
 <h3 class='container_title' id='listing_title'><%= tipo.pluralize.capitalize %></h3>
 
@@ -20,3 +21,5 @@
         <p style="text-align:center;">No hay objetos de tipo <%= tipo.capitalize %> que mostrar</p>
     <% end %>
 </div>
+
+<%= will_paginate obj_desp, :renderer => 'RemoteLinkRenderer', :params => {:tipo => tipo, :div => div_act}, :previous_label => "Anterior", :next_label => "Siguiente" %>

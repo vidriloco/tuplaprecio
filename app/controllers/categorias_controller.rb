@@ -22,8 +22,6 @@ class CategoriasController < ApplicationController
     instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
     if tipo.eql? "Concepto"
         @categorias = Categoria.paginate :all, :joins => :conceptos, :conditions => {:categorias_conceptos => {:concepto_id => params[:id]}}, :page => params[:page]
-        #@categorias = Categoria.paginate_by_sql ["SELECT * FROM 'categorias' INNER JOIN 'categorias_conceptos' ON
-        #'categorias'.id = 'categorias_conceptos'.categoria_id WHERE ('categorias_conceptos'.concepto_id = ? )", params[:id]], :page => params[:page]
     elsif tipo.eql? "Servicio"
         @categorias = Categoria.paginate :all, :joins => :servicios, :conditions => {:servicios => {:id => params[:id]}}, :page => params[:page]
     end

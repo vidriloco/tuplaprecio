@@ -5,7 +5,9 @@
     <%= render :partial => 'compartidos/anterior_fue_servicio', :locals => {:servicio => @servicio} %>
 <% end %>
 
-<h3 id='listing_title_for_table' class='container_title'>Categorias</h3>
+<% c, modelo_plural_o_singular = modelo_info("Categoria", @categorias.length) %>
+
+<h3 id='listing_title_for_table' class='container_title'><%= modelo_plural_o_singular %></h3>
 <br>
 <table>
   <tr>
@@ -20,8 +22,8 @@
         <p> <%= link_to "Servicios", :controller => :servicios, :action => :some, :id => categoria, :tipo => "Categoria" %></p>
     </td>
     <td><%= button_to 'Mostrar', categoria, :method => :get %></td>
-    <td><%= if_es_admin do button_to 'Modificar', edit_categoria_path(categoria), :method => :get  end %></td>
-    <td><%= if_es_admin do button_to 'Eliminar', categoria, :confirm => '¿Eliminar registro?', :method => :delete end %></td>
+    <td><%= button_to 'Modificar', edit_categoria_path(categoria), :method => :get %></td>
+    <td><%= button_to 'Eliminar', categoria, :confirm => '¿Eliminar registro?', :method => :delete %></td>
   </tr>
   
 <% end %>
@@ -29,4 +31,4 @@
 
 <%= will_paginate @categorias, :prev_label => "Anterior", :next_label => "Siguiente" %>
 
-<%= if_es_admin do button_to 'Nueva categoría', new_categoria_path, :method => :post end %>
+<%= button_to 'Nueva categoría', new_categoria_path, :method => :post %>

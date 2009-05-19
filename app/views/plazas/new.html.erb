@@ -15,9 +15,6 @@
 <% end %>
 
 </div>
-<div class='form_links_container'>
-    <p class='inlined' id='regresar'>Regresar a:</p>
-    <p class='inlined'><%= link_to 'Plazas', plazas_path %></p>
-    <p class='inlined'><%= render :partial => 'compartidos/link_to_admin' %></p>
-</div>
+<%= render :partial => 'compartidos/nuevo_form_links', :locals => {:modelo => "plaza"} %>
+
 </div>

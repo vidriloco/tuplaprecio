@@ -15,10 +15,5 @@
 </div>
 
 
-<div class='form_links_container'>
-    <p class='inlined' id='regresar'>Regresar a:</p>
-    <p class='inlined'><%= link_to 'Servicios', servicios_path %></p>
-    <p class='inlined'><%= link_to 'Servicio', @servicio %></p>
-    <p class='inlined'><%= render :partial => 'compartidos/link_to_admin' %></p>
-</div>
+<%= render :partial => 'compartidos/edita_form_links', :locals => {:obj_editable => @servicio, :modelo => "servicio" } %>
 </div>

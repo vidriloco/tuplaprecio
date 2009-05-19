@@ -1,6 +1,6 @@
 class AdministracionesController < ApplicationController
   
-  before_filter :only => [:asigna_nivel] do |controller|
+  before_filter :only => [:asigna_nivel, :index] do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 podrán ejecutar la acción definida
     # en "only"
     controller.nivel_logged_in(["nivel 1"])
@@ -57,11 +57,12 @@ class AdministracionesController < ApplicationController
     div_act=params[:div].gsub(/\d/,'')
     # tipo corresponde al modelo del cuál se va a devolver datos
     tipo=params[:tipo].gsub(/\d/,'')
-    obj_desp=tipo.capitalize.constantize.all
+    obj_desp=tipo.capitalize.constantize.paginate :all, :page => params[:page]
     respond_to do |format|
       format.js do
         render :update do |page|
-          page.replace_html div_act, :partial => 'compartidos/verModelo', :locals => {:obj_desp => obj_desp, :tipo => tipo}
+          page.replace_html div_act, :partial => 'compartidos/verModelo', 
+                                     :locals => {:obj_desp => obj_desp, :tipo => tipo, :div_act => div_act}
         end
       end
     end

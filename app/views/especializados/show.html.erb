@@ -5,10 +5,6 @@
     <%= render :partial => 'compartidos/modelo_info_comun', :locals => {:hash => hash, :obj => @obj} %>
 
 
-    <div class='form_links_container'>
-        <p class='inlined' id='regresar'>Regresar a:</p>
-        <p class='inlined'><%= link_to 'Incorporados', servicios_path %></p>
-        <p class='inlined'><%= link_to 'Modificar', edit_especializado_path(@obj) %></p>
-        <p class='inlined'><%= render :partial => 'compartidos/link_to_admin' %></p>
-    </div>
+    <%= render :partial => 'compartidos/detalle_form_links', :locals => {:obj_modificable => @obj, :modelo => "especializado"}%>
+
 </div>
