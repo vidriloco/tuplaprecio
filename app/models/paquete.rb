@@ -6,6 +6,7 @@ class Paquete < ActiveRecord::Base
   has_many :servicios, :through => :incorporados
   attributes_to_serialize :nombre, :associated => [:incorporados, :plazas]
   
+  validates_presence_of :nombre, :message => "no puede ser vacío"
   
   def self.compartidas
     compartidas = Array.new

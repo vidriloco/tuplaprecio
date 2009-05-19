@@ -6,6 +6,11 @@ class Especializado < ActiveRecord::Base
   attributes_to_serialize :categoria, :concepto, :detalles_del_servicio, :activo_, :costo_
   remap_names 'Especializado' => 'Servicio'
   
+  validates_presence_of :costo, :message => "no puede ir vacío"
+  validates_numericality_of :costo, :message => "debe ser un valor numérico"
+  
+  validates_presence_of :activo, :message => "debe ser 'sí' ó 'no'"
+  
   # Devuelve el nombre del concepto del servicio incorporado.
   def concepto
     self.servicio.concepto.nombre

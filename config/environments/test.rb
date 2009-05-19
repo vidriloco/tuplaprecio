@@ -1,5 +1,5 @@
 # Settings specified here will take precedence over those in config/environment.rb
-
+require "will_paginate"
 # The test environment is used exclusively to run your application's
 # test suite.  You never need to work with it otherwise.  Remember that
 # your test database is "scratch space" for the test suite and is wiped
@@ -27,8 +27,8 @@ config.action_mailer.delivery_method = :test
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
 
-ENV['AUTOFEATURE'] = true
-ENV['RSPEC'] = true
+ENV['AUTOFEATURE'] = "true"
+ENV['RSPEC'] = "true"
 
 config.gem "rspec", :lib => false, :version => ">= 1.2.6" 
 config.gem "rspec-rails", :lib => false, :version => ">= 1.2.6" 

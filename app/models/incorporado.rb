@@ -6,6 +6,9 @@ class Incorporado < ActiveRecord::Base
   attributes_to_serialize :categoria, :concepto, :detalles_del_servicio, :detalles_en_paquete, :costo_, :vigencia
   remap_names 'Incorporado' => 'Servicio'
   
+  validates_presence_of :costo, :message => "no puede ir vacío"
+  validates_numericality_of :costo, :message => "debe ser un valor numérico"
+  
   DURACION_PROMOCION_NIL="No especificada"
   
   def costo_

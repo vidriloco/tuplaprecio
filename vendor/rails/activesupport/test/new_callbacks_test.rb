@@ -19,11 +19,11 @@ module NewCallbacksTest
 
     class << self
       def callback_symbol(callback_method)
-        returning(:"#{callback_method}_method") do |method_name|
-          define_method(method_name) do
-            history << [callback_method, :symbol]
-          end
+        method_name = :"#{callback_method}_method"
+        define_method(method_name) do
+          history << [callback_method, :symbol]
         end
+        method_name
       end
 
       def callback_string(callback_method)
@@ -255,6 +255,26 @@ module NewCallbacksTest
     end
   end
 
+  class HyphenatedCallbacks
+    include ActiveSupport::NewCallbacks
+    define_callbacks :save
+    attr_reader :stuff
+    
+    save_callback :before, :omg, :per_key => {:if => :yes}
+    
+    def yes() true end
+      
+    def omg
+      @stuff = "OMG"
+    end
+    
+    def save
+      _run_save_callbacks("hyphen-ated") do
+        @stuff
+      end
+    end
+  end
+
   class AroundCallbacksTest < Test::Unit::TestCase
     def test_save_around
       around = AroundPerson.new
@@ -345,7 +365,7 @@ module NewCallbacksTest
     save_callback :after, :third
 
   
-    attr_reader :history
+    attr_reader :history, :saved
     def initialize
       @history = []
     end
@@ -370,7 +390,9 @@ module NewCallbacksTest
     end
   
     def save
-      _run_save_callbacks
+      _run_save_callbacks do
+        @saved = true
+      end
     end
   end
 
@@ -380,5 +402,19 @@ module NewCallbacksTest
       terminator.save
       assert_equal ["first", "second", "third", "second", "first"], terminator.history
     end
+    
+    def test_block_never_called_if_terminated
+      obj = CallbackTerminator.new
+      obj.save
+      assert !obj.saved
+    end    
   end
+  
+  class HyphenatedKeyTest < Test::Unit::TestCase
+    def test_save
+      obj = HyphenatedCallbacks.new
+      obj.save
+      assert_equal obj.stuff, "OMG"
+    end    
+  end  
 end

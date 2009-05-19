@@ -5,11 +5,8 @@ require 'pathname'
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'railties_path'
 require 'rails/version'
-require 'rails/plugin/locator'
-require 'rails/plugin/loader'
 require 'rails/gem_dependency'
 require 'rails/rack'
-
 
 RAILS_ENV = (ENV['RAILS_ENV'] || 'development').dup unless defined?(RAILS_ENV)
 
@@ -159,6 +156,8 @@ module Rails
 
       add_support_load_paths
 
+      check_for_unbuilt_gems
+
       load_gems
       load_plugins
 
@@ -244,6 +243,7 @@ module Rails
     # Set the paths from which Rails will automatically load source files, and
     # the load_once paths.
     def set_autoload_paths
+      require 'active_support/dependencies'
       ActiveSupport::Dependencies.load_paths = configuration.load_paths.uniq
       ActiveSupport::Dependencies.load_once_paths = configuration.load_once_paths.uniq
 
@@ -263,7 +263,9 @@ module Rails
     # list. By default, all frameworks (Active Record, Active Support,
     # Action Pack, Action Mailer, and Active Resource) are loaded.
     def require_frameworks
+      require 'active_support'
       configuration.frameworks.each { |framework| require(framework.to_s) }
+      require 'active_support/core/all'
     rescue LoadError => e
       # Re-raise as RuntimeError because Mongrel would swallow LoadError.
       raise e.to_s
@@ -289,10 +291,12 @@ module Rails
     # Adds all load paths from plugins to the global set of load paths, so that
     # code from plugins can be required (explicitly or automatically via ActiveSupport::Dependencies).
     def add_plugin_load_paths
+      require 'active_support/dependencies'
       plugin_loader.add_plugin_load_paths
     end
 
     def add_gem_load_paths
+      require 'rails/gem_dependency'
       Rails::GemDependency.add_frozen_gem_path
       unless @configuration.gems.empty?
         require "rubygems"
@@ -303,6 +307,25 @@ module Rails
     def load_gems
       unless $gems_build_rake_task
         @configuration.gems.each { |gem| gem.load }
+      end
+    end
+
+    def check_for_unbuilt_gems
+      unbuilt_gems = @configuration.gems.select {|gem| gem.frozen? && !gem.built? }
+      if unbuilt_gems.size > 0
+        # don't print if the gems:build rake tasks are being run
+        unless $gems_build_rake_task
+          abort <<-end_error
+The following gems have native components that need to be built
+  #{unbuilt_gems.map { |gem| "#{gem.name}  #{gem.requirement}" } * "\n  "}
+
+You're running:
+  ruby #{Gem.ruby_version} at #{Gem.ruby}
+  rubygems #{Gem::RubyGemsVersion} at #{Gem.path * ', '}
+
+Run `rake gems:build` to build the unbuilt gems.
+          end_error
+        end
       end
     end
 
@@ -439,7 +462,7 @@ Run `rake gems:install` to install the missing gems.
 
         if RAILS_CACHE.respond_to?(:middleware)
           # Insert middleware to setup and teardown local cache for each request
-          configuration.middleware.insert_after(:"ActionController::Failsafe", RAILS_CACHE.middleware)
+          configuration.middleware.insert_after(:"Rack::Lock", RAILS_CACHE.middleware)
         end
       end
     end
@@ -568,7 +591,7 @@ Run `rake gems:install` to install the missing gems.
       Rails::Rack::Metal.metal_paths += plugin_loader.engine_metal_paths
 
       configuration.middleware.insert_before(
-        :"ActionDispatch::RewindableInput",
+        :"ActionDispatch::ParamsParser",
         Rails::Rack::Metal, :if => Rails::Rack::Metal.metals.any?)
     end
 
@@ -609,7 +632,6 @@ Run `rake gems:install` to install the missing gems.
       return unless configuration.frameworks.include?(:action_controller)
       require 'dispatcher' unless defined?(::Dispatcher)
       Dispatcher.define_dispatcher_callbacks(configuration.cache_classes)
-      Dispatcher.run_prepare_callbacks
     end
 
     def disable_dependency_loading
@@ -1037,12 +1059,14 @@ Run `rake gems:install` to install the missing gems.
       end
 
       def default_plugin_locators
+        require 'rails/plugin/locator'
         locators = []
         locators << Plugin::GemLocator if defined? Gem
         locators << Plugin::FileSystemLocator
       end
 
       def default_plugin_loader
+        require 'rails/plugin/loader'
         Plugin::Loader
       end
 

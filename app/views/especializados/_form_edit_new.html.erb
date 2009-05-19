@@ -3,9 +3,10 @@
 <%= f.select :servicio_id, lista_hash_objetos_de_modelo("servicio") %>
 </p>
 
-  <br/><%= f.label :costo %><br />
+<br/><%= f.label :costo, "Costo (en pesos)" %><br />
+
 <p>
-  $ <%= f.text_field :costo, :size => 5 %> pesos
+   <%= f.text_field :costo, :size => 5 %>
 </p>
 
   <br/><%= f.label :estado_del_servicio %>

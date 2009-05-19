@@ -5,8 +5,9 @@ class Administracion < ActiveRecord::Base
   attributes_to_serialize :associated => [:usuarios]
   
   def agrega_nuevo_usuario(usuario)
-    self.usuarios << usuario
-    self.save!
+    unless self.usuarios.exists? usuario
+      self.usuarios << usuario
+    end
   end
   
   def eliminar_usuario(usuario)

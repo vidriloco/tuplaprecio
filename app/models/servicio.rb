@@ -8,7 +8,7 @@ class Servicio < ActiveRecord::Base
   has_many :especializados, :dependent => :destroy
   has_many :plazas, :through => :especializados
     
-  validates_presence_of :concepto, :unless => "concepto_id.eql? 'Selecciona una categoría'", :message => "Selecciona una categoría"
+  validates_presence_of :concepto, :unless => "concepto_id.eql? 'Selecciona una categoría'", :message => "debe ir asociado con la categoría"
   
   attributes_to_serialize :detalles_, :associated => [:concepto, :categoria]
     

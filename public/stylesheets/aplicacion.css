@@ -22,12 +22,12 @@ a:hover { font-style: italic;  }
 }
 
 #errorExplanation {
+  margin-left: auto;
+  margin-right: auto;
   width: 400px;
-  border: 2px solid red;
-  padding: 7px;
   padding-bottom: 12px;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
+  background-color: #F0D6DC;
 }
 
 #errorExplanation h2 {
@@ -35,7 +35,6 @@ a:hover { font-style: italic;  }
   font-weight: bold;
   padding: 5px 5px 5px 15px;
   font-size: 12px;
-  margin: -7px;
   background-color: #c00;
   color: #fff;
 }

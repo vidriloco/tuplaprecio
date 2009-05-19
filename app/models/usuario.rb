@@ -17,15 +17,13 @@ class Usuario < ActiveRecord::Base
   validates_uniqueness_of   :login
   validates_format_of       :login,    :with => Authentication.login_regex, :message => "usa sólo letras, números y .-_@"
 
-  validates_format_of       :nombre,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
-  validates_length_of       :nombre,     :maximum => 100
+  validates_presence_of     :nombre,   :message => "no puede ser vacío"
+  validates_length_of       :nombre,   :maximum => 100, :message => "no puede ser mayor a 100 caracteres"
 
   validates_presence_of     :email,    :message => "no puede estar vacío"
   validates_length_of       :email,    :within => 6..100, :message => "es muy corto (mínimo 6 caracteres)"
   validates_uniqueness_of   :email,    :message => "debe ser único en la base de datos"
-  validates_format_of       :email,    :with => Authentication.email_regex, :message => "no parece ser un email (debe tener forma de un email)"
-
-  
+  validates_format_of       :email,    :with => Authentication.email_regex, :message => "debe tener la forma que un email tiene"  
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
