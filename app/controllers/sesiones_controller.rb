@@ -18,9 +18,10 @@ class SesionesController < ApplicationController
       self.current_usuario = usuario
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
-      if usuario.responsabilidad.instance_of? Administracion
+      nivel_usuario=Administracion.nivel_de(usuario.rol.nombre)
+      if nivel_usuario.eql? "nivel 1"
           redirect_to administraciones_path
-      elsif usuario.responsabilidad.instance_of? Plaza
+      elsif nivel_usuario.eql?("nivel 2") || nivel_usuario.eql?("nivel 3")
           redirect_to tablero_principal_path
       else
           render :action => 'new'

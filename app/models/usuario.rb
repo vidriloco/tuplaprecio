@@ -69,8 +69,13 @@ class Usuario < ActiveRecord::Base
   end
   
   def responsable_de
-    return "No asignado aún" if self.responsabilidad.nil?
+   if self.responsabilidad.nil? && Administracion.nivel_de(self.rol.nombre).eql?("nivel 3")
+      return "No asignable"
+   elsif self.responsabilidad.nil?
+      return "No asignado aún" 
+   else
       self.responsabilidad_type 
+   end
   end
   
   def detalles_responsabilidad

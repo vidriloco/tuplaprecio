@@ -2,8 +2,15 @@ class TablerosController < ApplicationController
   
   def index
     @usuario = Usuario.find(session[:usuario_id])
-    @plaza = @usuario.responsabilidad
-    @tareas = ["especializado", "paquete"]
+    if Administracion.nivel_de(@usuario.rol.nombre).eql? "nivel 3"
+      @plazas = Plaza.paginate :all, :page => params[:page], :per_page => 7
+      respond_to do |format|
+        format.html
+        format.js { render :partial => 'lista_de_plazas', :object => @plazas }
+      end
+    else
+      @plaza = @usuario.responsabilidad
+    end
   end
   
   def lista_ajax
@@ -24,4 +31,16 @@ class TablerosController < ApplicationController
       end
     end
   end
+  
+  def selecciona_plaza
+    @plaza = Plaza.find params[:id].gsub(/\D/,'')
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html 'plaza_area_contenedor', :partial => 'contenido_para_nivel_dos_y_tres', :object => @plaza
+        end
+      end
+    end
+  end
+  
 end

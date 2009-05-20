@@ -95,7 +95,7 @@ module ApplicationHelper
         para_todos="<p>Paquetes</p>
         #{ genera_checkboxes_para("paquete", objeto) }
         
-        <p>Servicios Especializables</p>
+        <p>Servicios asignables a Plaza</p>
         #{ genera_checkboxes_para("especializado", objeto) }
         "
       
@@ -138,11 +138,15 @@ module ApplicationHelper
       u_ids=objeto.ids_of(:usuarios)
       modelo.capitalize.constantize.all.each do |instancia|
         encargado_en=instancia.responsable_de
+        # Solución acentuada
         if instancia.responsable_de.eql? 'Administracion'
           encargado_en="Administración"
         end
         estado_seleccion=!u_ids.index(instancia.id).nil?
-        out+="<p class='inlined'><i>#{encargado_en}</i></p><p class='inlined'>#{instancia.login}</p> #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}<br/>"
+
+        unless Administracion.nivel_de(instancia.rol.nombre).eql? "nivel 3"
+          out+="<p class='inlined'><i>#{encargado_en}</i></p><p class='inlined'>#{instancia.login}</p> #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}<br/>"
+        end
       end
     elsif modelo.eql? "servicio"
       p_ids=objeto.ids_of(:servicios)
@@ -158,7 +162,7 @@ module ApplicationHelper
         estado_seleccion=!p_ids.index(instancia.id).nil?
         # Verifica si éste incorporado ya está asociado a un paquete. 
         estado_asignacion= instancia.paquete.nil? ? "<i>(Libre)</i>" : "<i>(Asignado)</i>"
-        out+="<p> #{estado_asignacion} <b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} - #{instancia.costo_} #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}</p>"
+        out+="<div class='form_opcion'><b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion}</div>"
       end  
     elsif modelo.eql? "especializado"
       p_ids=objeto.ids_of(:especializados)
@@ -166,14 +170,14 @@ module ApplicationHelper
         estado_seleccion=!p_ids.index(instancia.id).nil?
         # Verifica si éste incorporado ya está asociado a un paquete. 
         estado_asignacion= instancia.plaza.nil? ? "<i>(Libre)</i>" : "<i>(Asignado)</i>"
-        out+="<p> #{estado_asignacion} <b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} - #{instancia.costo_} #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}</p>"
+        out+="<div class='form_opcion'><b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion}</div>"
       end
     elsif modelo.eql? "paquete"
       # Arreglo con el id de las paquetes relacionados a "objeto"
       p_ids=objeto.ids_of(:paquetes)
       modelo.capitalize.constantize.all.each do |instancia|
         estado_seleccion=!p_ids.index(instancia.id).nil?
-        out+="<p><b>#{instancia.nombre}</b> #{instancia.listado_de_servicios_incorporados} #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}</p>"
+        out+="<div class='form_opcion'><b>#{instancia.nombre}</b><br/> #{instancia.listado_de_servicios_incorporados} #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}</div>"
       end
     elsif modelo.eql? "categoria"
       c_ids=objeto.ids_of(:categorias)
@@ -204,14 +208,13 @@ module ApplicationHelper
     return false if session[:usuario_id].nil?
     
     usuario=Usuario.find(session[:usuario_id])      
-    admin=Administracion.first
   
     if args.instance_of? Array
-      if args.index(admin.nivel_de(usuario.rol.nombre)).nil?
+      if args.index(Administracion.nivel_de(usuario.rol.nombre)).nil?
         return false
       end
     else
-      unless args.eql?(admin.nivel_de(usuario.rol.nombre))
+      unless args.eql?(Administracion.nivel_de(usuario.rol.nombre))
         return false
       end
     end

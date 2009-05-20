@@ -1,0 +1,14 @@
+<%= javascript_tag "Nifty('#listado_de_plazas_contenedor');Nifty('div.pagination');" %>
+
+<div id='listado_de_plazas_contenedor' class='inlined'>
+  <b>Plazas: </b>
+  <% @plazas.each do |plaza| %>
+      <div class='inlined' id='plaza_en_lista'>
+          <%= link_to_remote plaza.nombre, :url => {:action => 'selecciona_plaza', :id => plaza.id} %>       
+      </div>
+  <% end %>
+</div>
+
+<%= will_paginate @plazas, :renderer => 'RemoteLinkRenderer' , 
+                           :remote => {:update => 'listado_de_plazas_contenedor_intercambiable'},
+                           :previous_label => "", :next_label => "", :id=> 'tiny' %>

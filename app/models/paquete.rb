@@ -53,10 +53,10 @@ class Paquete < ActiveRecord::Base
   end
   
   def listado_de_servicios_incorporados
-    out = "<div class='subservicio'>"
+    out=String.new
     self.incorporados.each do |incorporado|
-      out+="<p>#{ incorporado.servicio.con_concepto }</p>"
+      out+="#{ incorporado.servicio.con_concepto }<br/>"
     end
-    out+="</div>"
+    out
   end
 end

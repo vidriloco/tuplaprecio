@@ -157,6 +157,24 @@ input.boton_justificado {
   right:50px;
 }
 
+#plaza_area_contenedor {
+  position:relative;
+  margin-top:30px;
+}
+
+#listado_de_plazas_contenedor {
+  background-color:#DAED79;
+  padding: 12px;
+  width: 960px;
+}
+
+#plaza_en_lista {
+  padding-right: 10px;	
+  padding-left: 10px;
+}
+
+/* estilos generales en la aplicación */
+
 #container {
   margin-top:30px;
   position: relative;
@@ -315,6 +333,7 @@ input.boton_justificado {
 	color: #fff;
 }
 
+
 /* paginacion */
 
 .pagination{
@@ -326,3 +345,15 @@ input.boton_justificado {
 	width: 250px;
 }
 
+/* formularios */
+
+.form_opcion {
+	background-color:#A6C090;
+	width:300px;
+	margin-bottom: 20px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:left;
+	font-size:10px;
+	padding:8px;
+}

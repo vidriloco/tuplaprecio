@@ -1,4 +1,4 @@
-<%= javascript_tag  "Nifty('h3.container_title','top'); Nifty('div#attributes_of_related')" %>
+<%= javascript_tag  "Nifty('h3.container_title','top'); Nifty('div#attributes_of_related'); Nifty('div.pagination');" %>
 
 <h3 class='container_title' id='listing_title'><%= modelo.pluralize.capitalize %></h3>
 
@@ -20,6 +20,5 @@
         <p style="text-align:center;">No hay objetos de tipo <%= modelo.capitalize %> que mostrar</p>
     <% end %>
 </div>
-<%= javascript_tag "Nifty('div.pagination');" %>
 
 <%= will_paginate obj_desp, :renderer => 'RemoteLinkRenderer', :params => {:modelo => modelo, :id => plaza_id}, :previous_label => 'Anterior', :next_label => 'Siguiente' %>

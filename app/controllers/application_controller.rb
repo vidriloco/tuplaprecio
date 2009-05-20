@@ -12,9 +12,8 @@ class ApplicationController < ActionController::Base
     redirect_to(new_sesion_path) if session[:usuario_id].nil?
     
     usuario=Usuario.find(session[:usuario_id])      
-    admin=Administracion.first
     
-    if args.index(admin.nivel_de(usuario.rol.nombre)).nil?
+    if args.index(Administracion.nivel_de(usuario.rol.nombre)).nil?
       redirect_to :back
     end
   end

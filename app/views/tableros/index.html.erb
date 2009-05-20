@@ -1,62 +1,11 @@
-<div id='general-panel'>
-<h2 id='titulo_del_panel' class='container_title'>Plaza</h2>
-<div class='panel-izquierdo-tablero'>
-    
-<div class='atributo_en_panel'><p><b>Estado: </b><%= @plaza.estado.nombre %></p></div>    
-<div class='atributo_en_panel'><p><b>Nombre: </b><%= @plaza.nombre %></p></div>
-<% if logged_in_on?("nivel 2") %>
-    <%= button_to "Asignar Paquetes y Servicios", edit_plaza_path(@plaza) , :method => :get, :class => "boton_justificado" %>
-<% end %>
-</div>
-<br/>
-<br/>
+<% if logged_in_on?("nivel 3") %>
 
-<h3>Tiene:</h3>
-<br>
-
-<% @tareas.each do |tarea| %>
-    <div class='tarea-izquierda-tablero'>
-        <% cuenta, modelo_cuenta = modelo_info(tarea, eval("@plaza.#{tarea.pluralize}.count")) %>
-        <p class='inlined_short' id=<%="cuenta#{tarea.capitalize}"%>><b><%= cuenta %></b></p> 
-        <p class='inlined_medium' id=<%="sustantivo#{tarea.capitalize}"%>><%= modelo_cuenta %></p>
-    
-        <% if logged_in_on?(["nivel 1", "nivel 2"])%>
-    	    <div class='inlined'>
-                <%= button_to "Nuevo", :controller => tarea.pluralize, :action => 'new' %>
-            </div>
-        <% end %>
-        <div class='inlined'>
-            <%= button_to_remote "Ver Lista", 
-                :url => {:controller => 'tableros', :action => 'lista_ajax', :id => @plaza}, 
-                :with => "'modelo=#{tarea.capitalize}'" %>
-        </div>
+    <div id='listado_de_plazas_contenedor_intercambiable'>
+        <%= render :partial => 'lista_de_plazas', :object => @plazas %>
     </div>
-    <% if tarea.eql? 'paquete' %>
-        <% if logged_in_on?("nivel 2") %>
-            <div class='contenedor_sub_tarea'>
-                <h4>Tiene:</h4>
-                <br>
-                <div class='tarea-anidada-izquierda-tablero'>
-                    <% total = @plaza.paquetes.inject(0) { |n,paquete| n+=paquete.incorporados.count } %>
-                    <% cuenta, modelo_cuenta = modelo_info("incorporado", total) %>
-                    <p class='inlined_short' id=<%="cuenta#{tarea.capitalize}"%>><b><%= cuenta %></b></p> 
-                    <p class='inlined' id=<%="sustantivo#{tarea.capitalize}"%>><%= modelo_cuenta %></p>
-                    <div class='inlined'>
-                        <%= button_to "Nuevo", :controller => 'incorporados', :action => 'new' %>
-                    </div>
-                    <div class='inlined'>
-                        <%= button_to_remote "Ver Lista", 
-                            :url => {:controller => 'tableros', :action => 'lista_ajax', :id => @plaza}, 
-                            :with => "'modelo=Incorporado'" %>
-                    </div>
-                </div>
-            </div>
-        <% end %>
-    <% end %>
+
+    <div id='plaza_area_contenedor'></div>
+<% else %>    
+    <%= render :partial => 'contenido_para_nivel_dos_y_tres', :object => @plaza %>
 <% end %>
 
-</div>
-
-<div id='tablero-recargable'>
-    
-</div>

@@ -18,12 +18,13 @@ class Administracion < ActiveRecord::Base
     self.usuarios
   end
   
-  def nivel_de(rol)
-    if self.nivel_alto.eql? rol
+  def self.nivel_de(rol)
+    @administracion = self.first
+    if  @administracion.nivel_alto.eql? rol
       return "nivel 1"
-    elsif self.nivel_medio.eql? rol
+    elsif  @administracion.nivel_medio.eql? rol
       return "nivel 2"
-    elsif self.nivel_bajo.eql? rol
+    elsif  @administracion.nivel_bajo.eql? rol
       return "nivel 3"
     end
   end
