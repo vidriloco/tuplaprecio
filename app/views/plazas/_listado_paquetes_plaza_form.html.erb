@@ -1,0 +1,25 @@
+<% if session[:paquetes_plaza].nil? %>
+     <% if instance_variable_defined? "@plaza" %>
+        <% session[:paquetes_plaza] = @plaza.ids_of(:paquetes) %>
+    <% else %>
+        <% session[:paquetes_plaza] = [] %>
+    <% end %>
+<% end %>
+
+
+<% @paquetes.each do |paquete| %>
+
+    <% estado_seleccion = existe_en_sesion(:paquetes_plaza, paquete.id) %>
+    <div class='form_opcion'>
+        <%= check_box_tag "paquete", paquete.id,  estado_seleccion, 
+                                     :onchange => remote_function( 
+                                              :url => {:action => 'objetos_a_sesion', :id => paquete.id}, 
+                                              :with => "'seleccion='+'#{estado_seleccion}'+'&sesion='+'paquetes_plaza'") %> 
+        <b><%= paquete.nombre %></b><br/><%= paquete.listado_de_servicios_incorporados %>
+    </div>
+<% end %>
+
+<%= will_paginate @paquetes, :renderer => 'RemoteLinkRenderer', 
+                             :remote => {:with => "'partial='+'listado_paquetes_plaza_form'",
+                                         :update => 'listado_paquetes_plaza_form_contenedor'}, 
+                             :previous_label => ':.', :next_label => '.:', :class => 'pagination_form', :id => 'small' %>

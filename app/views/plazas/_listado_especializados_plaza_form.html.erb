@@ -1,0 +1,17 @@
+<% @especializados.each do |especializado| %>
+
+    <% estado_seleccion = existe_en_sesion(:especializados_plaza, especializado.id) %>
+    <div class='form_opcion'>
+        <%= check_box_tag "especializado", especializado.id,  estado_seleccion, 
+                                     :onchange => remote_function( 
+                                     :url => {:action => 'objetos_a_sesion', :id => especializado.id}, 
+                                     :with => "'seleccion='+'#{estado_seleccion}'+'&sesion='+'especializados_plaza'") %> 
+        <% estado_asignacion= especializado.plaza.nil? ? "<i>(Libre)</i>" : "<i>(Asignado)</i>" %>
+        <%= estado_asignacion %> <b><%= especializado.servicio.categoria.nombre %></b>::<%= especializado.servicio.concepto.nombre %> <br/><%= especializado.costo_ %><br/>
+    </div>
+<% end %>
+
+<%= will_paginate @especializados, :renderer => 'RemoteLinkRenderer', 
+                             :remote => {:with => "'partial='+'listado_especializados_plaza_form'",
+                                         :update => 'listado_especializados_plaza_form_contenedor'}, 
+                             :previous_label => ':.', :next_label => '.:', :class => 'pagination_form', :id => 'small' %>

@@ -12,8 +12,16 @@ module ApplicationHelper
   end
   
   def busca_nivel_de(rol)
-    admin=Administracion.first
-    admin.nivel_de(rol)
+    Administracion.nivel_de(rol)
+  end
+  
+  # verifica si objeto está presente en el arreglo almacenado en sesion
+  def existe_en_sesion(sesion, objeto)
+    unless session[sesion].nil?
+      return false if session[sesion].index(objeto).nil?
+      return true
+    end
+    false
   end
   
   def genero_de(palabra_a_prueba, palabra)
@@ -137,15 +145,16 @@ module ApplicationHelper
       # Arreglo con el id de los usuarios relacionados a "objeto"
       u_ids=objeto.ids_of(:usuarios)
       modelo.capitalize.constantize.all.each do |instancia|
-        encargado_en=instancia.responsable_de
-        # Solución acentuada
-        if instancia.responsable_de.eql? 'Administracion'
-          encargado_en="Administración"
-        end
-        estado_seleccion=!u_ids.index(instancia.id).nil?
-
-        unless Administracion.nivel_de(instancia.rol.nombre).eql? "nivel 3"
-          out+="<p class='inlined'><i>#{encargado_en}</i></p><p class='inlined'>#{instancia.login}</p> #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}<br/>"
+        nivel_de_instancia=Administracion.nivel_de(instancia.rol.nombre)
+        
+        if nivel_de_instancia.eql?("nivel 2")
+          estado_seleccion=!u_ids.index(instancia.id).nil?
+          if instancia.responsabilidad.nil?
+            encargado_en="No asignado a plaza aún"
+          else
+            encargado_en="en #{instancia.responsabilidad.nombre}"
+          end
+          out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}  #{instancia.login} <i> (#{encargado_en})</i><br/></div>"
         end
       end
     elsif modelo.eql? "servicio"
@@ -162,7 +171,7 @@ module ApplicationHelper
         estado_seleccion=!p_ids.index(instancia.id).nil?
         # Verifica si éste incorporado ya está asociado a un paquete. 
         estado_asignacion= instancia.paquete.nil? ? "<i>(Libre)</i>" : "<i>(Asignado)</i>"
-        out+="<div class='form_opcion'><b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion}</div>"
+        out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion} <b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/></div>"
       end  
     elsif modelo.eql? "especializado"
       p_ids=objeto.ids_of(:especializados)
@@ -170,14 +179,14 @@ module ApplicationHelper
         estado_seleccion=!p_ids.index(instancia.id).nil?
         # Verifica si éste incorporado ya está asociado a un paquete. 
         estado_asignacion= instancia.plaza.nil? ? "<i>(Libre)</i>" : "<i>(Asignado)</i>"
-        out+="<div class='form_opcion'><b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion}</div>"
+        out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion} <b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/></div>"
       end
     elsif modelo.eql? "paquete"
       # Arreglo con el id de las paquetes relacionados a "objeto"
       p_ids=objeto.ids_of(:paquetes)
       modelo.capitalize.constantize.all.each do |instancia|
         estado_seleccion=!p_ids.index(instancia.id).nil?
-        out+="<div class='form_opcion'><b>#{instancia.nombre}</b><br/> #{instancia.listado_de_servicios_incorporados} #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}</div>"
+        out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} <b>#{instancia.nombre}</b><br/> #{instancia.listado_de_servicios_incorporados}</div>"
       end
     elsif modelo.eql? "categoria"
       c_ids=objeto.ids_of(:categorias)
@@ -185,7 +194,7 @@ module ApplicationHelper
       modelo.capitalize.constantize.all.each do |instancia|
         estado_seleccion=!c_ids.index(instancia.id).nil?
         
-        out+="<p>#{instancia.nombre} #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}</p>"
+        out+="<div class='form_opcion' id='small'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{instancia.nombre} </div>"
       end
     end
     out

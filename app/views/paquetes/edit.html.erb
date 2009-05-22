@@ -6,14 +6,7 @@
 <% form_for(@paquete) do |f| %>
   <%= f.error_messages %>
    
-  <p>
-    <%= label :paquete, :nombre %><br />
-    <%= text_field :paquete, :nombre %>
-  </p>
-  
-  <p>Servicios Incorporables</p>
-  <%= genera_checkboxes_para "incorporado", @paquete %>
-
+  <%= render :partial => 'form_edit_new' %>
 
   <p>
     <%= f.submit 'Guardar' %>

@@ -12,4 +12,8 @@ class Concepto < ActiveRecord::Base
     self.save!
   end
   
+  def self.per_page
+    5
+  end
+  
 end

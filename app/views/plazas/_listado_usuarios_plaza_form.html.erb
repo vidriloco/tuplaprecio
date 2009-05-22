@@ -1,0 +1,26 @@
+<% @usuarios.each do |usuario| %>
+
+    <% nivel_de_usuario=Administracion.nivel_de(usuario.rol.nombre) %>
+
+    <% if nivel_de_usuario.eql?("nivel 2") %>
+        <% estado_seleccion = existe_en_sesion(:usuarios_plaza, usuario.id) %>
+        
+        <% if usuario.responsabilidad.nil? %>
+            <% encargado_en="No asignado a plaza aún" %>
+        <% else %>
+            <% encargado_en="en #{usuario.responsabilidad.nombre}" %>
+        <% end %>
+        <div class='form_opcion'>
+            <%= check_box_tag "usuario", usuario.id,  estado_seleccion, 
+                                         :onchange => remote_function( 
+                                                  :url => {:action => 'objetos_a_sesion', :id => usuario.id}, 
+                                                  :with => "'seleccion='+'#{estado_seleccion}'+'&sesion='+'usuarios_plaza'") %> 
+            <b><%= usuario.login %></b><i> <%= (encargado_en) %></i><br/>
+        </div>
+    <% end %>
+<% end %>
+
+<%= will_paginate @usuarios, :renderer => 'RemoteLinkRenderer', 
+                             :remote => {:with => "'partial='+'listado_usuarios_plaza_form'", 
+                                         :update => 'listado_usuarios_plaza_form_contenedor'}, 
+                             :previous_label => ':.', :next_label => '.:', :class => 'pagination_form', :id => 'small' %>

@@ -1,0 +1,7 @@
+<% if session[:incorporados_paquete].nil? %>
+    <% if instance_variable_defined? "@paquete" %>
+        <% session[:incorporados_paquete] = @paquete.ids_of(:incorporados) %>
+    <% else %>
+        <% session[:incorporados_paquete] = [] %>
+    <% end %>
+<% end %>

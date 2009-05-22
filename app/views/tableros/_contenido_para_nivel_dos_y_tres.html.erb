@@ -42,8 +42,8 @@
                 <div class='tarea-anidada-izquierda-tablero'>
                     <% total = @plaza.paquetes.inject(0) { |n,paquete| n+=paquete.incorporados.count } %>
                     <% cuenta, modelo_cuenta = modelo_info("incorporado", total) %>
-                    <p class='inlined_short' id=<%="cuenta#{tarea.capitalize}"%>><b><%= cuenta %></b></p> 
-                    <p class='inlined' id=<%="sustantivo#{tarea.capitalize}"%>><%= modelo_cuenta %></p>
+                    <p class='inlined_short' id=<%="cuentaIncorporado"%>><b><%= cuenta %></b></p> 
+                    <p class='inlined' id=<%="sustantivoIncorporado"%>><%= modelo_cuenta %></p>
                     <div class='inlined'>
                         <%= button_to "Nuevo", :controller => 'incorporados', :action => 'new' %>
                     </div>

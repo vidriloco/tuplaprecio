@@ -1,0 +1,15 @@
+  <p>
+    <%= label :paquete, :nombre %><br />
+    <%= text_field :paquete, :nombre %>
+  </p>
+  
+  <%= render :partial => 'load_incorporados_in_session' %>
+  
+  <p>Servicios incorporables a Paquete</p>
+  
+  <% @categorias.each do |categoria| %>
+      <%= link_to_remote categoria.nombre, {:url => {:action => :listado_de_servicios, :id => categoria.id}, :update => :listado_incorporados_paquete_form_contenedor, :with => "'paquete='+'#{@paquete.id}'"}, :class => 'categoria_form' %>
+  <% end %>
+
+  <div id='listado_incorporados_paquete_form_contenedor' class='margen_a_doce'></div>
+

@@ -6,7 +6,7 @@ class PaquetesController < ApplicationController
     controller.nivel_logged_in(["nivel 1"])
   end
   
-  before_filter :only => [:new, :create, :edit, :update, :destroy, :separar_objetos] do |controller|
+  before_filter :only => [:new, :create, :edit, :update, :destroy, :separar_objetos, :listado_de_servicios] do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
     # definidas en "only"
     controller.nivel_logged_in(["nivel 1", "nivel 2"])
@@ -43,7 +43,6 @@ class PaquetesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @obj }
     end
   end
 
@@ -51,22 +50,31 @@ class PaquetesController < ApplicationController
   # GET /paquetes/new.xml
   def new
     @paquete = Paquete.new
-
+    @categorias = Categoria.find :all
+    
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @paquete }
+      format.html { session[:incorporados_paquete]=nil }
+      format.js { render :partial => params[:partial] }
     end
   end
 
   # GET /paquetes/1/edit
   def edit
     @paquete = Paquete.find(params[:id])
+    @categorias = Categoria.find :all
+    
+    respond_to do |format|
+      format.html { session[:incorporados_paquete]=nil }
+      format.js { render :partial => params[:partial] }
+    end
   end
 
   # POST /paquetes
   # POST /paquetes.xml
   def create
     @paquete = Paquete.new(params[:paquete])
+    params[:incorporados] = session[:incorporados_paquete]
+    
     @paquete.agrega_desde(params)
 
     respond_to do |format|
@@ -76,7 +84,6 @@ class PaquetesController < ApplicationController
         format.xml  { render :xml => @paquete, :status => :created, :location => @paquete }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @paquete.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -85,16 +92,16 @@ class PaquetesController < ApplicationController
   # PUT /paquetes/1.xml
   def update
     @paquete = Paquete.find(params[:id])
+    params[:incorporados] = session[:incorporados_paquete]
+    
     @paquete.agrega_desde(params, :update)
 
     respond_to do |format|
       if @paquete.update_attributes(params[:paquete])
         flash[:notice] = 'Paquete was successfully updated.'
         format.html { redirect_to(@paquete) }
-        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @paquete.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -107,7 +114,6 @@ class PaquetesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(paquetes_url) }
-      format.xml  { head :ok }
     end
   end
 
@@ -127,4 +133,20 @@ class PaquetesController < ApplicationController
        end
      end
    end
+
+    def listado_de_servicios
+      if params[:paquete].blank?
+        paquete_id= "" 
+      else
+        paquete_id= params[:paquete]
+        @paquete = Paquete.find(paquete_id)
+      end 
+      categoria_id=params[:id]
+      @incorporados = Incorporado.paginate :all, :joins => [:servicio => :categoria], 
+                        :conditions => ["servicios.categoria_id = ? AND (paquete_id IS NULL OR paquete_id = ?)", categoria_id, paquete_id], 
+                        :page => params[:page], :per_page => 3
+      respond_to do |format|
+        format.js { render :partial => 'listado_incorporados_paquete_form' }
+      end
+    end
 end

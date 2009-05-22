@@ -1,0 +1,7 @@
+<% if session[:usuarios_plaza].nil? %>
+    <% if instance_variable_defined? "@plaza" %>
+        <% session[:usuarios_plaza] = @plaza.ids_of(:usuarios) %>
+    <% else %>
+        <% session[:usuarios_plaza] = [] %>
+    <% end %>
+<% end %>

@@ -12,4 +12,7 @@ class Categoria < ActiveRecord::Base
     self.save!
   end
   
+  def self.per_page
+    1
+  end
 end

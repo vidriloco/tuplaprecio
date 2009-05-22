@@ -3,7 +3,7 @@ class Incorporado < ActiveRecord::Base
   belongs_to :paquete
   belongs_to :servicio
   
-  attributes_to_serialize :categoria, :concepto, :detalles_del_servicio, :detalles_en_paquete, :costo_, :vigencia
+  attributes_to_serialize :pertenece_a_paquete, :categoria, :concepto, :detalles_del_servicio, :detalles_en_paquete, :costo_, :vigencia
   remap_names 'Incorporado' => 'Servicio'
   
   validates_presence_of :costo, :message => "no puede ir vacío"
@@ -18,6 +18,11 @@ class Incorporado < ActiveRecord::Base
   def vigencia
     return DURACION_PROMOCION_NIL if self.vigente_hasta.nil? and self.vigente_desde.nil?
     "Vigente desde el #{self.vigente_desde.to_s(:long)} hasta el #{self.vigente_hasta.to_s(:long)}" 
+  end
+  
+  def pertenece_a_paquete
+    return "Aún no asignado a paquete" if self.paquete.nil?
+    return self.paquete.nombre
   end
   
   def detalles_en_paquete

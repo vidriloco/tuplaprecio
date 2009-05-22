@@ -69,6 +69,16 @@ input.boton_justificado {
   background-color: #A9F3A7;
 }
 
+.listing_container p {
+  font-size: 12px;
+  padding:0px;
+  margin:0px;
+}
+
+.listing_container a {
+  color:#D0B504;
+}
+
 .inlined_large {
   display:inline-block;
   width: 230px;
@@ -345,6 +355,23 @@ input.boton_justificado {
 	width: 250px;
 }
 
+.pagination_form {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.pagination_form .current {
+	background-color:#9AB289;
+	padding: 5px;
+	margin: 2px;
+}
+
+.pagination_form a {
+	background-color:#C8E7B2;
+	padding: 5px;
+	margin: 2px;	
+}
+
 /* formularios */
 
 .form_opcion {
@@ -356,4 +383,13 @@ input.boton_justificado {
 	text-align:left;
 	font-size:10px;
 	padding:8px;
+}
+
+.categoria_form {
+	background:#607560;
+	padding: 5px;
+}
+
+.margen_a_doce{
+	margin-top: 12px;
 }

@@ -1,15 +1,21 @@
 class PlazasController < ApplicationController
   
-  before_filter :except => [:edit, :update, :show] do |controller|
+  before_filter :except => [:edit, :update, :show, :reset_form_sessions, :objetos_a_sesion, :listado_de_servicios] do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
     # definidas en "only"
     controller.nivel_logged_in(["nivel 1"])
   end
   
-  before_filter :only => [:edit, :update, :show] do |controller|
+  before_filter :only => [:edit, :update, :show, :reset_form_sessions, :objetos_a_sesion, :listado_de_servicios] do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
     # definidas en "only"
     controller.nivel_logged_in(["nivel 1","nivel 2"])
+  end
+  
+  def reset_form_sessions
+    session[:paquetes_plaza]=nil
+    session[:usuarios_plaza]=nil
+    session[:especializados_plaza]=nil
   end
   
   # GET /plazas
@@ -54,9 +60,16 @@ class PlazasController < ApplicationController
   # GET /plazas/new.xml
   def new
     @plaza = Plaza.new
-
+    @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 1
+    @categorias = Categoria.find :all
+    
+    if admin_logged_in?
+      @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 1
+    end
+    
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { reset_form_sessions }
+      format.js { render :partial => params[:partial] }
    #  format.xml  { render :xml => @plaza }
     end
   end
@@ -64,12 +77,26 @@ class PlazasController < ApplicationController
   # GET /plazas/1/edit
   def edit
     @plaza = Plaza.find(params[:id])
+    @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 1
+    @categorias = Categoria.find :all
+  
+    @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 1
+    
+    respond_to do |format|
+      format.html { reset_form_sessions }
+      format.js { render :partial => params[:partial] }
+   #  format.xml  { render :xml => @plaza }
+    end
   end
 
   # POST /plazas
   # POST /plazas.xml
   def create
     @plaza = Plaza.new(params[:plaza])
+    params[:paquetes]=session[:paquetes_plaza]
+    params[:usuarios]=session[:usuarios_plaza]
+    params[:especializados]=session[:especializados_plaza]
+    
     @plaza.agrega_desde(params)
     
     respond_to do |format|
@@ -88,6 +115,10 @@ class PlazasController < ApplicationController
   # PUT /plazas/1.xml
   def update
     @plaza = Plaza.find(params[:id])
+    params[:paquetes]=session[:paquetes_plaza]
+    params[:usuarios]=session[:usuarios_plaza]
+    params[:especializados]=session[:especializados_plaza]
+    
     @plaza.agrega_desde(params, :update)
     
     respond_to do |format|
@@ -134,4 +165,21 @@ class PlazasController < ApplicationController
       end
     end
   end
+  
+  def listado_de_servicios
+    if params[:plaza].blank?
+      plaza_id= "" 
+    else
+      plaza_id= params[:plaza]
+      @plaza = Plaza.find(plaza_id)
+    end 
+    categoria_id=params[:id]
+    @especializados = Especializado.paginate :all, :joins => [:servicio => :categoria], 
+                      :conditions => ["servicios.categoria_id = ? AND (plaza_id IS NULL OR plaza_id = ?)", categoria_id, plaza_id], 
+                      :page => params[:page], :per_page => 3
+    respond_to do |format|
+      format.js { render :partial => 'listado_especializados_plaza_form' }
+    end
+  end  
+  
 end

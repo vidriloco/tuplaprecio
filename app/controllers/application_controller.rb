@@ -18,6 +18,17 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def objetos_a_sesion
+     sesion_objeto = params[:sesion].to_sym
+     if eval(params[:seleccion])
+       session[sesion_objeto].delete(params[:id].to_i)
+     else
+       if session[sesion_objeto].index(params[:id].to_i).nil?
+         session[sesion_objeto] << params[:id].to_i
+       end
+     end
+     render :nothing => :true
+  end
   
   private 
     before_filter :instantiate_controller_and_action_names
@@ -27,16 +38,9 @@ class ApplicationController < ActionController::Base
       @current_controller = controller_name
     end
     
-    def admin_logged_in
-      unless Usuario.es_tipo(session[:usuario_id], "administracion")
-        redirect_to new_sesion_path
-      end
-    end
-    
-    def only_if_these_are_logged_in()
-      unless Usuario.es_tipo(session[:usuario_id], "plaza") || Usuario.es_tipo(session[:usuario_id], "administracion")
-        redirect_to new_sesion_path
-      end
+    def admin_logged_in?
+      @usuario = Usuario.find(session[:usuario_id])
+      return true if Administracion.nivel_de(@usuario.rol.nombre).eql?("nivel 1")
     end
   
     def recibir_parametros_comunes
