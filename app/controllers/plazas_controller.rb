@@ -60,11 +60,11 @@ class PlazasController < ApplicationController
   # GET /plazas/new.xml
   def new
     @plaza = Plaza.new
-    @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 1
+    @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 3
     @categorias = Categoria.find :all
     
     if admin_logged_in?
-      @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 1
+      @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 5
     end
     
     respond_to do |format|
@@ -77,10 +77,10 @@ class PlazasController < ApplicationController
   # GET /plazas/1/edit
   def edit
     @plaza = Plaza.find(params[:id])
-    @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 1
+    @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 3
     @categorias = Categoria.find :all
   
-    @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 1
+    @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 5
     
     respond_to do |format|
       format.html { reset_form_sessions }

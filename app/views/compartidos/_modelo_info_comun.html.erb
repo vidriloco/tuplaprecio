@@ -29,6 +29,7 @@
 <% hash.each_key do |key| %>
     <div class='attributes_of_related'>
         <h4><%= cardinaliza key, hash %></h4>
+        <br/>
         <% hash[key].each_key do |inner_key| %>
             <%= "<div id='#{inner_key}'>" %>
                 <%= excepcion_para_servicios_en_este_nivel inner_key %>
@@ -36,6 +37,7 @@
                 <% if logged_in_on?(["nivel 1", "nivel 2"])%>
                     <%= link_eliminar_registro_relacionado inner_key, obj %>
                 <% end %>
+                <br/>
             </div>
         <% end %>
        

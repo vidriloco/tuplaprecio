@@ -4,6 +4,8 @@ class Estado < ActiveRecord::Base
   attributes_to_serialize :nombre, :associated => [:plazas]
   validates_presence_of :nombre, :message => "no puede ser vacío"
   
+  acts_as_fulltextable :nombre
+  
   has_many :plazas
   
   def agrega_nueva_plaza(plaza)

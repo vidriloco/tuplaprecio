@@ -11,7 +11,8 @@ class Servicio < ActiveRecord::Base
   validates_presence_of :concepto, :unless => "concepto_id.eql? 'Selecciona una categoría'", :message => "debe ir asociado con la categoría"
   
   attributes_to_serialize :detalles_, :associated => [:concepto, :categoria]
-    
+  
+  acts_as_fulltextable :detalles  
     
   def pon_concepto(concepto)
     self.concepto = concepto
@@ -44,6 +45,10 @@ class Servicio < ActiveRecord::Base
   def detalles_
     return "" if self.detalles.nil?
     return self.detalles
+  end
+  
+  def to_s
+    ["Servicio :", "#{detalles_}"]
   end
   
 end

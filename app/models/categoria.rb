@@ -5,6 +5,8 @@ class Categoria < ActiveRecord::Base
   has_and_belongs_to_many :conceptos
   validates_presence_of :nombre, :message => "no puede ser vacío"
   
+  acts_as_fulltextable :nombre
+  
   attributes_to_serialize :nombre, :associated => [:conceptos]
   
   def agrega_nuevo_concepto(concepto)

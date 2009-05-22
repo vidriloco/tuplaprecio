@@ -11,6 +11,8 @@ class Usuario < ActiveRecord::Base
 
   attributes_to_serialize :nombre, :login, :email, :responsable_de, :associated => [:responsabilidad, :rol]
 
+  acts_as_fulltextable :nombre, :email, :login
+
 
   validates_presence_of     :login,   :message => "no puede estar vacío"
   validates_length_of       :login,    :within => 4 ..40, :message => "es muy corto (mínimo 4 caracteres)"

@@ -9,7 +9,6 @@
             <% hash = obj.to_hashed_html(1) %>
             <div id=<%= "#{obj.class}#{obj.id}"%>>
                 <%= render :partial => 'compartidos/modelo_info_comun',:locals => {:hash => hash, :obj => obj} %>
-                
                 <% if logged_in_on?(["nivel 1", "nivel 2"])%>
                     <%= render :partial => 'compartidos/controles_listado', :locals => {:obj => obj}%>
                 <% end %>
@@ -22,4 +21,7 @@
     <% end %>
 </div>
 
-<%= will_paginate obj_desp, :renderer => 'RemoteLinkRenderer', :params => {:tipo => tipo, :div => div_act}, :previous_label => "Anterior", :next_label => "Siguiente" %>
+<% if es_paginable?(obj_desp) %>
+    <%= will_paginate obj_desp, :renderer => 'RemoteLinkRenderer', :params => {:tipo => tipo, :div => div_act}, 
+                                :previous_label => "Anterior", :next_label => "Siguiente" %>
+<% end %>

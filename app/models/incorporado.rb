@@ -6,6 +6,8 @@ class Incorporado < ActiveRecord::Base
   attributes_to_serialize :pertenece_a_paquete, :categoria, :concepto, :detalles_del_servicio, :detalles_en_paquete, :costo_, :vigencia
   remap_names 'Incorporado' => 'Servicio'
   
+  acts_as_fulltextable :detalles
+  
   validates_presence_of :costo, :message => "no puede ir vacío"
   validates_numericality_of :costo, :message => "debe ser un valor numérico"
   
@@ -42,5 +44,9 @@ class Incorporado < ActiveRecord::Base
   # Devuelve los detalles referentes al servicio independientemente al paquete
   def detalles_del_servicio
     self.servicio.detalles
+  end
+  
+  def to_s
+    ["Servicio (en paquete) :", "#{detalles_en_paquete}"]
   end
 end

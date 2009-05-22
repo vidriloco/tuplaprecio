@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'usuarios', :action => 'new'
   map.tablero_principal '/principal', :controller => 'tableros', :action => 'index'
   
+  map.busqueda_inicial '/busqueda', :controller => 'busquedas', :action => 'inicial'
   
   #map.connect '/:controller/:action/:tipo', :controller=>"generalizados", :action=>"new"
   #map.connect '/:controller/:tipo/(.:format)', :controller=>"generalizados", :action=>"create"
@@ -18,6 +19,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :sesion
 
   map.resources :administraciones, :collection => { :ver => :get }
+  
+  map.resources :busquedas
 
   map.resources :conceptos
 
