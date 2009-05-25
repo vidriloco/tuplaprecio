@@ -17,4 +17,8 @@ class Categoria < ActiveRecord::Base
   def self.per_page
     1
   end
+  
+  def expose
+    ["Categoría :", "#{nombre}"]
+  end
 end

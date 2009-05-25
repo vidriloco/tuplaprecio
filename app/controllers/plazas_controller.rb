@@ -105,6 +105,11 @@ class PlazasController < ApplicationController
         format.html { redirect_to(@plaza) }
         format.xml  { render :xml => @plaza, :status => :created, :location => @plaza }
       else
+        @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 3
+        if admin_logged_in?
+          @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 5
+        end
+        @categorias = Categoria.find :all
         format.html { render :action => "new" }
         format.xml  { render :xml => @plaza.errors, :status => :unprocessable_entity }
       end
@@ -127,6 +132,11 @@ class PlazasController < ApplicationController
         format.html { redirect_to(@plaza) }
         format.xml  { head :ok }
       else
+        @paquetes = Paquete.paginate :all, :page => params[:page], :per_page => 3
+        if admin_logged_in?
+          @usuarios = Usuario.paginate :all, :page => params[:page], :per_page => 5
+        end
+        @categorias = Categoria.find :all
         format.html { render :action => "edit" }
         format.xml  { render :xml => @plaza.errors, :status => :unprocessable_entity }
       end

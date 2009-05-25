@@ -1,0 +1,21 @@
+
+<div id='barra_de_busqueda' class='inlined'>
+
+<% form_remote_tag :url => {:controller =>:busquedas, :action => :inicial}, 
+                            :update => 'area_de_resultados',
+                            :complete => visual_effect(:appear, 'area_de_resultados') do -%>
+    <div class='inlined'><b>Búsqueda: </b></div>
+    <%= text_field_tag 'query', '', :class => 'inlined', :size => 22 %>
+    <div class='inlined'><%= submit_tag 'Buscar' %></div>
+<% end -%>
+
+</div>
+<div id='area_de_resultados'></div>
+
+<div id='detallados_contenedor'></div>
+
+<%= render :partial => 'lista_de_estados', :object => @estados %>
+
+<div id='contenedor_cambiante'></div>
+
+

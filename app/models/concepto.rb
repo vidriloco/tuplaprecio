@@ -18,4 +18,8 @@ class Concepto < ActiveRecord::Base
     5
   end
   
+  def expose
+    ["Concepto :", "#{nombre}"]
+  end
+  
 end

@@ -83,6 +83,7 @@ class PaquetesController < ApplicationController
         format.html { redirect_to(@paquete) }
         format.xml  { render :xml => @paquete, :status => :created, :location => @paquete }
       else
+        @categorias = Categoria.find :all
         format.html { render :action => "new" }
       end
     end
@@ -101,6 +102,7 @@ class PaquetesController < ApplicationController
         flash[:notice] = 'Paquete was successfully updated.'
         format.html { redirect_to(@paquete) }
       else
+        @categorias = Categoria.find :all
         format.html { render :action => "edit" }
       end
     end

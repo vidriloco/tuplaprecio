@@ -81,12 +81,41 @@ class AddTestModels < ActiveRecord::Migration
      servicio7.pon_categoria categoria3
      servicio7.save!
      
+     servicio8 = Servicio.create(:detalles => "Registro nuevo")
+     servicio8.pon_concepto concepto_internet2
+     servicio8.pon_categoria categoria1
+     servicio8.save!
+     
+     servicio9 = Servicio.create(:detalles => "Registro nuevo activo")
+     servicio9.pon_concepto concepto_internet1
+     servicio9.pon_categoria categoria1
+     servicio9.save!
+     
+     servicio10 = Servicio.create(:detalles => "Registro nuevo")
+     servicio10.pon_concepto concepto_internet2
+     servicio10.pon_categoria categoria2
+     servicio10.save!
+     
+     servicio11 = Servicio.create(:detalles => "Registro nuevo activo")
+     servicio11.pon_concepto concepto_internet1
+     servicio11.pon_categoria categoria2
+     servicio11.save!
+     
      especializado1 = Especializado.create(:activo => true, :costo => 120)
      especializado1.servicio = servicio2
      especializado2 = Especializado.create(:activo => true, :costo => 80)
      especializado2.servicio = servicio3
      especializado3 = Especializado.create(:activo => true, :costo => 160)
      especializado3.servicio = servicio4
+     
+     especializado4 = Especializado.create(:activo => true, :costo => 20)
+     especializado4.servicio = servicio8
+     especializado5 = Especializado.create(:activo => true, :costo => 15)
+     especializado5.servicio = servicio9
+     especializado6 = Especializado.create(:activo => true, :costo => 19)
+     especializado6.servicio = servicio10
+     especializado7 = Especializado.create(:activo => true, :costo => 25)
+     especializado7.servicio = servicio11
      
      incorporado1 = Incorporado.create(:costo => 100, :detalles => "")
      incorporado1.servicio = servicio1
@@ -125,10 +154,11 @@ class AddTestModels < ActiveRecord::Migration
      plaza2.agrega_nuevo_especializado especializado1
      plaza1.agrega_nuevo_especializado especializado2
      plaza1.agrega_nuevo_especializado especializado3
+     plaza1.agrega_nuevo_especializado especializado4
+     plaza1.agrega_nuevo_especializado especializado5
+     plaza2.agrega_nuevo_especializado especializado6
+     plaza2.agrega_nuevo_especializado especializado7
      
-     especializado1.plaza = plaza1
-     especializado2.plaza = plaza2
-     especializado3.plaza = plaza1
      
      estado1.agrega_nueva_plaza plaza1
      estado1.agrega_nueva_plaza plaza2

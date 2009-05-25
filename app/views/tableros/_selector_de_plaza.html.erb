@@ -1,0 +1,8 @@
+<% unless instance_variable_defined?("@plazas") %>
+    <i>Selecciona un estado</i>
+<% else %>
+    <%= collection_select(:plaza, :id, @plazas, :id, :nombre,{:prompt => ""}, :onchange => remote_function(
+                            :update => 'contenedor_cambiante',
+                            :url => { :action => :plaza_seleccionada}, 
+                                      :with => "'plaza_id='+this.options[this.selectedIndex].value")) %>
+<% end %>

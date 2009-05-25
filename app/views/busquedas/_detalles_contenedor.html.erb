@@ -1,0 +1,5 @@
+<div class='cerrar' onclick="<%= remote_function(:url => {:action => :esconde_div}, 
+                                              :with=> "'div_id='+'detallados_contenedor'")%>">
+x
+</div>
+<%= render :partial => 'compartidos/verModelo', :locals => {:obj_desp => obj_desp, :tipo => tipo, :div_act => div_act} %>

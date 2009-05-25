@@ -1,6 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
+  # Método cuyo primer valor de vuelta es la cuenta actual de instancias de *modelo, y
+  # el segundo, el valor pluralizado o no dependiendo del número cuenta
   def modelo_info(modelo, numero=nil)
     cuenta = numero.nil? ? modelo.capitalize.constantize.count : numero
     if cuenta == 1
@@ -11,6 +13,7 @@ module ApplicationHelper
     return cuenta, out
   end
   
+  # Método auxiliar para determinar el nivel de un *rol
   def busca_nivel_de(rol)
     Administracion.nivel_de(rol)
   end
@@ -24,6 +27,7 @@ module ApplicationHelper
     false
   end
   
+  # Devuelve *palabra en un estado modificado según el genero de *palabra_a_prueba
   def genero_de(palabra_a_prueba, palabra)
     nuevo = palabra
 
@@ -34,11 +38,14 @@ module ApplicationHelper
     nuevo
   end
   
+  # Devuelve la salida (en HTML) para la barra de navegación superior izquierda
   def logged_in_as
     return "<p><b>No logeado</b>" if session[:usuario_id].nil?
     "<p>#{Usuario.salida_usuario(session[:usuario_id])} | #{link_to 'Cerrar Sesión', :controller => :sesiones, :action => :destroy}</p></p>"
   end
   
+  # Método auxiliar que genera un diccionario con pares de valores. Utilizado para generar opciones para los select forms.
+  # Ejemplo: {1 => pepito, 2 => floripondia}
   def lista_hash_objetos_de_modelo(modelo)
     hash= Hash.new
     return hash if modelo.capitalize.constantize.count == 0
@@ -54,6 +61,8 @@ module ApplicationHelper
     hash
   end
   
+  # Actua de manera similar al método auxiliar anterior, sólo que en vez de obtener la colección de objetos 
+  # desde el modelo en sí (invocando *modelo.all) toma la colección de *collection
   def lista_hash_objetos(collection)
     hash= Hash.new
     return hash if collection.length == 0
@@ -78,6 +87,8 @@ module ApplicationHelper
     salida
   end
   
+  # Busca *cadena en *hash como una llave y si *hash[cadena] es un conjunto, entonces 
+  # *cadena es pluralizada y se devuelve dicha modificación
   def cardinaliza(cadena, hash)
     if hash[cadena].keys.length > 1
       cadena.pluralize
@@ -89,26 +100,7 @@ module ApplicationHelper
   # FINAL
   
   def genera_atributos_faltantes_forma_para(objeto, f={})
-     if objeto.instance_of? Plaza
-         out1, out2 = String.new, String.new
-       if logged_in_on?("nivel 1")
-         out1="<p>
-           #{f.label :estado} <br />
-           #{f.select :estado_id, lista_hash_objetos_de_modelo("estado")}
-         </p>"
-         out2="<p>Usuarios</p>
-         #{ genera_checkboxes_para("usuario", objeto) }"
-       end
-        
-        para_todos="<p>Paquetes</p>
-        #{ genera_checkboxes_para("paquete", objeto) }
-        
-        <p>Servicios asignables a Plaza</p>
-        #{ genera_checkboxes_para("especializado", objeto) }
-        "
-      
-        return out1+para_todos+out2
-     elsif objeto.instance_of? Servicio
+     if objeto.instance_of? Servicio
        
        "#{f.label :categoría} <br />
          <p>
@@ -141,54 +133,7 @@ module ApplicationHelper
   def genera_checkboxes_para(modelo, objeto=nil)
     # Cadena de salida
     out = String.new
-    if modelo.eql? "usuario"
-      # Arreglo con el id de los usuarios relacionados a "objeto"
-      u_ids=objeto.ids_of(:usuarios)
-      modelo.capitalize.constantize.all.each do |instancia|
-        nivel_de_instancia=Administracion.nivel_de(instancia.rol.nombre)
-        
-        if nivel_de_instancia.eql?("nivel 2")
-          estado_seleccion=!u_ids.index(instancia.id).nil?
-          if instancia.responsabilidad.nil?
-            encargado_en="No asignado a plaza aún"
-          else
-            encargado_en="en #{instancia.responsabilidad.nombre}"
-          end
-          out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}  #{instancia.login} <i> (#{encargado_en})</i><br/></div>"
-        end
-      end
-    elsif modelo.eql? "servicio"
-      p_ids=objeto.ids_of(:servicios)
-      modelo.capitalize.constantize.all.each do |instancia|
-        unless instancia.categoria.nil?
-          estado_seleccion=!p_ids.index(instancia.id).nil?
-          out+="<p>#{instancia.concepto.nombre} <b>#{instancia.categoria.nombre}</b> #{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion}</p>"
-        end
-      end
-    elsif modelo.eql? "incorporado"
-      p_ids=objeto.ids_of(:incorporados)
-      modelo.capitalize.constantize.all.each do |instancia|
-        estado_seleccion=!p_ids.index(instancia.id).nil?
-        # Verifica si éste incorporado ya está asociado a un paquete. 
-        estado_asignacion= instancia.paquete.nil? ? "<i>(Libre)</i>" : "<i>(Asignado)</i>"
-        out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion} <b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/></div>"
-      end  
-    elsif modelo.eql? "especializado"
-      p_ids=objeto.ids_of(:especializados)
-      modelo.capitalize.constantize.all.each do |instancia|
-        estado_seleccion=!p_ids.index(instancia.id).nil?
-        # Verifica si éste incorporado ya está asociado a un paquete. 
-        estado_asignacion= instancia.plaza.nil? ? "<i>(Libre)</i>" : "<i>(Asignado)</i>"
-        out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{estado_asignacion} <b>#{instancia.servicio.categoria.nombre}</b>::#{instancia.servicio.concepto.nombre} <br/>#{instancia.costo_} <br/></div>"
-      end
-    elsif modelo.eql? "paquete"
-      # Arreglo con el id de las paquetes relacionados a "objeto"
-      p_ids=objeto.ids_of(:paquetes)
-      modelo.capitalize.constantize.all.each do |instancia|
-        estado_seleccion=!p_ids.index(instancia.id).nil?
-        out+="<div class='form_opcion'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} <b>#{instancia.nombre}</b><br/> #{instancia.listado_de_servicios_incorporados}</div>"
-      end
-    elsif modelo.eql? "categoria"
+    if modelo.eql? "categoria"
       c_ids=objeto.ids_of(:categorias)
       
       modelo.capitalize.constantize.all.each do |instancia|
@@ -199,18 +144,7 @@ module ApplicationHelper
     end
     out
   end
-  
-  def genera_roundboxes_para(modelo)
-    out = String.new
-    if modelo.eql? "servicio"
-      modelo.capitalize.constantize.all.each do |instancia|
-        unless instancia.categoria.nil?
-          out+="<p>#{instancia.concepto.nombre} <b>#{instancia.categoria.nombre}</b> #{ radio_button_tag "#{modelo.pluralize}[]", instancia.id, false}</p>"
-        end
-      end
-    end
-    out
-  end
+
   
   # Verifica el nivel del usuario que está actualmente logeado
   def logged_in_on?(args)
@@ -230,6 +164,7 @@ module ApplicationHelper
     true
   end
   
+  # Método auxiliar que excluye a objetos que no son paginables.
   def es_paginable?(objeto)
     return objeto.instance_of? WillPaginate::Collection
   end

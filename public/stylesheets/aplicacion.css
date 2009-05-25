@@ -167,20 +167,102 @@ input.boton_justificado {
   right:50px;
 }
 
-#plaza_area_contenedor {
+#contenedor_cambiante {
   position:relative;
   margin-top:30px;
+  width: 980px;
 }
 
-#listado_de_plazas_contenedor {
+#detallados_contenedor {
+  position:relative;
+  margin-top:30px;
+  width: 980px;
+}
+
+#listado_de_estados_contenedor {
   background-color:#DAED79;
-  padding: 12px;
-  width: 960px;
+  padding: 10px;
+  width: 630px;
+  position:absolute;
+  top:0;
+  right:18px;
 }
 
-#plaza_en_lista {
+#estado_en_lista {
   padding-right: 10px;	
   padding-left: 10px;
+}
+
+#titulo_en_contenedor {
+  background-color:#CBDD7E;	
+  padding: 5px;
+  margin-right: 5px;
+}
+
+#lista_de_servicios_categoria {
+  background-color: #BBDA72;
+  margin-top: 3px;
+  padding: 10px;	
+}
+
+.incorporado {
+  background-color:#8CCE6E;
+  padding: 4px;	
+  margin:2px;
+  width: 850px;
+  display:inline-block;
+}
+
+.plaza_titulos_formato {
+  background-color:#93B3F6;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  padding: 3px;
+  width:80px;
+  text-align: center;
+}
+
+#paquetes_contenedor {
+  background-color: #FFDE9C;
+  margin-top: 3px;
+  padding: 10px;
+}
+
+.paquete {
+  border: solid #F3CE77 1px;
+  padding: 4px;
+  margin:2px;
+  width: 850px;
+  display:inline-block;
+}
+
+.cerrar {
+  font-weight: 900;
+  font-size: 20px;
+  position: absolute;
+  right: 40px;
+
+}
+
+
+/* estilos para listado de categorias y servicios de plaza*/
+
+.categoria_nombre {
+  padding: 15px;
+  width: 100px;
+  background-color:#7c9599;	
+}
+
+#plaza_info {
+  background-color:#D5D1EE;
+  width: 250px;
+  padding:10px;	
+  margin-bottom: 10px;
+}
+
+#plaza_info h3 {
+  padding-top: 4px;
+  color:#888598;	
 }
 
 /* estilos generales en la aplicación */
@@ -243,6 +325,10 @@ input.boton_justificado {
 
 #tiny {
 	width: 50px;
+}
+
+#smaller {
+	width: 100px;
 }
 
 #small {

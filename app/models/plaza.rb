@@ -51,6 +51,9 @@ class Plaza < ActiveRecord::Base
     self.usuarios
   end
   
+  def expose
+    ["Plaza :", "#{nombre}"]
+  end
   
   #def en
   #   "" if self.estado.nil?

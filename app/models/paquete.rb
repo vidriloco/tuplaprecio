@@ -61,4 +61,8 @@ class Paquete < ActiveRecord::Base
     end
     out
   end
+  
+  def expose
+    ["Paquete :", "#{nombre}"]
+  end
 end

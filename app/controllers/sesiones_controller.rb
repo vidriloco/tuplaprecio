@@ -21,8 +21,10 @@ class SesionesController < ApplicationController
       nivel_usuario=Administracion.nivel_de(usuario.rol.nombre)
       if nivel_usuario.eql? "nivel 1"
           redirect_to administraciones_path
-      elsif nivel_usuario.eql?("nivel 2") || nivel_usuario.eql?("nivel 3")
-          redirect_to tablero_principal_path
+      elsif nivel_usuario.eql?("nivel 2") 
+          redirect_to tablero_nivel_dos_path
+      elsif nivel_usuario.eql?("nivel 3")
+          redirect_to tablero_nivel_tres_path
       else
           render :action => 'new'
       end

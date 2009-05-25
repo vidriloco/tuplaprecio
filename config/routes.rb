@@ -5,7 +5,9 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sesiones', :action => 'new'
   map.register '/register', :controller => 'usuarios', :action => 'create'
   map.signup '/signup', :controller => 'usuarios', :action => 'new'
-  map.tablero_principal '/principal', :controller => 'tableros', :action => 'index'
+  map.tablero_nivel_tres '/principal_tres', :controller => 'tableros', :action => 'index_nivel_tres'
+  map.tablero_nivel_dos '/principal_dos', :controller => 'tableros', :action => 'index_nivel_dos'
+
   
   map.busqueda_inicial '/busqueda', :controller => 'busquedas', :action => 'inicial'
   

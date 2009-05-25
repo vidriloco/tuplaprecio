@@ -3,6 +3,7 @@ class Especializado < ActiveRecord::Base
   belongs_to :servicio
   belongs_to :plaza
   
+  # Métodos ( y atributos ) que se imprimirán cada vez que se invoque el método *to_hashed_html heredado de Compartido
   attributes_to_serialize :categoria, :concepto, :detalles_del_servicio, :activo_, :costo_
   remap_names 'Especializado' => 'Servicio'
   
@@ -26,6 +27,7 @@ class Especializado < ActiveRecord::Base
     self.servicio.detalles
   end
   
+  # Método que devuelve el estado de actividad del servicio en un formato leíble
   def activo_
     if self.activo
       return "Sí"
@@ -34,9 +36,14 @@ class Especializado < ActiveRecord::Base
     end
   end
   
+  # Método que devuelve el costo del servicio en un formato leíble
   def costo_
     return "$ #{self.costo} pesos"
   end
   
+  # Método que expone el atributo :detalles de éste modelo juntamente con el nombre del modelo
+  def expose
+    ["Servicio (asignado a plaza) :", "#{detalles_del_servicio}"]
+  end
   
 end

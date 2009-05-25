@@ -19,7 +19,7 @@ class Incorporado < ActiveRecord::Base
   
   def vigencia
     return DURACION_PROMOCION_NIL if self.vigente_hasta.nil? and self.vigente_desde.nil?
-    "Vigente desde el #{self.vigente_desde.to_s(:long)} hasta el #{self.vigente_hasta.to_s(:long)}" 
+    "Vigente desde: <b>#{self.vigente_desde.to_s(:long)}</b> hasta: <b>#{self.vigente_hasta.to_s(:long)}</b>" 
   end
   
   def pertenece_a_paquete
@@ -46,7 +46,7 @@ class Incorporado < ActiveRecord::Base
     self.servicio.detalles
   end
   
-  def to_s
+  def expose
     ["Servicio (en paquete) :", "#{detalles_en_paquete}"]
   end
 end

@@ -30,6 +30,18 @@ class ApplicationController < ActionController::Base
      render :nothing => :true
   end
   
+  # Responde aplicando toggle al div que llega en params[:div_id]
+  def esconde_div
+    div=params[:div_id]
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.toggle(div)
+        end
+      end
+    end
+  end
+  
   private 
     before_filter :instantiate_controller_and_action_names
     

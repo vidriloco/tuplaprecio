@@ -8,9 +8,10 @@
 
 
 <% if logged_in_on?("nivel 1") %>
+    <p>
     <%= f.label :estado %> <br />
     <%= f.select :estado_id, lista_hash_objetos_de_modelo("estado") %>
-    
+    </p>
     <p>Usuarios</p>
     <div id='listado_usuarios_plaza_form_contenedor'>
         <%= render :partial => 'listado_usuarios_plaza_form' %>

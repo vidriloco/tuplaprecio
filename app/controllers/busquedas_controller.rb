@@ -17,9 +17,10 @@ class BusquedasController < ApplicationController
     obj_desp=tipo.constantize.find(objeto_id)
     
     render :update do |page|
-      page.replace_html 'plaza_area_contenedor', :partial => 'compartidos/verModelo', 
+      page.replace_html 'detallados_contenedor', :partial => 'detalles_contenedor', 
                                                  :locals => {:obj_desp => [obj_desp], :tipo => tipo,
-                                                 :div_act => 'plaza_area_contenedor'}
+                                                 :div_act => 'detallados_contenedor'}
+      page.visual_effect :appear, 'detallados_contenedor'
     end
   end
 end

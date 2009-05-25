@@ -12,3 +12,15 @@
 <p>
   <%= f.text_area :detalles, :cols => 50, :rows => 5 %>
 </p>
+
+    <br/>
+  <%= f.label :vigente_desde %><br />
+<p>
+  <%= date_select "incorporado", "vigente_desde", :include_blank => true, :start_year => Date.today.years_ago(1).year %>
+</p>
+
+    <br/>
+  <%= f.label :vigente_hasta %><br />
+<p>
+  <%= date_select "incorporado", "vigente_hasta", :include_blank => true, :start_year => Date.today.years_ago(1).year %>
+</p>

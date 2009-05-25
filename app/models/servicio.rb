@@ -47,7 +47,7 @@ class Servicio < ActiveRecord::Base
     return self.detalles
   end
   
-  def to_s
+  def expose
     ["Servicio :", "#{detalles_}"]
   end
   

@@ -1,11 +1,13 @@
 <%= javascript_tag("Nifty('#contenedor_de_resultados');Nifty('.resultado');") -%>
 <div id='contenedor_de_resultados'>
+    <div class='cerrar' onclick="<%= remote_function(:url => {:action => :esconde_div}, 
+                                                             :with=> "'div_id='+'area_de_resultados'")%>">x</div>
     Encontrados <b><%=h @resultados.total_entries %> resultados</b> que contienen: <%=h @cosa_a_buscar %>
     
     <div id='resultados'>
         <% @resultados.each do |resultado| %>
             <div class='resultado'>
-                <% datos= resultado.to_s %>
+                <% datos= resultado.expose %>
                 <b>> <%=h datos[0] %> </b> <%=h datos[1] %>   
                 <div class='boton_derecha'>
                     <%= button_to_remote "Más Detalle", :url=> {:action => :detalle, :id => resultado.id},

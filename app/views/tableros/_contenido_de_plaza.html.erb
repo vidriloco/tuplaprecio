@@ -1,0 +1,50 @@
+<%= javascript_tag "Nifty('#primero_tabla_head', 'tl bl'); 
+                    Nifty('#ultimo_tabla_head', 'tr br'); 
+                    Nifty('#plaza_info');
+                    Nifty('#servicios');
+                    Nifty('#paquetes');
+                    Nifty('#paquetes_contenedor')" %>
+
+<div id='plaza_info'>
+    <h2><%=h @plaza.nombre %></h2><h3><%=h @plaza.estado.nombre %></h3>
+</div>
+
+<div class='plaza_titulos_formato' id='servicios'><h4>Servicios</h4></div>
+
+<table class='servicios_categorias'>
+<tr>
+<% ultimo = @categorias.length-1 %>
+<% @categorias.each_with_index do |categoria,indx| %>
+    <% if indx == 0 %>
+        <th class='categoria_nombre' id='primero_tabla_head'>
+    <% elsif indx == ultimo %>
+        <th class='categoria_nombre' id='ultimo_tabla_head'>
+    <% else %>
+        <th class='categoria_nombre'>
+    <% end %>
+    <b>
+       <%= link_to_remote "#{categoria.nombre}", :update => 'contenedor_lista_servicios_categoria', 
+                                                 :url => {:action => 'despliega_servicios_de_categoria'}, 
+                                                 :with => "'categoria_id='+'#{categoria.id}'+'&plaza_id='+'#{@plaza.id}'" %>
+    </b>
+    </th>
+<% end %>
+</tr>
+</table>
+<div id='contenedor_lista_servicios_categoria'></div>
+
+
+<% if @paquetes.size > 0%>
+<div class='plaza_titulos_formato' id='paquetes'><h4>Paquetes</h4></div>
+
+<div id='paquetes_contenedor'>
+
+<% @paquetes.each do |paquete| %>
+    <div class='paquete'>
+        <%= paquete.nombre %>
+    </div>
+    <%= button_to_remote "Más Detalle", :url=> {:controller => :busquedas, :action => :detalle, :id => paquete.id},
+                                        :with => "'tipo='+'Paquete'" %>
+<% end %>
+</div>
+<% end %>
