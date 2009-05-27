@@ -1,3 +1,4 @@
-mislav-will_paginate
-thoughtbot-factory_girl
-cucumber 
+mislav-will_paginate --source http://gems.github.com
+thoughtbot-factory_girl --source http://gems.github.com
+cucumber --source http://gems.github.com
+
