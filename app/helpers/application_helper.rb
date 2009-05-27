@@ -166,6 +166,6 @@ module ApplicationHelper
   
   # Método auxiliar que excluye a objetos que no son paginables.
   def es_paginable?(objeto)
-    return objeto.instance_of? WillPaginate::Collection
+    return objeto.instance_of?(WillPaginate::Collection)
   end
 end

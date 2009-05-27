@@ -35,7 +35,7 @@ class ServiciosController < ApplicationController
       @servicios = Servicio.paginate :all, :joins => "#{tipo.downcase.pluralize}".to_sym, :conditions => {"#{tipo.downcase.pluralize}".to_sym => {:id => params[:id]}}, :page => params[:page]
     end
     respond_to do |format|
-      format.html { render 'index.html.erb', :layout => 'application_layout' }
+      format.html { render 'index.html.erb' }
     end
   end
   

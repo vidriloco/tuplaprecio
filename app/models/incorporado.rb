@@ -19,7 +19,7 @@ class Incorporado < ActiveRecord::Base
   
   def vigencia
     return DURACION_PROMOCION_NIL if self.vigente_hasta.nil? and self.vigente_desde.nil?
-    "Vigente desde: <b>#{self.vigente_desde.to_s(:long)}</b> hasta: <b>#{self.vigente_hasta.to_s(:long)}</b>" 
+    "Vigente desde: <b>#{self.vigente_desde.to_s}</b> hasta: <b>#{self.vigente_hasta.to_s}</b>" 
   end
   
   def pertenece_a_paquete

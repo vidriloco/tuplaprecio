@@ -26,7 +26,7 @@ class CategoriasController < ApplicationController
         @categorias = Categoria.paginate :all, :joins => :servicios, :conditions => {:servicios => {:id => params[:id]}}, :page => params[:page]
     end
     respond_to do |format|
-      format.html { render 'index.html.erb', :layout => 'application_layout' }
+      format.html { render 'index.html.erb' }
     end
   end
 

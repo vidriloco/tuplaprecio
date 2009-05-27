@@ -11,8 +11,7 @@ development:
 test:
   adapter: mysql
   database: tuplaprecio_test
-  username: tuplaprecio_user
-  password: none
+  username: root
 
 production:
   adapter: mysql

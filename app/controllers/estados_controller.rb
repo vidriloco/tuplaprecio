@@ -22,7 +22,7 @@ class EstadosController < ApplicationController
     instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
     @estados = [instance_variable_get("@#{tipo.downcase}").estado]
     respond_to do |format|
-      format.html { render 'index.html.erb', :layout => 'application_layout' }
+      format.html { render 'index.html.erb' }
     end
   end
 

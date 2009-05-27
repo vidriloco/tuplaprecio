@@ -26,7 +26,7 @@ class ConceptosController < ApplicationController
       @conceptos = Concepto.paginate :all, :joins => :categorias, :conditions => {:categorias_conceptos => {:categoria_id => params[:id]}}, :page => params[:page]
     end
     respond_to do |format|
-      format.html { render 'index.html.erb', :layout => 'application_layout' }
+      format.html { render 'index.html.erb' }
     end
   end
 

@@ -12,6 +12,6 @@
 <% end %>
 
 <%= will_paginate @especializados, :renderer => 'RemoteLinkRenderer', 
-                             :remote => {:with => "'partial='+'listado_especializados_plaza_form'",
+                             :remote => {:with => "'partial='+'listado_especializados_plaza_form'+'&plaza='+'#{@plaza.id}'+",
                                          :update => 'listado_especializados_plaza_form_contenedor'}, 
                              :previous_label => ':.', :next_label => '.:', :class => 'pagination_form', :id => 'small' %>

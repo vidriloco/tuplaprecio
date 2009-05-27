@@ -23,7 +23,7 @@ class UsuariosController < ApplicationController
     @usuarios = eval("Usuario.paginate_by_#{tipo.downcase}_id @#{tipo.downcase}.id, :page => params[:page]")
 
     respond_to do |format|
-      format.html { render 'index.html.erb', :layout => 'application_layout' }
+      format.html { render 'index.html.erb' }
     end
   end
  

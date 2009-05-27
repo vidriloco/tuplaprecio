@@ -54,22 +54,14 @@ class Usuario < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
   
-  def self.es_tipo(usuario_id, tipo)
-    return false if usuario_id.nil?
-    usuario=Usuario.find(usuario_id)
-    usuario.responsabilidad.instance_of? tipo.capitalize.constantize
-  end
-  
-  def self.solo_registros_de(alguna_clase)
-    find(:all, :conditions => "responsabilidad_type = '#{alguna_clase.to_s.capitalize}'")
-  end
-  
+  # Método que devuelve el login de un usuario de manera estilizada en html <b> 
   def self.salida_usuario(usuario_id)
     return false if usuario_id.nil?
     usuario= Usuario.find(usuario_id)
     "<b>#{usuario.login}</b>"
   end
   
+  # Devuelve el valor ó en su defecto el estado de la responsabilidad de un usuario
   def responsable_de
    if self.responsabilidad.nil? && Administracion.nivel_de(self.rol.nombre).eql?("nivel 3")
       return "No asignable"
@@ -80,6 +72,7 @@ class Usuario < ActiveRecord::Base
    end
   end
   
+  # Devuelve una cadena con detalles sobre la responsabilidad de un usuario
   def detalles_responsabilidad
     if self.responsabilidad.nil? || responsabilidad_type.eql?("Administracion")
       return responsable_de

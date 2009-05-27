@@ -43,7 +43,7 @@ class Servicio < ActiveRecord::Base
   end
   
   def detalles_
-    return "" if self.detalles.nil?
+    return "No hay detalles que mostrar" if self.detalles.blank?
     return self.detalles
   end
   

@@ -41,7 +41,7 @@ class PlazasController < ApplicationController
       @plazas = Plaza.paginate :all, :joins => "#{tipo.downcase.pluralize}".to_sym, :conditions => {"#{tipo.downcase.pluralize}".to_sym => {:id => params[:id]}}, :page => params[:page]
     end
     respond_to do |format|
-      format.html { render 'index.html.erb', :layout => 'application_layout' }
+      format.html { render 'index.html.erb' }
     end
   end
 
@@ -188,7 +188,9 @@ class PlazasController < ApplicationController
                       :conditions => ["servicios.categoria_id = ? AND (plaza_id IS NULL OR plaza_id = ?)", categoria_id, plaza_id], 
                       :page => params[:page], :per_page => 3
     respond_to do |format|
-      format.js { render :partial => 'listado_especializados_plaza_form' }
+      format.js do 
+        render :partial => 'listado_especializados_plaza_form' 
+      end
     end
   end  
   

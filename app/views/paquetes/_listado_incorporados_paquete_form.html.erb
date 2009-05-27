@@ -13,6 +13,6 @@
 <% end %>
 
 <%= will_paginate @incorporados, :renderer => 'RemoteLinkRenderer', 
-                             :remote => {:with => "'partial='+'listado_incorporados_paquete_form'",
+                             :remote => {:with => "'partial='+'listado_incorporados_paquete_form'+'&paquete='+'#{@paquete.id}'",
                                          :update => 'listado_incorporados_paquete_form_contenedor'}, 
                              :previous_label => ':.', :next_label => '.:', :class => 'pagination_form', :id => 'small' %>
