@@ -55,6 +55,8 @@ class Especializado < ActiveRecord::Base
           
           array_conditions[0] += (i == algo.length-1) ? "costo = ? ": "costo = ? OR "
           array_conditions << a
+        else
+          return []
         end
       end
       logger.info "SQL Query: #{array_conditions}"
