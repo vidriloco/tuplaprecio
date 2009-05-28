@@ -4,7 +4,7 @@ class Estado < ActiveRecord::Base
   attributes_to_serialize :nombre, :associated => [:plazas]
   validates_presence_of :nombre, :message => "no puede ser vacío"
   
-  acts_as_ferret :fields => [:nombre]
+  acts_as_ferret :fields => {:nombre => { :store => :yes }}
   
   has_many :plazas
   

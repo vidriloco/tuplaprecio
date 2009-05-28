@@ -7,7 +7,7 @@ class Plaza < ActiveRecord::Base
   has_many :especializados
   has_many :servicios, :through => :especializados
   
-  acts_as_ferret :fields => [:nombre]
+  acts_as_ferret :fields => {:nombre => { :store => :yes }}
   
   attributes_to_serialize :nombre, :associated => [:usuarios, :paquetes, :especializados, :estado]
   

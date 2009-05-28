@@ -12,7 +12,7 @@ class Servicio < ActiveRecord::Base
   
   attributes_to_serialize :detalles_, :associated => [:concepto, :categoria]
   
-  acts_as_ferret :fields => [:detalles_]
+  acts_as_ferret :fields => {:detalle_ => { :store => :yes }}
     
   def pon_concepto(concepto)
     self.concepto = concepto

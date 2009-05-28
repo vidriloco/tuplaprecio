@@ -7,7 +7,7 @@ class Especializado < ActiveRecord::Base
   attributes_to_serialize :categoria, :concepto, :detalles_del_servicio, :activo_, :costo_
   remap_names 'Especializado' => 'Servicio'
   
-  acts_as_ferret :fields => [:costo_]
+  acts_as_ferret :fields => {:costo_ => { :store => :yes }}
   
   validates_presence_of :costo, :message => "no puede ir vacío"
   validates_numericality_of :costo, :message => "debe ser un valor numérico"

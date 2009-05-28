@@ -5,7 +5,7 @@ class BusquedasController < ApplicationController
     @cosa_a_buscar=params[:query].gsub(/\d/,'')
     @resultados = Array.new
     ["Servicio", "Plaza", "Concepto", "Categoria", "Paquete", "Incorporado", "Estado"].each do |modelo|
-      @resultados += modelo.constantize.find_with_ferret(@cosa_a_buscar)
+      @resultados += modelo.constantize.find_by_contents(@cosa_a_buscar)
     end
     
     respond_to do |format|
