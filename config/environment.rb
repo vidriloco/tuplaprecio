@@ -58,4 +58,5 @@ require "will_paginate"
 
 require 'acts_as_ferret'
 ActsAsFerret.index_dir = "#{RAILS_ROOT}/tmp/index"
-ActsAsFerret::Remote::Server.run
+actf=ActsAsFerret::Remote::Server.new
+actf.run
