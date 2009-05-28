@@ -53,9 +53,17 @@ class Incorporado < ActiveRecord::Base
   end
   
   def self.busca(algo)
-    fragmento = "detalles LIKE ? OR costo LIKE ?"
+    if bd_es_postgresql?
+      fragmento = "detalles LIKE ? OR costo LIKE ?::INT"
+    else
+      fragmento = "detalles LIKE ? OR costo LIKE ?"
+    end
     if algo.length > 1
-      campo="detalles LIKE ? OR costo LIKE ? OR"
+      if bd_es_postgresql?
+        campo="detalles LIKE ? OR costo LIKE ?::INT OR"
+      else
+        campo="detalles LIKE ? OR costo LIKE ? OR"
+      end
       campo=campo*(algo.length-1) + " #{fragmento}"
       array_condition=[campo]
       (algo*2).each do |a|

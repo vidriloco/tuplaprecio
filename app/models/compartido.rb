@@ -31,6 +31,11 @@ module Compartido
       end
   end
       
+    # Método auxiliar disponible a todo modelo que herede de ésta clase que devuelve true si la base es postgreSQL
+    def bd_es_postgresql?
+      return self.connection.adapter_name.eql?("PostgreSQL")
+    end
+    
     def attributes_which_are(symbol)
       return self.class.get_attributes(symbol)
     end
