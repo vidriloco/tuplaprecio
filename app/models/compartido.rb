@@ -1,6 +1,13 @@
 # TODO: Share this code
 
 module Compartido
+  def before_save
+    # other stuff goes here
+
+    # disable automatic ferret indexing...move it to a cron job
+    self.disable_ferret(:always)
+  end
+  
   def self.included receiver
       receiver.extend ClassMethods
       receiver.class_eval do
