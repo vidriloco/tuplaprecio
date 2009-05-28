@@ -43,7 +43,7 @@ class Especializado < ActiveRecord::Base
   
   # Método que expone el atributo :detalles de éste modelo juntamente con el nombre del modelo
   def expose
-    ["Servicio (asignado a plaza) :", "#{detalles_del_servicio}"]
+    ["Servicio (asignado a plaza) :", "#{detalles_del_servicio} #{costo_}"]
   end
   
   def self.busca(algo)
@@ -53,7 +53,13 @@ class Especializado < ActiveRecord::Base
       campo=campo*(algo.length-1) + " #{fragmento}"
       array_condition=[campo]
       algo.each do |a|
-        array_condition << "%#{a}%"
+        # Necesario el hacer un cast en PostgreSQL (si es un entero)
+        if a.to_i != 0 && self.connection.adapter_name.eql?("PostgreSQL")
+          a = "%#{a}%::INT"
+          array_condition << a
+        else
+          array_condition << "%#{a}%"
+        end
       end
       self.find(:all, :conditions => array_condition)
     else

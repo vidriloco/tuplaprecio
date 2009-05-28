@@ -45,7 +45,7 @@ class Incorporado < ActiveRecord::Base
   end
   
   def expose
-    ["Servicio (en paquete) :", "#{detalles_en_paquete}"]
+    ["Servicio (en paquete) :", "#{detalles_en_paquete} #{costo_}"]
   end
   
   def self.busca(algo)
@@ -53,21 +53,18 @@ class Incorporado < ActiveRecord::Base
   end
   
   def self.busca(algo)
-    if bd_es_postgresql?
-      fragmento = "detalles LIKE ? OR costo LIKE ?::INT"
-    else
-      fragmento = "detalles LIKE ? OR costo LIKE ?"
-    end
+    fragmento = "detalles LIKE ? OR costo LIKE ?"
     if algo.length > 1
-      if bd_es_postgresql?
-        campo="detalles LIKE ? OR costo LIKE ?::INT OR"
-      else
-        campo="detalles LIKE ? OR costo LIKE ? OR"
-      end
+      campo="detalles LIKE ? OR costo LIKE ? OR"
       campo=campo*(algo.length-1) + " #{fragmento}"
       array_condition=[campo]
       (algo*2).each do |a|
-        array_condition << "%#{a}%"
+        if a.to_i != 0 && self.connection.adapter_name.eql?("PostgreSQL")
+          a = "%#{a}%::INT"
+          array_condition << a
+        else
+          array_condition << "%#{a}%"
+        end
       end
       self.find(:all, :conditions => array_condition)
     else
