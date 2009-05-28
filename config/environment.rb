@@ -21,7 +21,6 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem 'mislav-will_paginate', '~>2.1'
 
   # Factory Girl gem setup
   config.gem "thoughtbot-factory_girl",
@@ -52,4 +51,4 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-require "will_paginate"
+#require "will_paginate"
