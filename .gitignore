@@ -2,4 +2,5 @@ tmp
 *.sqlite3
 log
 .DS_Store
-
+/lib/tasks/rcov.rake
+/lib/tasks/cucumber.rake
