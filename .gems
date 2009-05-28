@@ -1,5 +1,3 @@
 mislav-will_paginate --source http://gems.github.com
 thoughtbot-factory_girl --source http://gems.github.com
-cucumber --source http://gems.github.com
-rcov --source http://gems.github.com
 
