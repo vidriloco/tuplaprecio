@@ -47,7 +47,6 @@ class Especializado < ActiveRecord::Base
   end
   
   def self.busca(algo)
-    if algo.length > 1
       array_conditions = Array.new
       array_conditions[0] = String.new
       
@@ -60,9 +59,6 @@ class Especializado < ActiveRecord::Base
       end
       logger.info "SQL Query: #{array_conditions}"
       self.find(:all, :conditions => array_conditions)
-    else
-      self.find(:all, :conditions => [fragmento, "%#{algo}%", "%#{algo}%"])
-    end
   end
   
 end
