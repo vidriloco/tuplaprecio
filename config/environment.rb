@@ -55,8 +55,3 @@ Rails::Initializer.run do |config|
 end
 
 require "will_paginate"
-
-require 'acts_as_ferret'
-ActsAsFerret.index_dir = "#{RAILS_ROOT}/tmp/index"
-actf=ActsAsFerret::Remote::Server.new
-actf.run

@@ -5,9 +5,7 @@ class Incorporado < ActiveRecord::Base
   
   attributes_to_serialize :pertenece_a_paquete, :categoria, :concepto, :detalles_del_servicio, :detalles_en_paquete, :costo_, :vigencia
   remap_names 'Incorporado' => 'Servicio'
-  
-  acts_as_ferret => {:detalles => { :store => :yes }}
-  
+    
   validates_presence_of :costo, :message => "no puede ir vacío"
   validates_numericality_of :costo, :message => "debe ser un valor numérico"
   
@@ -48,5 +46,24 @@ class Incorporado < ActiveRecord::Base
   
   def expose
     ["Servicio (en paquete) :", "#{detalles_en_paquete}"]
+  end
+  
+  def self.busca(algo)
+    self.find(:all, :conditions => ["detalles LIKE ? OR costo LIKE ?", "%#{algo}%", "%#{algo}%"])
+  end
+  
+  def self.busca(algo)
+    fragmento = "detalles LIKE ? OR costo LIKE ?"
+    if algo.length > 1
+      campo="detalles LIKE ? OR costo LIKE ? OR"
+      campo=campo*(algo.length-1) + " #{fragmento}"
+      array_condition=[campo]
+      (algo*2).each do |a|
+        array_condition << "%#{a}%"
+      end
+      self.find(:all, :conditions => array_condition)
+    else
+      self.find(:all, :conditions => [fragmento, "%#{algo}%", "%#{algo}%"])
+    end
   end
 end

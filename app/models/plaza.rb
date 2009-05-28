@@ -6,9 +6,7 @@ class Plaza < ActiveRecord::Base
   has_many :usuarios, :as => :responsabilidad, :autosave => true, :dependent => :nullify
   has_many :especializados
   has_many :servicios, :through => :especializados
-  
-  acts_as_ferret :fields => {:nombre => { :store => :yes }}
-  
+    
   attributes_to_serialize :nombre, :associated => [:usuarios, :paquetes, :especializados, :estado]
   
   validates_presence_of :nombre, :message => "no puede ser vacío"
@@ -55,9 +53,8 @@ class Plaza < ActiveRecord::Base
     ["Plaza :", "#{nombre}"]
   end
   
-  #def en
-  #   "" if self.estado.nil?
-  #   self.estado.nombre
-  # end
+  def self.busca(algo)
+    self.find(:all, :conditions => ["nombre LIKE ?", "%#{algo}%"])
+  end
   
 end

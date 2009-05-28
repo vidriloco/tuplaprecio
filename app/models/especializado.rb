@@ -6,9 +6,7 @@ class Especializado < ActiveRecord::Base
   # Métodos ( y atributos ) que se imprimirán cada vez que se invoque el método *to_hashed_html heredado de Compartido
   attributes_to_serialize :categoria, :concepto, :detalles_del_servicio, :activo_, :costo_
   remap_names 'Especializado' => 'Servicio'
-  
-  acts_as_ferret :fields => {:costo_ => { :store => :yes }}
-  
+    
   validates_presence_of :costo, :message => "no puede ir vacío"
   validates_numericality_of :costo, :message => "debe ser un valor numérico"
   
@@ -46,6 +44,21 @@ class Especializado < ActiveRecord::Base
   # Método que expone el atributo :detalles de éste modelo juntamente con el nombre del modelo
   def expose
     ["Servicio (asignado a plaza) :", "#{detalles_del_servicio}"]
+  end
+  
+  def self.busca(algo)
+    fragmento = "costo LIKE ?"
+    if algo.length > 1
+      campo="costo LIKE ? OR "
+      campo=campo*(algo.length-1) + " #{fragmento}"
+      array_condition=[campo]
+      algo.each do |a|
+        array_condition << "%#{a}%"
+      end
+      self.find(:all, :conditions => array_condition)
+    else
+      self.find(:all, :conditions => [fragmento, "%#{algo}%"])
+    end
   end
   
 end

@@ -2,10 +2,13 @@ class BusquedasController < ApplicationController
   
   # Método principal para realizar búsquedas sobre todos los modelos
   def inicial
-    @cosa_a_buscar=params[:query].gsub(/\d/,'')
     @resultados = Array.new
+    
+    @cosa_a_buscar=params[:query]
+    trozos_de_busqueda=@cosa_a_buscar.split(" ")
+    
     ["Servicio", "Plaza", "Concepto", "Categoria", "Paquete", "Incorporado", "Estado"].each do |modelo|
-      @resultados += modelo.constantize.find_by_contents(@cosa_a_buscar)
+      @resultados += modelo.constantize.busca(trozos_de_busqueda)
     end
     
     respond_to do |format|

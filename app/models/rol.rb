@@ -7,4 +7,7 @@ class Rol < ActiveRecord::Base
   
   validates_presence_of :nombre, :message => "no puede ser vacío"
   
+  
+  def self.busqueda 
+  end
 end

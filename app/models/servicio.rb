@@ -11,9 +11,7 @@ class Servicio < ActiveRecord::Base
   validates_presence_of :concepto, :unless => "concepto_id.eql? 'Selecciona una categoría'", :message => "debe ir asociado con la categoría"
   
   attributes_to_serialize :detalles_, :associated => [:concepto, :categoria]
-  
-  acts_as_ferret :fields => {:detalle_ => { :store => :yes }}
-    
+      
   def pon_concepto(concepto)
     self.concepto = concepto
   end
@@ -49,6 +47,21 @@ class Servicio < ActiveRecord::Base
   
   def expose
     ["Servicio :", "#{detalles_}"]
+  end
+  
+  def self.busca(algo)
+    fragmento = "detalles LIKE ?"
+    if algo.length > 1
+      campo="detalles LIKE ? OR "
+      campo=campo*(algo.length-1) + " #{fragmento}"
+      array_condition=[campo]
+      algo.each do |a|
+        array_condition << "%#{a}%"
+      end
+      self.find(:all, :conditions => array_condition)
+    else
+      self.find(:all, :conditions => [fragmento, "%#{algo}%"])
+    end
   end
   
 end

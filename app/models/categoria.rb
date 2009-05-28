@@ -4,9 +4,7 @@ class Categoria < ActiveRecord::Base
   has_many :servicios, :dependent => :destroy
   has_and_belongs_to_many :conceptos
   validates_presence_of :nombre, :message => "no puede ser vacío"
-  
-  acts_as_ferret :fields => {:nombre => { :store => :yes }}
-  
+    
   attributes_to_serialize :nombre, :associated => [:conceptos]
   
   def agrega_nuevo_concepto(concepto)
@@ -21,4 +19,5 @@ class Categoria < ActiveRecord::Base
   def expose
     ["Categoría :", "#{nombre}"]
   end
+  
 end

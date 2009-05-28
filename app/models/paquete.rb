@@ -5,9 +5,7 @@ class Paquete < ActiveRecord::Base
   has_many :incorporados
   has_many :servicios, :through => :incorporados
   attributes_to_serialize :nombre, :associated => [:incorporados, :plazas]
-  
-  acts_as_ferret :fields => {:nombre => { :store => :yes }}
-  
+    
   validates_presence_of :nombre, :message => "no puede ser vacío"
   
   def self.compartidas
@@ -65,4 +63,5 @@ class Paquete < ActiveRecord::Base
   def expose
     ["Paquete :", "#{nombre}"]
   end
+  
 end

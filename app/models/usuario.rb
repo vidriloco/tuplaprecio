@@ -77,5 +77,8 @@ class Usuario < ActiveRecord::Base
       "Plaza: #{self.responsabilidad.nombre}"
     end
   end
+  
+  def self.busqueda
+  end
 
 end

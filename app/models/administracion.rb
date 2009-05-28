@@ -29,4 +29,7 @@ class Administracion < ActiveRecord::Base
     end
   end
   
+  def self.busqueda
+  end
+  
 end
