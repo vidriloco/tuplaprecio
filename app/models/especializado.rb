@@ -47,23 +47,21 @@ class Especializado < ActiveRecord::Base
   end
   
   def self.busca(algo)
-    fragmento = "costo LIKE ?"
     if algo.length > 1
-      campo="costo LIKE ? OR "
-      campo=campo*(algo.length-1) + " #{fragmento}"
-      array_condition=[campo]
-      algo.each do |a|
-        # Necesario el hacer un cast en PostgreSQL (si es un entero)
-        if a.to_i != 0 && self.connection.adapter_name.eql?("PostgreSQL")
-          a = "%#{a}%::INT"
-          array_condition << a
-        else
-          array_condition << "%#{a}%"
+      array_conditions = Array.new
+      array_conditions[0] = String.new
+      
+      algo.each_with_index do |a, i|
+        if a.to_i != 0
+          
+          array_conditions[0] += (i == algo.length-1) ? "costo = ? ": "costo = ? OR "
+          array_conditions << a
         end
       end
-      self.find(:all, :conditions => array_condition)
+      logger.info "SQL Query: #{array_conditions}"
+      self.find(:all, :conditions => array_conditions)
     else
-      self.find(:all, :conditions => [fragmento, "%#{algo}%"])
+      self.find(:all, :conditions => [fragmento, "%#{algo}%", "%#{algo}%"])
     end
   end
   
