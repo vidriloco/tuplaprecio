@@ -5,7 +5,7 @@ class Concepto < ActiveRecord::Base
   has_and_belongs_to_many :categorias
   validates_presence_of :nombre, :message => "no puede ser vacío"
 
-  acts_as_fulltextable :nombre
+  acts_as_ferret :fields => [:nombre]
 
   attributes_to_serialize :nombre, :associated => [:categorias]
   

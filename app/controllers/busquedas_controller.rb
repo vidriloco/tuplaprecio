@@ -3,7 +3,10 @@ class BusquedasController < ApplicationController
   # Método principal para realizar búsquedas sobre todos los modelos
   def inicial
     @cosa_a_buscar=params[:query].gsub(/\d/,'')
-    @resultados=FulltextRow.search(@cosa_a_buscar, :only => [:servicio, :plaza, :concepto, :categoria, :paquete, :incorporado, :estado], :limit => 10, :offset => 0)
+    @resultados = Array.new
+    ["Servicio", "Plaza", "Concepto", "Categoria", "Paquete", "Incorporado", "Estado"].each do |modelo|
+      @resultados += modelo.constantize.find_with_ferret(@cosa_a_buscar)
+    end
     
     respond_to do |format|
       format.js { render :partial => 'resultados'}

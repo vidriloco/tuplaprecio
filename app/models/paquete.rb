@@ -6,7 +6,7 @@ class Paquete < ActiveRecord::Base
   has_many :servicios, :through => :incorporados
   attributes_to_serialize :nombre, :associated => [:incorporados, :plazas]
   
-  acts_as_fulltextable :nombre
+  acts_as_ferret :fields => [:nombre]
   
   validates_presence_of :nombre, :message => "no puede ser vacío"
   

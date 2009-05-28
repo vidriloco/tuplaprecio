@@ -2,7 +2,7 @@
 <div id='contenedor_de_resultados'>
     <div class='cerrar' onclick="<%= remote_function(:url => {:action => :esconde_div}, 
                                                              :with=> "'div_id='+'area_de_resultados'")%>">x</div>
-    Encontrados <b><%=h @resultados.total_entries %> resultados</b> que contienen: <%=h @cosa_a_buscar %>
+    Encontrados <b><%=h @resultados.size %> resultados</b> que contienen: <%=h @cosa_a_buscar %>
     
     <div id='resultados'>
         <% @resultados.each do |resultado| %>
