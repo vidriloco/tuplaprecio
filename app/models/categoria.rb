@@ -7,11 +7,6 @@ class Categoria < ActiveRecord::Base
     
   attributes_to_serialize :nombre, :associated => [:conceptos]
   
-  def agrega_nuevo_concepto(concepto)
-    self.conceptos << concepto
-    self.save!
-  end
-  
   def self.per_page
     1
   end

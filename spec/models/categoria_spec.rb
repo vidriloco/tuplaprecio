@@ -2,15 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Categoria do
   
-  it "should be possible to add new conceptos to this categoria" do
-    categoria=Factory.create(:categoria)
-
-    counter=1
-    while(counter < 6) do
-      categoria.agrega_nuevo_concepto Factory.create(:concepto)
-      counter+=1
-      categoria.should have(counter).conceptos
-    end
+  it "should expose it's contents in  a readable format" do
+    categoria=Factory.build(:categoria, :nombre => "alguna")
+    exposure=categoria.expose
+    exposure.should have(2).items
+    exposure[0].should == "Categoría :"
+    exposure[1].should == "alguna"
   end
   
 end

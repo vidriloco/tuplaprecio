@@ -13,6 +13,7 @@ end
 
 Factory.define :concepto do |c|
   c.nombre "unconcepto"
+#  c.categorias { |categorias| categorias.association(:categoria) }
 end
 
 Factory.define :estado do |e|
@@ -22,6 +23,30 @@ end
 Factory.define :plaza do |p|
   p.sequence(:nombre) { |n| "plaza#{n}" }
   p.association :estado
+end
+
+Factory.define :servicio do |s|
+  s.detalles "Detalles del servicio"
+  s.association :categoria
+  s.association :concepto
+  s.incorporados { |incorporados| incorporados.association(:incorporado) }
+  s.especializados { |especializados| especializados.association(:especializado) }
+end
+
+Factory.define :incorporado do |i|
+  i.vigente_desde Date.today
+  i.vigente_hasta Date.tomorrow
+  i.detalles "Detalles del incorporado asociado a algún servicio dentro de un paquete"
+  i.costo 300
+  i.association :servicio
+  i.association :paquete
+end
+
+Factory.define :especializado do |e|
+  e.activo true
+  e.costo 200
+  e.association :servicio
+  e.association :plaza
 end
 
 Factory.define :rol_nivel_1, :class => Rol do |r|
