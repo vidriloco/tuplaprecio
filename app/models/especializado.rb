@@ -46,18 +46,15 @@ class Especializado < ActiveRecord::Base
     ["Servicio (asignado a plaza) :", "#{detalles_del_servicio} #{costo_}"]
   end
   
+  # Método auxiliar de clase que busca las instancias que cumplen con *algo en alguno de sus atributos
+  # éste método hace una distinción entre atributos numéricos (costo) y no numéricos según el tipo de *algo
   def self.busca(algo)
       array_conditions = Array.new
       array_conditions[0] = String.new
       
       algo.each_with_index do |a, i|
-        if a.to_i != 0
-          
-          array_conditions[0] += (i == algo.length-1) ? "costo = ? ": "costo = ? OR "
-          array_conditions << a
-        else
-          return []
-        end
+        array_conditions[0] += (i == algo.length-1) ? "costo = ? ": "costo = ? OR "
+        array_conditions << a.to_i
       end
       logger.info "SQL Query: #{array_conditions}"
       self.find(:all, :conditions => array_conditions)

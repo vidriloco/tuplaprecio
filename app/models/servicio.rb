@@ -20,24 +20,12 @@ class Servicio < ActiveRecord::Base
     self.categoria = categoria
   end
   
-  def eliminar
-    self.destroy
-  end
-  
   def con_concepto
-    if self.concepto.nil?
-      ""
-    else
-      self.concepto.nombre
-    end
+    self.concepto.nombre
   end
   
   def con_categoria
-    if self.categoria.nil?
-      ""
-    else
-      self.categoria.nombre
-    end
+    self.categoria.nombre
   end
   
   def detalles_

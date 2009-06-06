@@ -37,11 +37,13 @@ class AddTestModels < ActiveRecord::Migration
      concepto_premium4 =Concepto.create(:nombre => "Play Boy-Venus")     
      
      [1,2,3,4].each do |n|
-       eval("concepto_premium#{n}.agrega_nueva_categoria(categoria3)")
+       eval("concepto_premium#{n}.categorias << categoria3")
+       eval("concepto_internet#{n}.save!")
      end
 
      [1,2,3,4,5,6,7,8,9,10,11,12,13,14].each do |n|
-       eval("concepto_internet#{n}.agrega_nueva_categoria(categoria1)")
+       eval("concepto_internet#{n}.categorias << categoria1")
+       eval("concepto_internet#{n}.save!")
      end
 
      servicio1 = Servicio.create(:detalles => "Navegación para principiantes")

@@ -48,6 +48,8 @@ class Incorporado < ActiveRecord::Base
     ["Servicio (en paquete) :", "#{detalles_en_paquete} #{costo_}"]
   end
   
+  # Método auxiliar de clase que busca las instancias que cumplen con *algo en alguno de sus atributos
+  # éste método hace una distinción entre atributos numéricos (costo) y no numéricos (detalles) según el tipo de *algo
   def self.busca(algo)
  
       array_conditions = Array.new

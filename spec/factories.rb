@@ -29,8 +29,8 @@ Factory.define :servicio do |s|
   s.detalles "Detalles del servicio"
   s.association :categoria
   s.association :concepto
-  s.incorporados { |incorporados| incorporados.association(:incorporado) }
-  s.especializados { |especializados| especializados.association(:especializado) }
+  #s.incorporados { |incorporados| incorporados.association(:incorporado) }
+  #s.especializados { |especializados| especializados.association(:especializado) }
 end
 
 Factory.define :incorporado do |i|
