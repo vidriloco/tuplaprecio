@@ -1,0 +1,24 @@
+<div class="tabla_interior">
+<h3>Conceptos <i><%= @servicio.metasubservicio.nombre %></i></h3>
+<br/>
+    <div>
+        <div class="tabla_row">
+            <div class="tabla_head_cell">Concepto</div>
+            <div class="tabla_head_cell">Disponible</div>
+            <div class="tabla_head_cell">Costo</div>
+            <div class="tabla_head_cell">Valor</div>
+            <div class="tabla_head_cell">Comentarios</div>
+        </div>
+    <% @conceptos.each do |c| %>
+        <div class="tabla_row">
+            <div class="tabla_cell"><%= c.metaconcepto.nombre %></div>
+            <div class="tabla_cell"><%= c.disponibilidad %></div>
+            <div class="tabla_cell"><%= c.costo_ %></div>
+            <div class="tabla_cell"><%= c.valor_ %></div>
+            <div class="tabla_cell"><%= c.comentarios %></div>
+        </div>
+    <% end %>
+    </div>
+    <br/>
+    <%= link_to_remote "Cerrar", :url => {:action => :detalles_asociados}, :with => "'accion=esconder'" %>
+</div>

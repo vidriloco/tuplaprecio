@@ -1,0 +1,59 @@
+
+<h3 class='admin_modelo_titulo'><%= modelo.capitalize.pluralize %></h3>
+<div class='container_admin'>
+    <div class='form'>
+          <% if @objetos.empty? %>
+            <h2>No hay <%= modelo.pluralize %> disponibles aún</h2><br/>
+            <h2>Crear 
+                <%= link_to_remote  genero_de(modelo, "nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>  
+                ó
+                <%= link_to_remote "cerrar", :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                                       :with => "'modelo=#{modelo}'" %>
+            </h2>
+          <% else %>
+          <% atributos = modelo.capitalize.constantize.atributos %>
+          <% width = 900/(atributos.size+1) %>
+          <div class="tabla">
+            <div class="tabla_row">
+            <% atributos.each do |atributo| %>
+              <div style="width:<%= width %>px" class="tabla_head_cell"><%= atributo.humanize %></div>
+            <% end %>
+              <div style="width:<%= width %>px" class="tabla_head_cell"></div>
+            </div>  
+          </div>
+          <br/>
+            <% @objetos.each do |objeto| %>  
+                <div class="tabla">
+                  <div class="tabla_row" id="<%= "#{modelo}_#{objeto.id}" %>">
+                    <% atributos.each do |atributo| %>
+                        <div class="tabla_cell">
+                            <% if modelo.capitalize.constantize.es_evaluable(atributo) %>
+                                <%= eval objeto.send(atributo) %>
+                            <% else %>
+                                <%= objeto.send(atributo) %>
+                            <% end %>
+                        </div>
+                    <% end %>
+                
+                    <div class="tabla_cell">
+                      <%= button_to_remote "Borrar", :url => {:controller => modelo.pluralize, :action => "destroy",
+                                                              :id => objeto}, :method => :delete,  
+                                                              :confirm => "¿Borrar #{genero_de(modelo, "éste")} #{modelo}?" %>
+                      <%= button_to_remote "Editar", :url => {:controller => modelo.pluralize, :action => "edit",
+                                                              :id => objeto}, :method => :get %>
+                    </div>
+                      
+                  </div>
+                </div> 
+                
+                <div id="<%= "#{modelo}_show_#{objeto.id}" %>"> </div>
+            <% end %>
+             
+          <p>
+            <%= link_to_remote "Cerrar", :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                         :with => "'modelo=#{modelo}'" %>
+          </p>
+          <% end %>
+    </div>
+</div>
+

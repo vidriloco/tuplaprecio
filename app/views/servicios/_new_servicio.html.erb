@@ -1,0 +1,19 @@
+<h3 class='admin_modelo_titulo'>Servicio</h3>
+<div class='container_admin'>
+
+    <div class='form'>
+<% form_remote_for(@servicio) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render :partial => 'form_servicio', :locals => {:f => f},
+                                          :object => [ @plaza, @metaservicios] %>
+
+  <p>
+    <%= f.submit 'Crear' %> | <%= link_to_remote "Cerrar", 
+                                        :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                        :with => "'modelo=#{modelo}'" %>
+  </p>
+<% end %>
+</div>
+
+</div>

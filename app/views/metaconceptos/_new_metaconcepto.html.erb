@@ -1,0 +1,16 @@
+<h3 class='admin_modelo_titulo'>Metaconcepto</h3>
+<div class='container_admin'>
+    
+    <div class='form'>
+        <% form_remote_for(@metaconcepto) do |f| %>
+
+          <%= render :partial => "form_metaconcepto", :locals => {:f => f, :tipos => @tipos} %>
+
+          <p>
+            <%= f.submit 'Crear' %>   | <%= link_to_remote "Cerrar", 
+                                              :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                              :with => "'modelo=#{modelo}'" %>
+          </p>
+        <% end %>
+    </div>
+</div>

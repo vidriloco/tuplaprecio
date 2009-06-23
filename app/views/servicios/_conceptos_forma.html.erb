@@ -1,0 +1,31 @@
+<p>
+   <label>Captura de conceptos</label> 
+</p>
+
+<table width="900px">
+    <tr>
+    <th>Concepto</th>
+    <th>Disponible</th>
+    <th>Costo</th>
+    <th>Valor</th>
+    <th>Comentarios</th>
+    </tr>
+        <% @servicio.conceptos.each_with_index do |concepto, index| %>
+            <tr>
+              <% fields_for "conceptos[#{index}]", concepto do |f| %>
+                <td><%= @metaconceptos[index].nombre %></td>
+                <td><%= f.check_box :disponible %></td>
+                
+                <% if @metaconceptos[index].tipo.eql?("A") %>
+                    <td><%= f.text_field :costo, :size => 3 %> pesos</td>
+                    <td>-</td>
+                <% elsif @metaconceptos[index].tipo.eql?("B") %>
+                    <td>-</td>
+                    <td><%= f.text_field :valor, :size => 3 %></td>
+                <% end %>
+                <td><%= f.text_area :comentarios, :cols => 25, :rows => 2 %></td>  
+                <%= f.hidden_field :metaconcepto_id, :value => @metaconceptos[index].id %>  
+              <% end %>
+            </tr>
+        <% end %>
+</table>

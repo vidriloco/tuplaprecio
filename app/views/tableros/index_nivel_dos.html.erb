@@ -1,1 +1,14 @@
-<%= render :partial => 'contenido_para_nivel_dos_y_tres', :object => @plaza %>
+<div id='general_admin'>
+
+	
+	<div class='informativa_barra'>
+	    <p align="center"><span class="plaza_nombre"><%= @plaza.nombre %></span> <b>en</b> <%= @plaza.estado.nombre %></p>
+	</div>
+	
+    <% @modelos.each do |modelo| %>
+      <div class='modelo_barra' id="<%= modelo.pluralize %>">
+          <%= render :partial => "administraciones/index_modelo_barra", :locals => {:modelo => modelo} %>
+      </div>
+    <% end %>
+    
+</div>

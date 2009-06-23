@@ -6,16 +6,6 @@ Factory.define :usuario do |u|
   u.password_confirmation { |u| u.password }
 end
 
-Factory.define :categoria do |c|
-  c.nombre "unacategoria"
-  c.conceptos { |conceptos| [conceptos.association(:concepto)] }
-end
-
-Factory.define :concepto do |c|
-  c.nombre "unconcepto"
-#  c.categorias { |categorias| categorias.association(:categoria) }
-end
-
 Factory.define :estado do |e|
   e.sequence(:nombre) { |n| "estado#{n}" }
 end
@@ -25,28 +15,46 @@ Factory.define :plaza do |p|
   p.association :estado
 end
 
+Factory.define :paquete do |p|
+  p.costo_1_10 100
+  p.costo_11_31 150
+  p.costo_real 80
+  p.ahorro 20
+end
+
+Factory.define :subcategoria do |sc|
+  sc.nombre "Alguna Subcategoria"
+end
+
+Factory.define :metaconcepto do |mc|
+  mc.nombre "Un Metaconcepto genérico"
+end
+
+Factory.define :metaconcepto_tipo_a, :class => Metaconcepto do |mc|
+  mc.nombre "Un Metaconcepto"
+  mc.tipo "A"
+end
+
+Factory.define :metaconcepto_tipo_b, :class => Metaconcepto do |mc|
+  mc.nombre "Un Metaconcepto"
+  mc.tipo "B"
+end
+
+Factory.define :categoria do |c|
+  c.nombre "Alguna Categoria"
+end
+
+Factory.define :concepto do |c|
+  c.vigente_desde Date.today
+  c.vigente_hasta Date.tomorrow
+  c.disponible true
+  c.comentarios "algunos que puedan interesar"
+  c.costo 100
+  c.valor 4
+end
+
+
 Factory.define :servicio do |s|
-  s.detalles "Detalles del servicio"
-  s.association :categoria
-  s.association :concepto
-  #s.incorporados { |incorporados| incorporados.association(:incorporado) }
-  #s.especializados { |especializados| especializados.association(:especializado) }
-end
-
-Factory.define :incorporado do |i|
-  i.vigente_desde Date.today
-  i.vigente_hasta Date.tomorrow
-  i.detalles "Detalles del incorporado asociado a algún servicio dentro de un paquete"
-  i.costo 300
-  i.association :servicio
-  i.association :paquete
-end
-
-Factory.define :especializado do |e|
-  e.activo true
-  e.costo 200
-  e.association :servicio
-  e.association :plaza
 end
 
 Factory.define :rol_nivel_1, :class => Rol do |r|

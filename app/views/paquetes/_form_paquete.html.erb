@@ -1,0 +1,26 @@
+
+<div id="errores_paquete" class="errorExplanation" style="display:none"></div>
+
+
+<%= f.hidden_field :plaza_id, :value => plaza.id %>
+
+<table width="900px">
+    <tr>
+        <th>Internet</th>
+        <th>Televisión</th>
+        <th>Telefonía</th>
+        <th>Costo (1 al día 10)</th>
+        <th>Costo (11 al fin de mes)</th>
+        <th>Costo Real</th>
+        <th>Ahorro</th>
+    </tr>
+    <tr>
+        <td><%= f.text_field :internet, :size => 15 -%></td>
+        <td><%= f.text_field :television, :size => 15 -%></td>
+        <td><%= f.text_field :telefonia, :size => 15 -%></td>
+        <td><%= f.text_field :costo_1_10, :size => 5 -%> pesos</td>
+        <td><%= f.text_field :costo_11_31, :size => 5 -%> pesos</td>
+        <td><%= f.text_field :costo_real, :size => 5 -%> pesos</td>
+        <td><%= f.text_field :ahorro, :size => 5 -%> pesos</td>
+    </tr>
+</table>

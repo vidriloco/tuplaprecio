@@ -12,142 +12,116 @@ class ServiciosController < ApplicationController
     controller.nivel_logged_in(["nivel 1", "nivel 2"])
   end
   
-  
-  # GET /servicios
-  # GET /servicios.xml
-  def index
-    @servicios = Servicio.paginate :all, :page => params[:page]
-
-    respond_to do |format|
-      format.html # index.html.erb
-    #  format.xml  { render :xml => @servicios }
-    end
-  end
-  
-  # Pagina objetos relacionados a un objeto previo
-  def some
-    tipo = params[:tipo]
-    instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
-    if tipo.eql?("Concepto") || tipo.eql?("Categoria")
-      @servicios = eval("Servicio.paginate_by_#{tipo.downcase}_id @#{tipo.downcase}.id, :page => params[:page]")
-    # paginación para: [paquete, especializado, plaza, incorporado]  
-    else
-      @servicios = Servicio.paginate :all, :joins => "#{tipo.downcase.pluralize}".to_sym, :conditions => {"#{tipo.downcase.pluralize}".to_sym => {:id => params[:id]}}, :page => params[:page]
-    end
-    respond_to do |format|
-      format.html { render 'index.html.erb' }
-    end
-  end
-  
-
-  # GET /servicios/1
-  # GET /servicios/1.xml
-  def show
-    @obj = Servicio.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-     # format.xml  { render :xml => @obj }
-    end
-  end
-
   # GET /servicios/new
   # GET /servicios/new.xml
   def new
-    @servicio = Servicio.new
+    @plaza = current_user.responsabilidad
+    @metaservicios = Metaservicio.all
+    super
+  end
+
+  def create
+    @servicio = Servicio.new(params[:servicio])
+    params[:conceptos].each_value { |concepto| @servicio.conceptos.build(concepto) } if params.has_key?(:conceptos)
+    
     respond_to do |format|
-      format.html # new.html.erb
-    #  format.xml  { render :xml => @servicio }
+      format.js do
+        if @servicio.save
+          render :update do |page|
+            page['servicios'].replace_html :partial => 'administraciones/index_modelo_barra', 
+                                                          :locals => {:modelo => 'servicio'}
+            page['servicios'].visual_effect :appear
+          end
+        else
+          @errores=@servicio.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
+          render :update do |page|    
+            page["errores_servicio"].replace_html :partial => "compartidos/errores_modelo", 
+                                                :locals => {:modelo => "servicio"} 
+            page["errores_servicio"].appear                                    
+            page["errores_servicio"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"  
+          end
+        end
+      end
     end
   end
 
   # GET /servicios/1/edit
   def edit
-    @servicio = Servicio.find(params[:id])
+    @plaza = current_user.responsabilidad
+    @metaservicios = Metaservicio.all
+    @servicio= Servicio.find(params[:id])
+    metaservicio = @servicio.metasubservicio.metaservicio
+    @metasubservicios = metaservicio.metasubservicios
+    @from_edit="EDIT"
+    super
   end
-
-  # POST /servicios
-  # POST /servicios.xml
-  def create
-    @servicio = Servicio.new(params[:servicio])
-    
-    respond_to do |format|
-      if @servicio.save
-        flash[:notice] = 'Servicio was successfully created.'
-        format.html { redirect_to(@servicio) }
-       # format.xml  { render :xml => @servicio, :status => :created, :location => @servicio }
-      else
-        format.html { render :action => "new" }
-      #  format.xml  { render :xml => @servicio.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /servicios/1
-  # PUT /servicios/1.xml
+  
   def update
     @servicio = Servicio.find(params[:id])
-    
-    respond_to do |format|
-      if @servicio.update_attributes(params[:servicio])
-        flash[:notice] = 'Servicio was successfully updated.'
-        format.html { redirect_to(@servicio) }
-      #  format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-      #  format.xml  { render :xml => @servicio.errors, :status => :unprocessable_entity }
+    if params.has_key?(:conceptos)
+      params[:conceptos].each_key do |concepto_key| 
+        @servicio.conceptos.find(concepto_key).update_attributes(params[:conceptos]["#{concepto_key}"]) 
       end
     end
-  end
-
-  # DELETE /servicios/1
-  # DELETE /servicios/1.xml
-  def destroy
-    @servicio = Servicio.find(params[:id])
-    @servicio.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(servicios_url) }
-     # format.xml  { head :ok }
-    end
-  end
-  
-  # Actualiza la lista de selección de conceptos cuando se ha seleccionado una categoria 
-  # en los formularios new y edit de servicio.
-  def update_conceptos
-    categoria = Categoria.find params[:categoria_servicio].gsub(/\D/,'')
-    conceptos = categoria.conceptos
+    
     respond_to do |format|
       format.js do
-        render :update do |page|
-          page.replace_html "concepto_changer", :partial => "concepto_form", :locals => {:conceptos => conceptos}
+        if @servicio.update_attributes(params[:servicio])
+          render :update do |page|
+            page['servicios'].replace_html :partial => 'administraciones/index_modelo_barra', 
+                                           :locals => {:modelo => 'servicio'}
+            page['servicios'].visual_effect :appear
+          end
+        else
+          @errores=@servicio.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
+          render :update do |page|    
+            page["errores_servicio"].replace_html :partial => "compartidos/errores_modelo", 
+                                                  :locals => {:modelo => "servicio"} 
+            page["errores_servicio"].appear                                    
+            page["errores_servicio"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"  
+          end
         end
       end
     end
   end
   
-  # Desliga objetos relacionados a un objeto
-  def separar_objetos
-    id_super, submodelo, id_sub, identificador = recibir_parametros_comunes
-    
-    @subM=submodelo.capitalize.constantize.find(id_sub)
-    @servicio=Servicio.find(id_super)
-    if submodelo.eql? 'Concepto'
-      eval("@servicio.#{submodelo.downcase}=nil")
-      @servicio.save!
-    elsif submodelo.eql? 'Categoria'
-      eval("@servicio.#{submodelo.downcase}=nil")
-      @servicio.save!
-    else
-      eval("@servicio.#{submodelo.pluralize.downcase}.delete(@subM)")
-    end
-    
+  def cambios_de_div
+    @metaservicio = Metaservicio.find(params[:id])
+    @metaconceptos = @metaservicio.metaconceptos
+    @servicio = Servicio.new
+    @metaconceptos.size.times { @servicio.conceptos.build }
+    metasubservicios = @metaservicio.metasubservicios
     respond_to do |format|
       format.js do
         render :update do |page|
-          page.replace_html identificador, ""
+          page["conceptos_forma"].replace_html :partial => "conceptos_forma"
+          page["conceptos_forma"].visual_effect :appear
+          page["metasubservicio_forma"].replace_html :partial => "metasubservicio_forma", 
+                                                     :locals => { :metasubservicios => metasubservicios }
+          page["metasubservicio_forma"].visual_effect :appear
         end
       end
     end
   end
+  
+  def detalles_asociados
+    servicio_id=params[:id]
+    accion=params[:accion]
+    @servicio = Servicio.find(servicio_id)
+    @conceptos = @servicio.conceptos
+    
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          if accion.eql?("mostrar")
+            page["servicio_show_#{servicio_id}"].replace_html :partial => "servicio_show"
+            page["servicio_show_#{servicio_id}"].visual_effect :appear
+          elsif accion.eql?("esconder")
+            page["servicio_show_#{servicio_id}"].visual_effect :fade
+          end
+        end
+      end
+    end
+  end
+  
 end

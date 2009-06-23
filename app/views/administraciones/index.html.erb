@@ -1,40 +1,13 @@
-<div id='seleccion_actual'></div>
 <div id='general_admin'>
-	
-    <% @modelos_independientes.each do |modelo| %>
-      <% cuenta, modelo_cuenta = modelo_info(modelo) %>
-      
-      <div class='modelo_admin'>
-        <p class='inlined_short' id=<%="cuenta#{modelo.capitalize}"%>><b><%= cuenta %></b></p>
-        <p class='inlined_large' id=<%="sustantivo#{modelo.capitalize}"%>><%= modelo_cuenta %></p>
-        
-        
-        
-        <div class='inlined_short'>
-            <%= button_to genero_de(modelo, "Nuevo"), :controller => modelo.pluralize, :action => 'new' %>
-        </div>
-        <div class='inlined_short'>
-            <%= button_to_remote "Ver todos", :url => {:action => 'ver', :tipo => modelo, :div => "seleccion_actual"} %>
-        </div>
+	<% javascript_tag do %>
+	    NiftyLoad=function(){ Nifty("div.modelo_barra"); }
+	<% end %>
+    <% @modelos.each do |modelo| %>
+      <div class='modelo_barra' id="<%= modelo.pluralize %>">
+          <%= render :partial => "index_modelo_barra", :locals => {:modelo => modelo} %>
       </div>
     <% end %>
-    <% @modelos_relacionados.each do |modelo| %>
-      <% cuenta, modelo_cuenta = modelo_info(modelo) %>
-     
-      <div class='modelo_relacionado_admin'>
-        <p class='inlined_short' id=<%="cuenta#{modelo.singularize.capitalize}"%>><b><%= cuenta %></b></p>
-        <p class='inlined_large' id=<%="sustantivo#{modelo.singularize.capitalize}"%>><%= modelo_cuenta %></p>
-        
-        
-        
-        <div class='inlined_short'>
-            <%= button_to genero_de(modelo, "Asociar"), :controller => modelo.pluralize, :action => 'new' %>
-        </div>
-        <div class='inlined_short'>
-            <%= button_to_remote "Ver todos", :url => {:action => 'ver', :tipo => modelo, :div => "seleccion_actual"} %>
-        </div>
-      </div>
-    <% end %>
+    
 </div>
 
 

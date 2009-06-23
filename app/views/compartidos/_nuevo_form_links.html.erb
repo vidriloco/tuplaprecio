@@ -3,7 +3,8 @@
 <% else %>
     <div class='form_links_container' id='tiny'>
 <% end %>
-    <p><%= link_to "Atrás", :back %></p>
+    <p><%= link_to "Cerrar", :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                    :with => "'modelo='+#{modelo}" %></p>
 </div>
 
 <% if nivel_1 %>

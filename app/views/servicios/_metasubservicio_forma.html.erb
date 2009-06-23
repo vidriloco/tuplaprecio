@@ -1,0 +1,4 @@
+<p>
+   <%= label_tag :metasubservicio, "Nombre" %><br />
+   <%= select(:servicio, :metasubservicio_id, metasubservicios.map {|u| [u.nombre,u.id]}) %>
+</p>

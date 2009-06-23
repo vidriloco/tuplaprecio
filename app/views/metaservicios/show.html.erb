@@ -1,0 +1,9 @@
+<% @obj = @categoria if @obj.nil? %>
+
+<% hash=@obj.to_hashed_html(1) %>
+<div class='show_container'>
+    <%= render :partial => 'compartidos/modelo_info_comun', :locals => {:hash => hash, :obj => @obj} %>
+
+
+<%= render :partial => 'compartidos/detalle_form_links', :locals => {:obj_modificable => @obj, :modelo => "categoria"}%>
+</div>

@@ -1,7 +1,5 @@
 # This controller handles the login/logout function of the site.  
 class SesionesController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
 
   # render new.rhtml
   def new
@@ -9,16 +7,17 @@ class SesionesController < ApplicationController
 
   def create
     logout_keeping_session!
-    usuario = Usuario.authenticate(params[:login], params[:password])
-    if usuario
+    user = Usuario.authenticate(params[:login], params[:password])
+    if user
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
       # reset_session
-      self.current_usuario = usuario
+      self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
-      nivel_usuario=Administracion.nivel_de(usuario.rol.nombre)
+      rol = user.rol
+      nivel_usuario=Administracion.nivel_de(rol.nombre)
       if nivel_usuario.eql? "nivel 1"
           redirect_to administraciones_path
       elsif nivel_usuario.eql?("nivel 2") 
@@ -40,7 +39,7 @@ class SesionesController < ApplicationController
   def destroy
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/sesiones/new')
+    redirect_back_or_default('/')
   end
 
 protected
@@ -49,5 +48,4 @@ protected
     flash[:error] = "Couldn't log you in as '#{params[:login]}'"
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
-  
 end

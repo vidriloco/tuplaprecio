@@ -1,0 +1,11 @@
+<div id="errores_metasubservicio" class="errorExplanation" style="display:none"></div>
+
+<p>
+  <%= f.label :nombre %><br />
+  <%= f.text_field :nombre -%>
+</p>
+
+<p>
+    <%= f.label :metaservicio, "Tipo de Servicio" %><br />
+    <%= f.collection_select :metaservicio_id, metaservicios, :id, :nombre %>
+</p>

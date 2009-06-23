@@ -6,6 +6,10 @@ class Estado < ActiveRecord::Base
     
   has_many :plazas
   
+  def self.atributos
+    ["nombre", "plazas_"]
+  end
+  
   def agrega_nueva_plaza(plaza)
     unless self.plazas.exists? plaza
       self.plazas << plaza
@@ -13,7 +17,17 @@ class Estado < ActiveRecord::Base
     end
   end
   
-  def expose
-    ["Estado :", "#{nombre}"]
+  def to_label
+    "#{nombre}"
   end
+  
+  def plazas_
+    plazas_nombres=plazas.inject("") do |cdna, plaza|
+      cdna<<"#{plaza.nombre}, "
+      cdna
+    end
+    return "-" if plazas_nombres.blank?
+    plazas_nombres.chop.chop
+  end
+  
 end

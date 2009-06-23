@@ -1,0 +1,13 @@
+<div class='m_i_modelo_barra'>
+    <% cuenta, modelo_cuenta = modelo_info(modelo) %>
+  
+    <p class='inlined_short' id=<%="cuenta#{modelo.capitalize}"%>><b><%= cuenta %></b></p>
+    <p class='inlined_large' id=<%="sustantivo#{modelo.capitalize}"%>><%= modelo_cuenta %></p>
+
+    <div class='inlined_short'>
+        <%= button_to_remote genero_de(modelo, "Nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>
+    </div>
+    <div class='inlined_short'>
+        <%= button_to_remote "Ver todos", :url => {:controller => modelo.pluralize, :action => 'listing'} %>
+    </div>
+</div>

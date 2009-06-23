@@ -1,134 +1,5 @@
 class AddTestModels < ActiveRecord::Migration
   def self.up
-     categoria1=Categoria.create(:nombre => "Internet")
-     categoria2=Categoria.create(:nombre => "ALO 100")
-     categoria3=Categoria.create(:nombre => "Premium")
-     categoria4=Categoria.create(:nombre => "ALO 150")
-
-     concepto_internet1 =Concepto.create(:nombre => "Contratación Cliente Activo")
-     concepto_internet2 =Concepto.create(:nombre => "Contratación Cliente Nuevo")
-     concepto_internet3 =Concepto.create(:nombre => "Tarjeta de Red") 
-     concepto_internet4 =Concepto.create(:nombre => "Renta Mensual: 128 kbps")
-     concepto_internet5 =Concepto.create(:nombre => "Renta Mensual: 512 kbps")
-     concepto_internet6 =Concepto.create(:nombre => "Renta Mensual: 1 mbps")
-     concepto_internet7 =Concepto.create(:nombre => "Cuentas de correo")
-     concepto_internet8 =Concepto.create(:nombre => "Instalación Computadora Adicional")
-     concepto_internet9 =Concepto.create(:nombre => "Cambio de ubicación")
-     concepto_internet10 =Concepto.create(:nombre => "Cambio de velocidades")
-     concepto_internet11 =Concepto.create(:nombre => "Cambio de Domicilio")
-     concepto_internet12 =Concepto.create(:nombre => "Cambio de Cable")
-     concepto_internet13 =Concepto.create(:nombre => "Metro cable excedente")
-     concepto_internet14 =Concepto.create(:nombre => "Visita soporte técnico")
-     concepto_internet15 =Concepto.create(:nombre => "Reconexión")
-     
-     
-     
-     
-     
-     
-     
-     
-     concepto2 =Concepto.create(:nombre => "TV Adicional")
-
-
-     concepto_premium1 =Concepto.create(:nombre => "HBO Pack 3")
-     concepto_premium2 =Concepto.create(:nombre => "HBO Max")     
-     concepto_premium3 =Concepto.create(:nombre => "Venus")     
-     concepto_premium4 =Concepto.create(:nombre => "Play Boy-Venus")     
-     
-     [1,2,3,4].each do |n|
-       eval("concepto_premium#{n}.categorias << categoria3")
-       eval("concepto_internet#{n}.save!")
-     end
-
-     [1,2,3,4,5,6,7,8,9,10,11,12,13,14].each do |n|
-       eval("concepto_internet#{n}.categorias << categoria1")
-       eval("concepto_internet#{n}.save!")
-     end
-
-     servicio1 = Servicio.create(:detalles => "Navegación para principiantes")
-     servicio1.pon_concepto concepto_internet4
-     servicio1.pon_categoria categoria1
-     servicio1.save!
-     
-     servicio2 = Servicio.create(:detalles => "HBO Pack con tres canales")
-     servicio2.pon_concepto concepto_premium2
-     servicio2.pon_categoria categoria3
-     servicio2.save!
-     
-
-     servicio3 = Servicio.create(:detalles => "Navegación para intermedios")
-     servicio3.pon_concepto concepto_internet5
-     servicio3.pon_categoria categoria1
-     servicio3.save!
-     
-     servicio4 = Servicio.create(:detalles => "Navegación para avanzados")
-     servicio4.pon_concepto concepto_internet6
-     servicio4.pon_categoria categoria1
-     servicio4.save!
-     
-     #computadora adicional
-     servicio5 = Servicio.create(:detalles => "")
-     servicio5.pon_concepto concepto_internet8
-     servicio5.pon_categoria categoria1
-     servicio5.save!
-     
-     servicio6 = Servicio.create(:detalles => "Tarjeta de red ethernet")
-     servicio6.pon_concepto concepto_internet3
-     servicio6.pon_categoria categoria1
-     servicio6.save! 
-     
-     servicio7 = Servicio.create(:detalles => "Venus")
-     servicio7.pon_concepto concepto_premium3
-     servicio7.pon_categoria categoria3
-     servicio7.save!
-     
-     servicio8 = Servicio.create(:detalles => "Registro nuevo")
-     servicio8.pon_concepto concepto_internet2
-     servicio8.pon_categoria categoria1
-     servicio8.save!
-     
-     servicio9 = Servicio.create(:detalles => "Registro nuevo activo")
-     servicio9.pon_concepto concepto_internet1
-     servicio9.pon_categoria categoria1
-     servicio9.save!
-     
-     servicio10 = Servicio.create(:detalles => "Registro nuevo")
-     servicio10.pon_concepto concepto_internet2
-     servicio10.pon_categoria categoria2
-     servicio10.save!
-     
-     servicio11 = Servicio.create(:detalles => "Registro nuevo activo")
-     servicio11.pon_concepto concepto_internet1
-     servicio11.pon_categoria categoria2
-     servicio11.save!
-     
-     especializado1 = Especializado.create(:activo => true, :costo => 120)
-     especializado1.servicio = servicio2
-     especializado2 = Especializado.create(:activo => true, :costo => 80)
-     especializado2.servicio = servicio3
-     especializado3 = Especializado.create(:activo => true, :costo => 160)
-     especializado3.servicio = servicio4
-     
-     especializado4 = Especializado.create(:activo => true, :costo => 20)
-     especializado4.servicio = servicio8
-     especializado5 = Especializado.create(:activo => true, :costo => 15)
-     especializado5.servicio = servicio9
-     especializado6 = Especializado.create(:activo => true, :costo => 19)
-     especializado6.servicio = servicio10
-     especializado7 = Especializado.create(:activo => true, :costo => 25)
-     especializado7.servicio = servicio11
-     
-     incorporado1 = Incorporado.create(:costo => 100, :detalles => "")
-     incorporado1.servicio = servicio1
-     incorporado2 = Incorporado.create(:costo => 60, :detalles => "Disponible en el paquete de canales de películas")
-     incorporado2.servicio = servicio2
-     incorporado3 = Incorporado.create(:costo => 80, :detalles => "Tarjeta Broadcom BCM4306")
-     incorporado3.servicio = servicio6
-     incorporado4 = Incorporado.create(:costo => 50, :detalles => "")
-     incorporado4.servicio = servicio7
-
-     
      rol1=Rol.create(:nombre=>"Administrador")
      rol2=Rol.create(:nombre=>"Agente")
      rol3=Rol.create(:nombre=>"Encargado")
@@ -152,30 +23,12 @@ class AddTestModels < ActiveRecord::Migration
      plaza3 = Plaza.create :nombre => 'Soledad de Graciano'
      estado1 = Estado.create :nombre => 'Querétaro'
      estado2 = Estado.create :nombre => 'San Luis Potosí'
-     
-     plaza2.agrega_nuevo_especializado especializado1
-     plaza1.agrega_nuevo_especializado especializado2
-     plaza1.agrega_nuevo_especializado especializado3
-     plaza1.agrega_nuevo_especializado especializado4
-     plaza1.agrega_nuevo_especializado especializado5
-     plaza2.agrega_nuevo_especializado especializado6
-     plaza2.agrega_nuevo_especializado especializado7
+    
      
      
      estado1.agrega_nueva_plaza plaza1
      estado1.agrega_nueva_plaza plaza2
      estado2.agrega_nueva_plaza plaza3
-     
-     paquete1 = Paquete.create(:nombre => 'Internet básico en Tepejí del Río')
-     paquete1.agrega_nuevo_incorporado incorporado1
-     paquete1.agrega_nuevo_incorporado incorporado3
-     
-     paquete2 = Paquete.create(:nombre => 'Paquete de películas Tepejí del Rio')
-     paquete2.agrega_nuevo_incorporado incorporado2
-     paquete2.agrega_nuevo_incorporado incorporado4
-     
-     plaza2.agrega_nuevo_paquete paquete1
-     plaza2.agrega_nuevo_paquete paquete2
      
      
      administracion=Administracion.create
@@ -184,7 +37,49 @@ class AddTestModels < ActiveRecord::Migration
      administracion.nivel_medio="Encargado"
      administracion.nivel_bajo="Agente"
      administracion.save!
-     plaza1.agrega_nuevo_usuario usuario3
+     plaza1.usuarios << usuario3
+     plaza1.save
+     
+     #Migrando datos de metaservicios, y metasubservicios junto con metaconceptos
+     
+     
+     # Metaservicio: Compartidos
+     Metaconcepto.create :nombre => "Contratación cliente Nuevo", :tipo => "A"
+     Metaconcepto.create :nombre => "Contratación cliente Activo", :tipo => "A"
+     Metaconcepto.create :nombre => "Renta Mensual", :tipo => "A"
+     Metaconcepto.create :nombre => "Cambio de ubicación", :tipo => "A"
+     Metaconcepto.create :nombre => "Cambio de domicilio", :tipo => "A"
+     Metaconcepto.create :nombre => "Metro de cable excedente", :tipo => "A"
+     Metaconcepto.create :nombre => "Reconexión", :tipo => "A"
+     Metaconcepto.create :nombre => "Cambio de cable", :tipo => "A"
+     
+     # Metaservicio: Televisión
+     Metaconcepto.create :nombre => "TV's incluídas al momento de la instalación", :tipo => "B"
+     Metaconcepto.create :nombre => "TV Adicional (instalación)", :tipo => "A"
+     Metaconcepto.create :nombre => "TV Adicional (renta)", :tipo => "A"
+
+     # Metaservicio: Premium
+     Metaconcepto.create :nombre => "Película Familiar (PPV)", :tipo => "A"
+     Metaconcepto.create :nombre => "Película Adultos (PPV)", :tipo => "A"
+     
+     # Metaservicio: Internet
+     Metaconcepto.create :nombre => "PC's incluídas al momento de la instalación", :tipo => "B"
+     Metaconcepto.create :nombre => "Computadora Adicional (instalación)", :tipo => "A"
+     Metaconcepto.create :nombre => "Cambio de velocidades", :tipo => "A"
+     Metaconcepto.create :nombre => "Visita de soporte técnico", :tipo => "A"
+     
+     # Metaservicio: Premium
+     Metaconcepto.create :nombre => "Líneas telefónicas", :tipo => "B"
+     Metaconcepto.create :nombre => "Soluciones Cablecom", :tipo => "A"
+     Metaconcepto.create :nombre => "Instalación de extensión telefónica", :tipo => "A"
+     Metaconcepto.create :nombre => "Cambio de paquete", :tipo => "A"
+     
+     Metaservicio.create :nombre => "Internet"
+     Metaservicio.create :nombre => "Televisión"
+     Metaservicio.create :nombre => "Telefonía"
+     Metaservicio.create :nombre => "Premium"
+     
+     
   end
 
   def self.down

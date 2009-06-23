@@ -1,5 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :categorias
 
   map.logout '/logout', :controller => 'sesiones', :action => 'destroy'
   map.login '/login', :controller => 'sesiones', :action => 'new'
@@ -8,13 +7,12 @@ ActionController::Routing::Routes.draw do |map|
   map.tablero_nivel_tres '/principal_tres', :controller => 'tableros', :action => 'index_nivel_tres'
   map.tablero_nivel_dos '/principal_dos', :controller => 'tableros', :action => 'index_nivel_dos'
 
+  map.connect '/sesion', :controller => 'sesiones', :action => 'create'
+
   
   map.busqueda_inicial '/busqueda', :controller => 'busquedas', :action => 'inicial'
   
-  #map.connect '/:controller/:action/:tipo', :controller=>"generalizados", :action=>"new"
-  #map.connect '/:controller/:tipo/(.:format)', :controller=>"generalizados", :action=>"create"
-  #map.connect '/:controller/:tipo/:action/:id', :controller=>"generalizados", :action=>"show"
-  #map.connect '/:controller/:tipo/(.:format)', :controller=>"generalizados", :action=>"index"
+  map.resources :metaservicios, :metasubservicios
   
   map.resources :usuarios
 
@@ -24,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :busquedas
 
-  map.resources :conceptos
+  map.resources :conceptos, :metaconceptos
 
   map.resources :paquetes
 

@@ -1,36 +1,47 @@
 class Servicio < ActiveRecord::Base
-  include Compartido
   
-  belongs_to :concepto
-  belongs_to :categoria
-  has_many :incorporados, :dependent => :destroy
-  has_many :paquetes, :through => :incorporados
-  has_many :especializados, :dependent => :destroy
-  has_many :plazas, :through => :especializados
+  belongs_to :plaza
+  belongs_to :metasubservicio
+  has_many :conceptos, :validate => false
+  
+  validates_presence_of :metasubservicio_id, :message => "no puede ir en blanco"
+  validates_uniqueness_of :metasubservicio_id
+  validate :atributos_de_conceptos
     
-  validates_presence_of :concepto, :unless => "concepto_id.eql? 'Selecciona una categoría'", :message => "debe ir asociado con la categoría"
+  def self.atributos
+    ["plaza_", "tipo_de_servicio", "nombre_del_servicio", "número_de_conceptos"]
+  end  
   
-  attributes_to_serialize :detalles_, :associated => [:concepto, :categoria]
-      
-  def pon_concepto(concepto)
-    self.concepto = concepto
+  def self.atributos_agente
+    ["tipo_de_servicio", "nombre_del_servicio"]
   end
   
-  def pon_categoria(categoria)
-    self.categoria = categoria
+  def self.es_evaluable(atributo)
+    hash_atributos={"número_de_conceptos" => true}
+    return hash_atributos[atributo]
   end
   
-  def con_concepto
-    self.concepto.nombre
+  def plaza_
+    plaza.nombre
   end
   
-  def con_categoria
-    self.categoria.nombre
+  def tipo_de_servicio
+    metasubservicio.metaservicio.nombre
   end
   
-  def detalles_
-    return "No hay detalles que mostrar" if self.detalles.blank?
-    return self.detalles
+  def nombre_del_servicio
+    metasubservicio.nombre
+  end
+  
+  def número_de_conceptos
+    numero = conceptos.size
+    return "'0 conceptos'" if numero==0
+    if numero==1
+      no_conceptos = "#{numero} concepto" 
+    else
+      no_conceptos = "#{numero} conceptos"
+    end
+    "link_to_remote '#{no_conceptos}', :url => {:action => 'detalles_asociados', :id => #{id}, :accion => 'mostrar' }"
   end
   
   def expose
@@ -51,5 +62,16 @@ class Servicio < ActiveRecord::Base
       self.find(:all, :conditions => [fragmento, "%#{algo}%"])
     end
   end
+  
+  protected
+    def atributos_de_conceptos
+      conceptos.each do |c|
+        unless c.valid?
+          c.errors.full_messages.each do |m|
+            errors.add(:conceptos, "#{m}")
+          end
+        end
+      end
+    end
   
 end

@@ -1,0 +1,9 @@
+<h3>Se encontraron los siguientes errores al guardar <%= genero_de(modelo, "éste") %> <%= modelo %></h3>
+
+<% @errores.each_key do |key| %>
+    <% if @errores[key].index(",") != 0 %>
+       <p><b><%= key.humanize %>: </b><%= @errores[key].chop.chop %></p>
+    <% else %>
+       <p><b><%= key.humanize %>: </b><%= @errores[key] %></p>
+    <% end %>
+<% end %>

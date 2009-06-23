@@ -29,7 +29,13 @@ class Usuario < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :nombre, :password, :password_confirmation, :rol_id
 
+  def atributos
+    ["nombre", "login", "email", "con_rol"]
+  end
 
+  def con_rol
+    rol.nombre
+  end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -80,5 +86,6 @@ class Usuario < ActiveRecord::Base
   
   def self.busqueda
   end
+  
 
 end

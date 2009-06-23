@@ -5,38 +5,149 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
-  
+  include AuthenticatedSystem
   
   def nivel_logged_in(args)
-    redirect_to(new_sesion_path) if session[:usuario_id].nil?
-    
-    usuario=Usuario.find(session[:usuario_id])      
-    
-    if args.index(Administracion.nivel_de(usuario.rol.nombre)).nil?
-      redirect_to :back
+    if logged_in?
+      if args.index(Administracion.nivel_de(current_user.rol.nombre)).nil?
+        redirect_to :back
+      end
+      current_user
+    else
+      redirect_to(new_sesion_path)
     end
   end
   
-  def objetos_a_sesion
-     sesion_objeto = params[:sesion].to_sym
-     if eval(params[:seleccion])
-       session[sesion_objeto].delete(params[:id].to_i)
-     else
-       if session[sesion_objeto].index(params[:id].to_i).nil?
-         session[sesion_objeto] << params[:id].to_i
-       end
-     end
-     render :nothing => :true
+  # POST /objeto.js
+  def create
+    modelo_pluralized = @current_controller.split("Controller")[0]
+    modelo = modelo_pluralized.singularize
+    @objeto = modelo.capitalize.constantize.new(params[modelo.to_sym])
+
+    respond_to do |format|
+      if @objeto.save
+        format.js do
+           render :update do |page|
+             page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                   :locals => {:modelo => modelo}
+             page[modelo.pluralize].visual_effect :appear
+             page << "Nifty('div##{modelo.pluralize}');"
+           end
+         end
+      else
+        @errores=@objeto.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
+        format.js do 
+          render :update do |page|
+            page["errores_#{modelo}"].replace_html :partial => "compartidos/errores_modelo", 
+                                                :locals => {:modelo => modelo} 
+            page["errores_#{modelo}"].appear                                    
+            page["errores_#{modelo}"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"
+          end
+        end
+      end
+    end
   end
   
-  # Responde aplicando toggle al div que llega en params[:div_id]
-  def esconde_div
-    div=params[:div_id]
+  def edit
+    modelo_pluralized = @current_controller.split("Controller")[0]
+    modelo = modelo_pluralized.singularize
+    instance_variable_set("@#{modelo}", modelo.capitalize.constantize.find(params[:id]))
+    
+    respond_to do |format|
+       format.js do
+         render :update do |page|
+           page[modelo_pluralized].replace_html :partial => "edit_#{modelo}", 
+                                              :locals => {:modelo => modelo}
+           page[modelo_pluralized].visual_effect :appear
+           page << "Nifty('div##{modelo_pluralized}');"
+         end
+       end
+    end
+    
+  end
+  
+  # GET /objeto/index.js
+  def listing
+    modelo_pluralized = @current_controller.split("Controller")[0]
+    modelo = modelo_pluralized.singularize
+    @objetos = modelo.capitalize.constantize.all
+    
+    respond_to do |format|
+       format.js do
+         render :update do |page|
+           page[modelo_pluralized].replace_html :partial => "compartidos/listing_modelo", 
+                                              :locals => {:modelo => modelo}
+           page[modelo_pluralized].visual_effect :appear
+           page << "Nifty('div##{modelo_pluralized}');"
+         end
+       end
+    end
+  end
+  
+  def destroy
+    modelo_pluralized = @current_controller.split("Controller")[0]
+    modelo = modelo_pluralized.singularize
+    @objeto = modelo.capitalize.constantize.find(params[:id])
+    @objeto.destroy
+    
+    respond_to do |format|
+       format.js do
+         render :update do |page|
+           if modelo.capitalize.constantize.count == 0
+             page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                 :locals => {:modelo => modelo}
+             page[modelo.pluralize].visual_effect :appear
+             page << "Nifty('div##{modelo.pluralize}');"
+           else   
+             page["#{modelo}_#{params[:id]}"].visual_effect :fade
+           end
+         end
+       end
+    end
+    
+  end
+  
+  # GET /objeto/new.js
+  def new
+    modelo_pluralized = @current_controller.split("Controller")[0]
+    modelo = modelo_pluralized.singularize
+    instance_variable_set("@#{modelo}", modelo.capitalize.constantize.new)
+     respond_to do |format|
+       format.js do
+         render :update do |page|
+           page[modelo_pluralized].replace_html :partial => "new_#{modelo}", 
+                                              :locals => {:modelo => modelo}
+           page[modelo_pluralized].visual_effect :appear
+           page << "Nifty('div##{modelo_pluralized}');"
+         end
+       end
+     end
+  end
+  
+  def update
+    modelo_pluralized = @current_controller.split("Controller")[0]
+    modelo = modelo_pluralized.singularize
+    @objeto = modelo.capitalize.constantize.find(params[:id])
+
     respond_to do |format|
       format.js do
-        render :update do |page|
-          page.toggle(div)
-        end
+        if @objeto.update_attributes(params[modelo.to_sym])
+          render :update do |page|
+            page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                  :locals => {:modelo => modelo}
+            page[modelo.pluralize].visual_effect :appear
+            page << "Nifty('div##{modelo.pluralize}');"
+          end
+        else
+          @errores=@objeto.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, "; h }
+          
+          render :update do |page|
+            page["errores_#{modelo}"].replace_html :partial => "compartidos/errores_modelo", 
+                                                  :locals => {:modelo => modelo} 
+            page["errores_#{modelo}"].appear                                    
+            page["errores_#{modelo}"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"
+          end
+        end 
       end
     end
   end
@@ -52,10 +163,5 @@ class ApplicationController < ActionController::Base
     def admin_logged_in?
       @usuario = Usuario.find(session[:usuario_id])
       return true if Administracion.nivel_de(@usuario.rol.nombre).eql?("nivel 1")
-    end
-  
-    def recibir_parametros_comunes
-      ds=params[:datos_separacion]
-      return ds[:id_supermodelo], ds[:submodelo], ds[:id_submodelo], params[:identificador]
-    end
+    end    
 end

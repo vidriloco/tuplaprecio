@@ -1,5 +1,5 @@
 class BusquedasController < ApplicationController
-  
+
   # Método principal para realizar búsquedas sobre todos los modelos
   def inicial
     @resultados = Array.new
@@ -7,7 +7,7 @@ class BusquedasController < ApplicationController
     @cosa_a_buscar=params[:query]
     trozos_de_busqueda=@cosa_a_buscar.split(" ")
     
-    ["Servicio", "Plaza", "Concepto", "Categoria", "Paquete", "Incorporado", "Estado", "Especializado"].each do |modelo|
+    ["Servicio", "Plaza", "Paquete", "Estado", "Concepto"].each do |modelo|
       @resultados += modelo.constantize.busca(trozos_de_busqueda)
     end
     

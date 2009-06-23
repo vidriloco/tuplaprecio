@@ -1,50 +1,84 @@
-<%= javascript_tag "Nifty('#primero_tabla_head', 'tl bl'); 
-                    Nifty('#ultimo_tabla_head', 'tr br'); 
-                    Nifty('#plaza_info');
+<%= javascript_tag "Nifty('#plaza_info');
                     Nifty('#servicios');
-                    Nifty('#paquetes');
-                    Nifty('#paquetes_contenedor')" %>
+                    Nifty('#paquetes')" %>
 
 <div id='plaza_info'>
-    <h2><%=h @plaza.nombre %></h2><h3><%=h @plaza.estado.nombre %></h3>
+    <h2><%=h @plaza.nombre -%></h2><h3><%=h @plaza.estado.nombre -%></h3>
 </div>
 
 <div class='plaza_titulos_formato' id='servicios'><h4>Servicios</h4></div>
-
-<table class='servicios_categorias'>
-<tr>
-<% ultimo = @categorias.length-1 %>
-<% @categorias.each_with_index do |categoria,indx| %>
-    <% if indx == 0 %>
-        <th class='categoria_nombre' id='primero_tabla_head'>
-    <% elsif indx == ultimo %>
-        <th class='categoria_nombre' id='ultimo_tabla_head'>
-    <% else %>
-        <th class='categoria_nombre'>
-    <% end %>
-    <b>
-       <%= link_to_remote "#{categoria.nombre}", :update => 'contenedor_lista_servicios_categoria', 
-                                                 :url => {:action => 'despliega_servicios_de_categoria'}, 
-                                                 :with => "'categoria_id='+'#{categoria.id}'+'&plaza_id='+'#{@plaza.id}'" %>
-    </b>
-    </th>
-<% end %>
-</tr>
-</table>
-<div id='contenedor_lista_servicios_categoria'></div>
-
-
-<% if @paquetes.size > 0%>
-<div class='plaza_titulos_formato' id='paquetes'><h4>Paquetes</h4></div>
-
-<div id='paquetes_contenedor'>
-
-<% @paquetes.each do |paquete| %>
-    <div class='paquete'>
-        <%= paquete.nombre %>
+<% if @servicios.empty? %>
+    No hay servicios que mostrar
+<% else %>
+    <table class="agente_servicios" id="cabecera_agente_servicios">
+        <tr>
+            <% Servicio.atributos_agente.each do |atributo| %>
+                <th><%= atributo.humanize -%></th>
+            <% end %>
+        </tr>
+    </table>
+    
+    <% @servicios.each do |servicio| %>
+    <div class="contenedor_servicios_conceptos">
+        <table class="agente_servicios">
+        <tr>
+            <% Servicio.atributos_agente.each do |atributo| %>
+                <% if Servicio.es_evaluable(atributo) %>
+                    <td><%=h eval servicio.send(atributo) -%></td>
+                <% else %>
+                    <td><%=h servicio.send(atributo) -%></td>
+                <% end %>
+            <% end %>
+        </tr>
+        </table>
+        
+        <table class="agente_servicios_conceptos">
+            <tr>
+                <th>Concepto</th>
+                <th>Disponible</th>
+                <th>Costo</th>
+                <th>Valor</th>
+                <th>Comentarios</th>
+            </tr>
+            <% servicio.conceptos.each do |c| %>
+                <tr>
+                    <td><%=h c.metaconcepto.nombre %></td>
+                    <td><%=h c.disponibilidad %></td>
+                    <td><%=h c.costo_ %></td>
+                    <td><%=h c.valor_ %></td>
+                    <td><%=h c.comentarios %></td>
+                </tr>
+            <% end %>
+        </table>
     </div>
-    <%= button_to_remote "Más Detalle", :url=> {:controller => :busquedas, :action => :detalle, :id => paquete.id},
-                                        :with => "'tipo='+'Paquete'" %>
+    <% end %>
 <% end %>
-</div>
+<div class='plaza_titulos_formato' id='paquetes'><h4>Paquetes</h4></div>
+<% if @paquetes.empty? %>
+    No hay paquetes que mostrar
+<% else %>
+    <table class="agente_paquetes">
+        <tr>
+            <th>Tipo de Paquete</th>
+            <th>Internet</th>
+            <th>Telefonía</th>
+            <th>Televisión</th>
+            <th>Costo (día primero hasta día 10)</th>
+            <th>Costo (día 11 hasta último día de mes)</th>
+            <th>Costo Real</th>
+            <th>Ahorro</th>
+        </tr>
+        <% @paquetes.each do |paquete| %>
+            <tr>
+                <td><%= paquete.tipo_de_paquete %></td>
+                <td><%= paquete.internet %></td>
+                <td><%= paquete.telefonia %></td>
+                <td><%= paquete.television %></td>
+                <td><%= paquete.costo_primer_mitad_de_mes %></td>
+                <td><%= paquete.costo_segunda_mitad_de_mes %></td>
+                <td><%= paquete.costo_real_ %></td>
+                <td><%= paquete.ahorro_ %></td>
+            </tr>
+        <% end %>
+    </table>
 <% end %>

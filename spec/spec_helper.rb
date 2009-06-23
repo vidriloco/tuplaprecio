@@ -4,7 +4,12 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
 require 'spec/autorun'
 require 'spec/rails'
-require File.dirname(__FILE__) + "/factories"
+require "webrat"
+include AuthenticatedTestHelper
+
+Webrat.configure do |config|
+  config.mode = :rails
+end
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
@@ -13,6 +18,8 @@ Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+
+  include Webrat::Methods
 
   # == Fixtures
   #
@@ -45,4 +52,48 @@ Spec::Runner.configure do |config|
   # == Notes
   # 
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+end
+
+shared_examples_for "one" do
+  
+  it "should be equal to 1" do
+    "1".should be_eql("1")
+  end
+  
+end
+
+shared_examples_for "admin only" do
+    
+  it "should not be accessible without authentication" do
+    current_user = nil
+
+    send @method, @action, @params
+
+    response.should redirect_to(new_sesion_url)
+  end
+
+  it "should not be accessible by an encargado user" do
+    current_user = Factory.stub(:usuario_completo_encargado)
+
+    send @method, @action, @params
+
+    response.should redirect_to(new_sesion_url)
+  end
+
+  it "should not be accessible by an agente user" do
+    current_user = Factory.stub(:usuario_completo_agente)
+
+    send @method, @action, @params
+
+    response.should redirect_to(new_sesion_url)
+  end
+
+  it "should be accessible by an admin user" do
+    current_user = Factory.stub(:usuario_completo_admin)
+    @controller.stub!(:logged_in?).and_return(true)
+    @controller.stub!(:nivel_logged_in).with(["nivel 1"]).and_return(current_user)
+    send @method, @action, @params
+
+    response.should_not redirect_to(new_sesion_url)
+  end
 end

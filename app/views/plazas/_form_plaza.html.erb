@@ -1,0 +1,12 @@
+
+    <div id="errores_plaza" class="errorExplanation" style="display:none"></div>
+
+    <p>
+      <%= f.label :nombre %><br />
+      <%= f.text_field :nombre %>
+    </p>
+    
+    <p>
+       <%= f.label :estado %><br />
+       <%= f.collection_select :estado_id, estados, :id, :nombre %>
+    </p>

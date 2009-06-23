@@ -1,11 +1,20 @@
 module AuthenticatedTestHelper
-  # Sets the current usuario in the session from the usuario fixtures.
-  def login_as(usuario)
-    @request.session[:usuario_id] = usuario ? (usuario.is_a?(Usuario) ? usuario.id : usuarios(usuario).id) : nil
+  # Sets the current user in the session from the user fixtures.
+  def login_as(user)
+    @request.session[:user_id] = user ? (user.is_a?(Usuario) ? user.id : usuarios(user).id) : nil
   end
 
-  def authorize_as(usuario)
-    @request.env["HTTP_AUTHORIZATION"] = usuario ? ActionController::HttpAuthentication::Basic.encode_credentials(usuarios(usuario).login, 'monkey') : nil
+  def authorize_as(user)
+    @request.env["HTTP_AUTHORIZATION"] = user ? ActionController::HttpAuthentication::Basic.encode_credentials(usuarios(user).login, 'monkey') : nil
   end
   
+  # rspec
+  def mock_user
+    user = mock_model(Usuario, :id => 1,
+      :login  => 'user_name',
+      :name   => 'U. Surname',
+      :to_xml => "User-in-XML", :to_json => "User-in-JSON", 
+      :errors => [])
+    user
+  end  
 end

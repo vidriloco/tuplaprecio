@@ -2,6 +2,7 @@ class UsuariosController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   
+  
   before_filter do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
     # definidas en "only"
@@ -10,7 +11,7 @@ class UsuariosController < ApplicationController
 
   # render new.rhtml
   def new
-    @usuario = Usuario.new
+    @user = Usuario.new
     
     respond_to do |format|
       format.html # new.html.erb
@@ -29,10 +30,10 @@ class UsuariosController < ApplicationController
  
   def create
     #logout_keeping_session!
-    @usuario = Usuario.new(params[:usuario])
+    @user = Usuario.new(params[:usuario])
 
-    success = @usuario && @usuario.save
-    if success && @usuario.errors.empty?
+    success = @user && @user.save
+    if success && @user.errors.empty?
             # Protects against session fixation attacks, causes request forgery
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
@@ -66,4 +67,5 @@ class UsuariosController < ApplicationController
       end
     end
   end
+
 end

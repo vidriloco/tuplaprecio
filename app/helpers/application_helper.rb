@@ -40,8 +40,8 @@ module ApplicationHelper
   
   # Devuelve la salida (en HTML) para la barra de navegación superior izquierda
   def logged_in_as
-    return "<p><b>No logeado</b>" if session[:usuario_id].nil?
-    "<p>#{Usuario.salida_usuario(session[:usuario_id])} | #{link_to 'Cerrar Sesión', :controller => :sesiones, :action => :destroy}</p></p>"
+    return "<p><b>No logeado</b>" if current_user.nil?
+    "<p>#{Usuario.salida_usuario(current_user)} | #{link_to 'Cerrar Sesión', :controller => :sesiones, :action => :destroy}</p></p>"
   end
   
   # Método auxiliar que genera un diccionario con pares de valores. Utilizado para generar opciones para los select forms.
@@ -97,33 +97,6 @@ module ApplicationHelper
     end
   end
   
-  # FINAL
-  
-  def genera_atributos_faltantes_forma_para(objeto, f={})
-     if objeto.instance_of? Servicio
-       
-       "#{f.label :categoría} <br />
-         <p>
-             #{f.select :categoria_id, lista_hash_objetos_de_modelo("categoria"), {}, :onchange => remote_function(:url => { :controller => :servicios, 
-             :action => :update_conceptos}, :with => "'categoria_servicio='+this.options[this.selectedIndex].value"), :method => :get}
-         </p>
-        <br/>  
-        #{f.label :concepto} <br>
-        <p id='concepto_changer'>
-            #{ render :partial => 'servicios/concepto_form', :locals => {:f => f, :conceptos => nil}}
-        </p>
-        <br/>
-        #{f.label :detalles} <br/>
-        <p>
-            #{f.text_area :detalles, :cols => 50, :rows => 5} 
-        </p>
-        <br/>
-
-        "
-     elsif objeto.instance_of? Concepto
-       "<p><b>Categorias</b></p>#{ genera_checkboxes_para("categoria", objeto) }"
-     end
-   end
   
   def genera_forma_para(modelo,f)
       "<p>#{ f.select modelo.pluralize.to_sym, lista_hash_objetos_de_modelo(modelo) }</p>"

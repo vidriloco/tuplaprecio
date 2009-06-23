@@ -26,13 +26,13 @@ module UsuariosHelper
   #   link_to_usuario @usuario, :content_text => 'Your user page'
   #   # => <a href="/usuarios/3" title="barmy" class="nickname">Your user page</a>
   #
-  def link_to_usuario(usuario, options={})
-    raise "Invalid usuario" unless usuario
+  def link_to_user(user, options={})
+    raise "Usuario no válido" unless user
     options.reverse_merge! :content_method => :login, :title_method => :login, :class => :nickname
     content_text      = options.delete(:content_text)
     content_text    ||= usuario.send(options.delete(:content_method))
     options[:title] ||= usuario.send(options.delete(:title_method))
-    link_to h(content_text), usuario_path(usuario), options
+    link_to h(content_text), usuario_path(user), options
   end
 
   #
@@ -79,9 +79,9 @@ module UsuariosHelper
   # Link to the current user's page (using link_to_usuario) or to the login page
   # (using link_to_login_with_IP).
   #
-  def link_to_current_usuario(options={})
-    if current_usuario
-      link_to_usuario current_usuario, options
+  def link_to_current_user(options={})
+    if current_user
+      link_to_user current_user, options
     else
       content_text = options.delete(:content_text) || 'not signed in'
       # kill ignored options from link_to_usuario

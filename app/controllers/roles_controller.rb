@@ -17,17 +17,6 @@ class RolesController < ApplicationController
     end
   end
   
-  # GET /roles/new
-  # GET /roles/new.xml
-  def new
-    @rol = Rol.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-   #   format.xml  { render :xml => @rol }
-    end
-  end
-  
   # GET /roles/1
   # GET /roles/1.xml
   def show
@@ -42,23 +31,6 @@ class RolesController < ApplicationController
   # GET /roles/1/edit
   def edit
     @rol = Rol.find(params[:id])
-  end
-  
-  # POST /roles
-  # POST /roles.xml
-  def create
-    @rol = Rol.new(params[:rol])
-
-    respond_to do |format|
-      if @rol.save
-        flash[:notice] = 'Rol creado con éxito.'
-        format.html { redirect_to(@rol) }
-   #     format.xml  { render :xml => @rol, :status => :created, :location => @rol }
-      else
-        format.html { render :action => "new" }
-    #    format.xml  { render :xml => @rol.errors, :status => :unprocessable_entity }
-      end
-    end
   end
   
   # PUT /roles/1

@@ -1,0 +1,13 @@
+<div id="errores_metaservicio" class="errorExplanation" style="display:none"></div>
+
+<p>
+  <%= f.label :nombre %><br />
+  <%= f.text_field :nombre -%>
+</p>
+
+<p>
+  <%= f.label :metaconceptos, "Metaconceptos asignables a ésta categoría" %><br />
+  <%= f.collection_select :metaconcepto_ids, metaconceptos, :id, :nombre, 
+      { :selected => @metaservicio.metaconcepto_ids }, 
+      { :multiple => true, :nombre => 'metaservicio[metaconcepto_ids][]' } -%>
+</p>

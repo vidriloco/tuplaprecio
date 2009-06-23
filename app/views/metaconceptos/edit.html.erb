@@ -1,0 +1,12 @@
+<h1>Editing metaconcepto</h1>
+
+<% form_for(@metaconcepto) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @metaconcepto %> |
+<%= link_to 'Back', metaconceptos_path %>

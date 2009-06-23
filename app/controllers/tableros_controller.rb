@@ -14,7 +14,7 @@ class TablerosController < ApplicationController
   
   
   def index_nivel_tres
-    @usuario = Usuario.find(session[:usuario_id])
+    @usuario = current_user
     @estados = Estado.paginate :all, :page => params[:page], :per_page => 6
     respond_to do |format|
       format.html
@@ -23,27 +23,9 @@ class TablerosController < ApplicationController
   end
   
   def index_nivel_dos
-    @usuario = Usuario.find(session[:usuario_id])
+    @usuario = current_user
     @plaza = @usuario.responsabilidad
-  end
-  
-  def lista_ajax
-    @plaza = Plaza.find params[:id].gsub(/\D/,'')
-    modelo = params[:modelo]
-    if modelo.eql? 'Incorporado'
-      @instancias = Incorporado.paginate :all, :joins => {:paquete => :plazas}, :conditions => {:paquetes_plazas => {:plaza_id => @plaza.id}}, :page => params[:page]
-    elsif modelo.eql? 'Paquete'
-      @instancias = Paquete.paginate :all, :joins => :plazas, :conditions => {:paquetes_plazas => {:plaza_id => @plaza.id}}, :page => params[:page]
-    elsif modelo.eql? 'Especializado'
-      @instancias = Especializado.paginate :all, :joins => :plaza, :conditions => {:plaza_id => @plaza.id}, :page => params[:page]
-    end
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html "tablero-recargable", :partial => 'verAsociados', :locals => {:obj_desp => @instancias, :modelo => modelo, :plaza_id=> @plaza.id}
-        end
-      end
-    end
+    @modelos=["servicio", "paquete"]
   end
   
   # Responde con un cambio en el selector de plazas cada vez que se selecciona un estado
@@ -64,9 +46,9 @@ class TablerosController < ApplicationController
   def plaza_seleccionada
     plaza_id = params[:plaza_id].gsub(/\D/,'')
     render(:nothing => true) && return if plaza_id.blank?
-    @categorias = Categoria.find :all
     @plaza = Plaza.find plaza_id
-    @paquetes = Paquete.find :all, :joins => :plazas, :conditions => {:plazas => {:id => plaza_id}}
+    @paquetes = @plaza.paquetes
+    @servicios = @plaza.servicios
     
     respond_to do |format|
       format.js do

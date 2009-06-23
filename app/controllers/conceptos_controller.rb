@@ -5,7 +5,7 @@ class ConceptosController < ApplicationController
     # definidas en "only"
     controller.nivel_logged_in(["nivel 1"])
   end
-  
+
   # GET /conceptos
   # GET /conceptos.xml
   def index
@@ -14,19 +14,6 @@ class ConceptosController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @conceptos }
-    end
-  end
-  
-  def some
-    tipo = params[:tipo]
-    instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
-    if tipo.eql? "Servicio"
-      @conceptos = Concepto.paginate :all, :joins => :servicios, :conditions => {:servicios => {:id => params[:id]}}, :page => params[:page]
-    elsif tipo.eql? "Categoria"
-      @conceptos = Concepto.paginate :all, :joins => :categorias, :conditions => {:categorias_conceptos => {:categoria_id => params[:id]}}, :page => params[:page]
-    end
-    respond_to do |format|
-      format.html { render 'index.html.erb' }
     end
   end
 
@@ -103,20 +90,4 @@ class ConceptosController < ApplicationController
     end
   end
   
-  # Desliga dos objetos relacionados
-  def separar_objetos
-    id_super, submodelo, id_sub, identificador = recibir_parametros_comunes
-    
-    @subM=submodelo.capitalize.constantize.find(id_sub)
-    @concepto=Concepto.find(id_super)
-    eval("@concepto.#{submodelo.pluralize.downcase}.delete(@subM)")
-    
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html identificador, ""
-        end
-      end
-    end
-  end
 end

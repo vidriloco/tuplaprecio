@@ -12,6 +12,8 @@ pre {
   font-size: 11px;
 }
 
+h2 a { font-size:20px; color:#53475D;}
+
 a { text-decoration:none; color: #000; font-size:11px;}
 
 a:hover { font-style: italic;  }
@@ -21,16 +23,17 @@ a:hover { font-style: italic;  }
   margin-bottom:-13px;
 }
 
-#errorExplanation {
+.errorExplanation {
   margin-left: auto;
   margin-right: auto;
-  width: 400px;
+  width: 450px;
   padding-bottom: 12px;
   margin-bottom: 20px;
-  background-color: #F0D6DC;
+  background-color: #f0d6dc;
+  border: 1pt #BA2E2C solid;
 }
 
-#errorExplanation h2 {
+.errorExplanation h3 {
   text-align: left;
   font-weight: bold;
   padding: 5px 5px 5px 15px;
@@ -39,13 +42,13 @@ a:hover { font-style: italic;  }
   color: #fff;
 }
 
-#errorExplanation p {
+.errorExplanation p {
   color: #333;
   margin-bottom: 0;
   padding: 5px;
 }
 
-#errorExplanation ul li {
+.errorExplanation ul li {
   font-size: 12px;
   list-style: square;
 }
@@ -55,12 +58,7 @@ input.boton_justificado {
   margin-bottom: 20px;
 }
 
-.modelo_admin {
-  width: 500px;
-  padding: 7px;
-  margin-bottom: 10px;
-  background-color: #CEBBDC;
-}
+
 
 .modelo_relacionado_admin {
   width: 500px;
@@ -100,6 +98,9 @@ input.boton_justificado {
   width: 70px;	
 }
 
+
+/* Administrador container:general_admin:modelo_admin[*] */
+/* Mismo div  (los elementos iniciales contienen a los que siguen) */
 #general_admin {
   display:inline-block;
   position:absolute;
@@ -107,58 +108,156 @@ input.boton_justificado {
   right:20px;
 }
 
-#seleccion_actual {
-  width: 430px;
-  display:inline-block;
+.modelo_barra {
+  width: 960px;
+  margin-bottom: 15px;
+  background-color: #CEBBDC;
+}
+
+.m_i_modelo_barra {
+  padding: 8px;
+}
+
+/* Encargado container */
+
+.informativa_barra {
+  width: 960px;
+  margin-bottom: 15px;
+  background-color: #a3aaec;
+}
+
+/*
+* Estilos para tabla de instancias de modelo administrador action :index
+*/
+
+.tabla {
+	display:table;
+	width:900px; 
+	border-color:#675569;
+}
+
+.tabla_head_cell {
+	display: table-cell; 
+	font-size:11px;
+	font-weight:bold;
+	color:#A798C3;
+}
+
+.tabla_row {
+	display: table-row;
+}
+
+.tabla_cell {
+	display: table-cell; 
+	font-size:10px; 
+	text-align:center;
+	width: 200px;
+	
+}
+
+.tabla_interior {
+	padding: 10px;
+	margin: 10px;
+	background-color:#DBBFE7;
+}
+
+/*
+* Estilos para tabla de instancias de servicios bajo usuario agente
+*/
+
+.agente_servicios {
+	width:800px;
+}
+
+.agente_servicios tr th {
+	color:#899242;
+	width: 200px;
+	background-color:#E3F470;
+	height:10px;
+}
+
+.agente_servicios tr td {
+	font-size:11px;
+	text-align:center;
+	width: 200px;
+	border: 1px solid #E4ECFF;
+	background-color:#EFF9A2;
+	color:#798840;
+}
+
+#cabecera_agente_servicios {
+	margin-top:10px;
+	margin-bottom:5px;
+	width: 806px;
+}
+
+.agente_servicios_conceptos {
+	margin-bottom: 5px;
+	width:800px;
+}
+
+.agente_servicios_conceptos tr th {
+	font-size:10px;
+	width: 150px;
+	color:#647236;
+}
+
+.agente_servicios_conceptos tr td {
+	font-size:9px;
+	text-align:center;
+	color:#8A9B48;
+}
+
+.contenedor_servicios_conceptos {
+	border:1px solid #DEEE6D;
+	width: 800px;
+	margin-left:2px;
+	margin-bottom: 10px;
+}
+
+.agente_paquetes {
+	width:900px;
+	margin-top:10px;
+}
+
+.agente_paquetes tr th {
+	color:#D26C40;
+	width: 250px;
+	background-color:#FFDE9C;
+	height:10px;
+	font-size:10px;
+}
+
+.agente_paquetes tr td {
+	font-size: 9px;
+	color:#D29A6F;
+	text-align: center;
+}
+
+/*
+* Estilos para contendor de modelo administrador action :index
+*/
+
+.admin_modelo_titulo {
+  margin-top:10px;
+  text-align: center;
+}
+
+.container_admin {
+	background-color:#e7d8f6;
+	margin: 7px;
+	padding-top: 10px;	
+	padding-bottom: 10px;
+}
+
+.container_title {	
+	padding: 5px;
+	text-align: center;
 }
 
 /*
 * Estilos para controller: tablero
 */
-
-#general-panel {
-  display:inline-block;
-  position:absolute;
-  top:0;	
-}
-
-.panel-izquierdo-tablero {
-  width: 360px;
-  display:inline-block;
-  background-color:#E4DD79;
-}
-
-#titulo_del_panel {
-	margin:left;
-	width: 130px;
-	background-color:#C9C047;
-	color: ;
-}
-
-.atributo_en_panel {
-	background-color: #EBE999;
-	padding: 2px;
-	margin: 25px;
-}
-
-.tarea-izquierda-tablero {
-  width: 352px;
-  background-color:#EDD963;
-  margin-bottom: 10px;
-  padding:4px;
-}
-
-.tarea-anidada-izquierda-tablero {
-  width: 337px;
-  background-color:#D0EBCB;
-  margin-bottom: 10px;
-  padding:4px;
-}
-
-.contenedor_sub_tarea {
-  width: 340;
-  margin-left: 10px;
-}
 
 #tablero-recargable {
   width: 540px;
@@ -171,6 +270,7 @@ input.boton_justificado {
   position:relative;
   margin-top:30px;
   width: 980px;
+  margin-bottom: 50px;
 }
 
 #detallados_contenedor {
@@ -199,20 +299,6 @@ input.boton_justificado {
   margin-right: 5px;
 }
 
-#lista_de_servicios_categoria {
-  background-color: #BBDA72;
-  margin-top: 3px;
-  padding: 10px;	
-}
-
-.incorporado {
-  background-color:#8CCE6E;
-  padding: 4px;	
-  margin:2px;
-  width: 850px;
-  display:inline-block;
-}
-
 .plaza_titulos_formato {
   background-color:#93B3F6;
   margin-top: 20px;
@@ -222,19 +308,7 @@ input.boton_justificado {
   text-align: center;
 }
 
-#paquetes_contenedor {
-  background-color: #FFDE9C;
-  margin-top: 3px;
-  padding: 10px;
-}
 
-.paquete {
-  border: solid #F3CE77 1px;
-  padding: 4px;
-  margin:2px;
-  width: 850px;
-  display:inline-block;
-}
 
 .cerrar {
   font-weight: 900;
@@ -247,11 +321,6 @@ input.boton_justificado {
 
 /* estilos para listado de categorias y servicios de plaza*/
 
-.categoria_nombre {
-  padding: 15px;
-  width: 100px;
-  background-color:#7c9599;	
-}
 
 #plaza_info {
   background-color:#D5D1EE;
@@ -270,17 +339,6 @@ input.boton_justificado {
 #container {
   margin-top:30px;
   position: relative;
-}
-
-.form_container {
-	width:600px;	
-	margin-left: 375px;
-	background-color: #D1FFCC;
-}
-
-.container_title {	
-	padding: 5px;
-	text-align: center;
 }
 
 #form_title {

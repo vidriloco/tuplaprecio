@@ -1,0 +1,1 @@
+/administraciones/index actions for model estado should render partial _new_estado on action new

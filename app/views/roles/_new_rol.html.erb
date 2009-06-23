@@ -1,0 +1,21 @@
+<h3 class='admin_modelo_titulo'>Rol</h3>
+<div class='container_admin'>
+    
+<div class='form'>
+<% form_remote_for(@rol) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.submit 'Crear' %> | <%= link_to_remote "Cerrar", 
+                                          :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                          :with => "'modelo=#{modelo}'" %>
+  </p>
+<% end %>
+
+</div>
+
+</div>

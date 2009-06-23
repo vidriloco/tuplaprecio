@@ -1,0 +1,17 @@
+<h3 class='admin_modelo_titulo'>Paquete</h3>
+<div class='container_admin'>
+    
+    <div class='form'>
+
+<% form_remote_for(:paquete, @paquete, :url => paquete_path(@paquete), :html => {:method => :put}) do |f| %>
+
+  <%= render :partial => 'form_paquete', :locals => {:f => f, :plaza => @plaza} %>
+  <p>
+    <%= f.submit 'Guardar cambios' %> | <%= link_to_remote "Cerrar", 
+                                          :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                          :with => "'modelo=#{modelo}'" %>
+  </p>
+<% end %>
+</div>
+
+</div>

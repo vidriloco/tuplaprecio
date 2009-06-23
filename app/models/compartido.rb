@@ -29,6 +29,10 @@ module Compartido
           end
         end
         
+        def self.es_evaluable(atributo)
+          hash_atributos={}
+          return hash_atributos[atributo]
+        end
       end
   end
     
@@ -44,74 +48,8 @@ module Compartido
       return self.class.drop_attribute(symbol, atr)
     end
   
-    def agrega_desde(params, simbolo={})
-       if params.has_key? "usuarios"
-         if simbolo.eql? :update
-           self.usuarios=[]
-         end
-         params['usuarios'].each do |usuario_id|
-           usuario=Usuario.find(usuario_id)
-           unless self.usuarios.exists? usuario
-             self.usuarios << usuario
-           end
-         end
-       end
-       if params.has_key? "paquetes"
-         if simbolo.eql? :update
-            self.paquetes=[]
-         end
-         params['paquetes'].each do |paquete_id|
-           paquete=Paquete.find(paquete_id)
-           unless self.paquetes.exists? paquete
-             self.paquetes << paquete
-           end
-         end
-       end
-       if params.has_key? "servicios"
-         if simbolo.eql? :update
-             self.servicios=[]
-          end
-         params['servicios'].each do |servicio_id|
-           servicio=Servicio.find(servicio_id)
-           unless self.servicios.exists? servicio
-              self.servicios << servicio
-           end
-         end
-       end
-       if params.has_key? "incorporados"
-          if simbolo.eql? :update
-              self.incorporados=[]
-           end
-          params['incorporados'].each do |incorporado_id|
-            incorporado=Incorporado.find(incorporado_id)
-            unless self.incorporados.exists? incorporado
-               self.incorporados << incorporado
-            end
-          end
-       end
-       if params.has_key? "especializados"
-           if simbolo.eql? :update
-               self.especializados=[]
-            end
-           params['especializados'].each do |especializado_id|
-             especializado=Especializado.find(especializado_id)
-             unless self.especializados.exists? especializado
-                self.especializados << especializado
-             end
-           end
-       end
-       if params.has_key? "categorias"
-         if simbolo.eql? :update
-             self.categorias=[]
-         end
-         params['categorias'].each do |categoria_id|
-            categoria=Categoria.find(categoria_id)
-            unless self.categorias.exists? categoria
-              self.categorias << categoria
-            end
-         end
-       end
-     end
+ 
+
 
      # Devuelve un arreglo con los id's de los instancias de los modelos relacionados a ésta instancia
      # INPUT: Symbol, modelo relacionado (plural)

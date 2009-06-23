@@ -2,59 +2,54 @@ class Plaza < ActiveRecord::Base
   include Compartido
   
   belongs_to :estado
-  has_and_belongs_to_many :paquetes, :autosave => true
+  has_many :paquetes
   has_many :usuarios, :as => :responsabilidad, :autosave => true, :dependent => :nullify
-  has_many :especializados
-  has_many :servicios, :through => :especializados
-    
-  attributes_to_serialize :nombre, :associated => [:usuarios, :paquetes, :especializados, :estado]
-  
+  has_many :servicios
+      
   validates_presence_of :nombre, :message => "no puede ser vacío"
   
+  def self.atributos
+    ["nombre", "estado_", "usuarios_", "paquetes_", "servicios_"]
+  end
   
-  def presentaciones_que_comparto_con_plazas
-    relacion_de_compartir = Hash.new
-    self.presentaciones.each do |presentacion|
-      lista_de_plazas = presentacion.plazas.clone
-      lista_de_plazas.delete(self)
-      if relacion_de_compartir[presentacion].nil?
-        relacion_de_compartir[presentacion] = lista_de_plazas
-      else
-        relacion_de_compartir[presentacion] << lista_de_plazas
-      end
+  def estado_
+    estado.nombre
+  end
+  
+  def usuarios_
+    usuarios_nombres=usuarios.inject("") do |cdna, usuario|
+      cdna<<"#{usuario.login}, "
+      cdna
     end
-    relacion_de_compartir
+    return "-" if usuarios_nombres.blank?
+    usuarios_nombres.chop.chop
   end
   
-  def agrega_nuevo_paquete(paquete)
-    self.paquetes << paquete
-    self.save!
+  def paquetes_
+    paquetes_nombres=paquetes.inject("") do |cdna, pqte|
+      cdna << "[#{pqte.internet}, #{pqte.telefonia}, #{pqte.television} ], "
+      cdna
+    end
+    return "-" if paquetes_nombres.blank?
+    paquetes_nombres.chop.chop
   end
   
-  def agrega_nuevo_especializado(especializado)
-    self.especializados << especializado
-    self.save!
-  end
-    
-  def agrega_nuevo_usuario(usuario)
-    self.usuarios << usuario
-    self.save!
-  end
-  
-  def eliminar_usuario(usuario)
-    self.listado_de_usuarios.delete(usuario)
-  end
-  
-  def listado_de_usuarios
-    self.usuarios
-  end
-  
-  def expose
-    ["Plaza :", "#{nombre}"]
+  def servicios_
+    servicios_re = servicios.inject("") do |cdna, servicio|
+      cdna << "#{servicio.metasubservicio.nombre}, "
+      puts cdna
+      cdna
+    end
+    return "-" if servicios_re.blank?
+    servicios_re.chop.chop
   end
   
   def self.busca(algo)
     self.find(:all, :conditions => ["nombre LIKE ?", "%#{algo}%"])
+  end
+  
+  def to_label
+    "#{nombre}"
   end
   
 end
