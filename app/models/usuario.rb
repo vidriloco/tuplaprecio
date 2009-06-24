@@ -29,7 +29,7 @@ class Usuario < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :nombre, :password, :password_confirmation, :rol_id
 
-  def atributos
+  def self.atributos
     ["nombre", "login", "email", "con_rol"]
   end
 

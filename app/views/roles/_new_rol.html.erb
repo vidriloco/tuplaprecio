@@ -3,8 +3,8 @@
     
 <div class='form'>
 <% form_remote_for(@rol) do |f| %>
-  <%= f.error_messages %>
-
+    <div id="errores_rol" class="errorExplanation" style="display:none"></div>
+    
   <p>
     <%= f.label :nombre %><br />
     <%= f.text_field :nombre %>

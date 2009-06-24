@@ -86,19 +86,30 @@ class ServiciosController < ApplicationController
   end
   
   def cambios_de_div
-    @metaservicio = Metaservicio.find(params[:id])
-    @metaconceptos = @metaservicio.metaconceptos
-    @servicio = Servicio.new
-    @metaconceptos.size.times { @servicio.conceptos.build }
-    metasubservicios = @metaservicio.metasubservicios
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page["conceptos_forma"].replace_html :partial => "conceptos_forma"
-          page["conceptos_forma"].visual_effect :appear
-          page["metasubservicio_forma"].replace_html :partial => "metasubservicio_forma", 
-                                                     :locals => { :metasubservicios => metasubservicios }
-          page["metasubservicio_forma"].visual_effect :appear
+    if params[:id].blank?
+      respond_to do |format|
+        format.js do
+          render :update do |page|
+            page["conceptos_forma"].visual_effect :fade
+            page["metasubservicio_forma"].visual_effect :fade
+          end
+        end
+      end
+    else
+      @metaservicio = Metaservicio.find(params[:id])
+      @metaconceptos = @metaservicio.metaconceptos
+      @servicio = Servicio.new
+      @metaconceptos.size.times { @servicio.conceptos.build }
+      metasubservicios = @metaservicio.metasubservicios
+      respond_to do |format|
+        format.js do
+          render :update do |page|
+            page["conceptos_forma"].replace_html :partial => "conceptos_forma"
+            page["conceptos_forma"].visual_effect :appear
+            page["metasubservicio_forma"].replace_html :partial => "metasubservicio_forma", 
+                                                       :locals => { :metasubservicios => metasubservicios }
+            page["metasubservicio_forma"].visual_effect :appear
+          end
         end
       end
     end

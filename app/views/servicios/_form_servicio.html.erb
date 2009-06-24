@@ -4,7 +4,7 @@
 
 <p>
    <%= label_tag :metaservicio, "Tipo de Servicio" %><br />
-   <%= select_tag(:id, options_from_collection_for_select(@metaservicios, :id, :nombre), { :onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value")}) %>
+   <%= select_tag(:id, options_from_collection_for_select(@metaservicios.insert(0,Metaservicio.new), :id, :nombre), { :onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value"), :include_blank => true}) %>
 </p>
 
 <div id="metasubservicio_forma">

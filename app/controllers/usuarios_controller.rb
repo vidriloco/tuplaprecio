@@ -11,11 +11,7 @@ class UsuariosController < ApplicationController
 
   # render new.rhtml
   def new
-    @user = Usuario.new
-    
-    respond_to do |format|
-      format.html # new.html.erb
-    end
+    super
   end
   
   def some
@@ -33,17 +29,32 @@ class UsuariosController < ApplicationController
     @user = Usuario.new(params[:usuario])
 
     success = @user && @user.save
-    if success && @user.errors.empty?
-            # Protects against session fixation attacks, causes request forgery
-      # protection if visitor resubmits an earlier form using back
-      # button. Uncomment if you understand the tradeoffs.
-      # reset session
-      #self.current_usuario = @usuario # !! now logged in
-      redirect_back_or_default('/administraciones')
-      #flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
-    else
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => 'new'
+    respond_to do |format|
+      format.js do
+        if success && @user.errors.empty?
+          render :update do |page|
+              page["usuarios"].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                     :locals => {:modelo => "usuario"}
+              page["usuarios"].visual_effect :appear
+              page << "Nifty('div#usuarios');"
+              # Protects against session fixation attacks, causes request forgery
+              # protection if visitor resubmits an earlier form using back
+              # button. Uncomment if you understand the tradeoffs.
+              # reset session
+              #self.current_usuario = @usuario # !! now logged in
+
+              #flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
+          end
+        else
+          @errores=@user.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
+          render :update do |page|
+            page["errores_usuario"].replace_html :partial => "compartidos/errores_modelo", 
+                                                :locals => {:modelo => "usuario"} 
+            page["errores_usuario"].appear                                    
+            page["errores_usuario"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"
+          end
+        end
+      end
     end
   end
   

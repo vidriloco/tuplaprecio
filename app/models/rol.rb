@@ -7,7 +7,7 @@ class Rol < ActiveRecord::Base
   
   validates_presence_of :nombre, :message => "no puede ser vacío"
   
-  def atributos
+  def self.atributos
     ["nombre", "usuarios_"]
   end
   

@@ -1,0 +1,36 @@
+<h3 class='admin_modelo_titulo'>Rol</h3>
+<div class='container_admin'>
+    
+<% @usuario.password = @usuario.password_confirmation = nil %>
+<div class='form'>
+    <div id="errores_usuario" class="errorExplanation" style="display:none"></div>
+    
+<% form_remote_for(@usuario) do |f| -%>
+
+<p><%= label_tag 'nombre' %><br/>
+<%= f.text_field :nombre %></p>
+
+<p><%= label_tag 'login' %><br/>
+<%= f.text_field :login %></p>
+
+<p><%= label_tag 'email' %><br/>
+<%= f.text_field :email %></p>
+
+<p><%= label_tag 'password', 'Contraseña' %><br/>
+<%= f.password_field :password %></p>
+
+<p><%= label_tag 'password_confirmation', 'Confirma Contraseña' %><br/>
+<%= f.password_field :password_confirmation %></p>
+
+<p><%= label_tag 'rol' %><br/>
+<%= f.select :rol_id, lista_hash_objetos_de_modelo("rol") %>
+
+<p><%= submit_tag 'Registrar' %>| <%= link_to_remote "Cerrar", 
+                                      :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                      :with => "'modelo=#{modelo}'" %>
+</p>
+<% end -%>
+</div>
+
+
+</div>
