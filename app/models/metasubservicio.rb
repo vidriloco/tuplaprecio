@@ -1,7 +1,7 @@
 class Metasubservicio < ActiveRecord::Base
   include Compartido
   belongs_to :metaservicio
-  has_many :servicios
+  has_many :servicios, :dependent => :destroy
   
   validates_presence_of :nombre, :message => "no puede ir vacío"
   validates_presence_of :metaservicio_id, :message => "no puede ir en blanco"

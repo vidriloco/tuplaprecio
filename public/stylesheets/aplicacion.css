@@ -130,25 +130,18 @@ input.boton_justificado {
 * Estilos para tabla de instancias de modelo administrador action :index
 */
 
-.tabla {
-	display:table;
+.generica {
 	width:900px; 
 	border-color:#675569;
 }
 
-.tabla_head_cell {
-	display: table-cell; 
+.generica tr th {
 	font-size:11px;
 	font-weight:bold;
 	color:#A798C3;
 }
 
-.tabla_row {
-	display: table-row;
-}
-
-.tabla_cell {
-	display: table-cell; 
+.generica tr td {
 	font-size:10px; 
 	text-align:center;
 	width: 200px;
