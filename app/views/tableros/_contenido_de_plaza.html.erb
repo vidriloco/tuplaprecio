@@ -1,12 +1,18 @@
 <%= javascript_tag "Nifty('#plaza_info');
-                    Nifty('#servicios');
+                    Nifty('#servicios_agente');
+                    Nifty('#listado_de_preservicios');
                     Nifty('#paquetes')" %>
 
 <div id='plaza_info'>
     <h2><%=h @plaza.nombre -%></h2><h3><%=h @plaza.estado.nombre -%></h3>
 </div>
 
-<div class='plaza_titulos_formato' id='servicios'><h4>Servicios</h4></div>
+<div id='servicios_agente' class='inlined'><h4>Servicios</h4></div>
+
+<div id='listado_de_preservicios' class='inlined'>
+    <%= render :partial => 'lista_de_metaservicios', :locals => {:metaservicios => @metaservicios} %> 
+</div>
+
 <% if @servicios.empty? %>
     No hay servicios que mostrar
 <% else %>
@@ -41,7 +47,7 @@
                 <th>Comentarios</th>
             </tr>
             <% servicio.conceptos.each do |c| %>
-                <tr>
+                <tr class="distingible">
                     <td><%=h c.metaconcepto.nombre %></td>
                     <td><%=h c.disponibilidad %></td>
                     <td><%=h c.costo_ %></td>
@@ -60,24 +66,24 @@
     <table class="agente_paquetes">
         <tr>
             <th>Tipo de Paquete</th>
-            <th>Internet</th>
-            <th>Telefonía</th>
             <th>Televisión</th>
-            <th>Costo (día primero hasta día 10)</th>
-            <th>Costo (día 11 hasta último día de mes)</th>
+            <th>Telefonía</th>
+            <th>Internet</th>
+            <th>Costo por paquete (pagando 1 - 10)</th>
             <th>Costo Real</th>
             <th>Ahorro</th>
+            <th>Costo por paquete (pagando 11 - día último)</th>
         </tr>
         <% @paquetes.each do |paquete| %>
             <tr>
                 <td><%= paquete.tipo_de_paquete %></td>
-                <td><%= paquete.internet %></td>
-                <td><%= paquete.telefonia %></td>
                 <td><%= paquete.television %></td>
+                <td><%= paquete.telefonia %></td>
+                <td><%= paquete.internet %></td>
                 <td><%= paquete.costo_primer_mitad_de_mes %></td>
-                <td><%= paquete.costo_segunda_mitad_de_mes %></td>
                 <td><%= paquete.costo_real_ %></td>
                 <td><%= paquete.ahorro_ %></td>
+                <td><%= paquete.costo_segunda_mitad_de_mes %></td>
             </tr>
         <% end %>
     </table>

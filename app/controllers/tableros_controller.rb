@@ -49,7 +49,7 @@ class TablerosController < ApplicationController
     @plaza = Plaza.find plaza_id
     @paquetes = @plaza.paquetes
     @servicios = @plaza.servicios
-    
+    @metaservicios = Metaservicio.all
     respond_to do |format|
       format.js do
         render :partial => 'contenido_de_plaza'

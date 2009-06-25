@@ -1,0 +1,7 @@
+<% if metaservicios.empty? %>
+    El catálogo no ha sido llenado aún
+<% else %>
+    <% metaservicios.each do |m| %>
+        <span class='preservicio'><%= link_to_remote "#{m.nombre}", :url => {} %></span>
+    <% end %>
+<% end %>

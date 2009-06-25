@@ -11,6 +11,13 @@ class UsuariosController < ApplicationController
 
   # render new.rhtml
   def new
+    @roles = Rol.all
+    super
+  end
+  
+  def edit
+    @roles = Rol.all
+    @plazas = Plaza.all
     super
   end
   
@@ -27,6 +34,12 @@ class UsuariosController < ApplicationController
   def create
     #logout_keeping_session!
     @user = Usuario.new(params[:usuario])
+    if @user.rol.nombre.eql?("Encargado")
+      @user.responsabilidad=Plaza.find(params[:usuario][:responsabilidad_id])
+    elsif @user.rol.nombre.eql?("Administrador")
+      @user.responsabilidad=Administracion.first
+    end
+
 
     success = @user && @user.save
     respond_to do |format|
@@ -74,6 +87,25 @@ class UsuariosController < ApplicationController
       format.js do
         render :update do |page|
           page.replace_html identificador, ""
+        end
+      end
+    end
+  end
+  
+  def cambios_de_div
+    rol = Rol.find params[:id].gsub(/\D/,'')
+    plazas = Plaza.all
+    respond_to do |format|
+      format.js do
+        if rol.nombre.eql? "Encargado"
+          render :update do |page|
+            page['usuario_plaza_form'].replace_html :partial => "usuario_plaza_form" , :locals => {:plazas => plazas}
+            page['usuario_plaza_form'].visual_effect :appear
+          end
+        else
+          render :update do |page|
+            page['usuario_plaza_form'].visual_effect :fade
+          end
         end
       end
     end

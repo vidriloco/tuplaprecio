@@ -46,4 +46,20 @@ class PaquetesController < ApplicationController
     super
   end
 
+  def listing
+    plaza= Plaza.find(params[:plaza_id])
+    @objetos = plaza.paquetes
+    
+    respond_to do |format|
+       format.js do
+         render :update do |page|
+           page['paquetes'].replace_html :partial => "compartidos/listing_modelo", 
+                                              :locals => {:modelo => 'paquete'}
+           page['paquetes'].visual_effect :appear
+           page << "Nifty('div#paquetes');"
+         end
+       end
+    end
+  end
+
 end

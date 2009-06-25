@@ -154,12 +154,13 @@ input.boton_justificado {
 	background-color:#DBBFE7;
 }
 
+
 /*
 * Estilos para tabla de instancias de servicios bajo usuario agente
 */
 
 .agente_servicios {
-	width:800px;
+	width:978px;
 }
 
 .agente_servicios tr th {
@@ -167,6 +168,10 @@ input.boton_justificado {
 	width: 200px;
 	background-color:#E3F470;
 	height:10px;
+}
+
+tr.distingible:hover {
+	background-color:#E3F6AA;
 }
 
 .agente_servicios tr td {
@@ -181,12 +186,13 @@ input.boton_justificado {
 #cabecera_agente_servicios {
 	margin-top:10px;
 	margin-bottom:5px;
-	width: 806px;
+	width: 983px;
+	margin-left:-2px;
 }
 
 .agente_servicios_conceptos {
 	margin-bottom: 5px;
-	width:800px;
+	width:978px;
 }
 
 .agente_servicios_conceptos tr th {
@@ -203,13 +209,12 @@ input.boton_justificado {
 
 .contenedor_servicios_conceptos {
 	border:1px solid #DEEE6D;
-	width: 800px;
-	margin-left:2px;
+	width: 978px;
 	margin-bottom: 10px;
 }
 
 .agente_paquetes {
-	width:900px;
+	width:980px;
 	margin-top:10px;
 }
 
@@ -252,13 +257,6 @@ input.boton_justificado {
 * Estilos para controller: tablero
 */
 
-#tablero-recargable {
-  width: 540px;
-  position:absolute;
-  top:0;
-  right:50px;
-}
-
 #contenedor_cambiante {
   position:relative;
   margin-top:30px;
@@ -281,9 +279,17 @@ input.boton_justificado {
   right:18px;
 }
 
-#estado_en_lista {
-  padding-right: 10px;	
-  padding-left: 10px;
+#listado_de_preservicios {
+  width: 875px;
+  margin-bottom: 15px;
+  background-color: #ee7538;
+  padding: 5px;
+}
+
+.preservicio {
+	margin-left:20px;
+	background-color:#F97A3B;
+	padding:3px;
 }
 
 #titulo_en_contenedor {
@@ -292,11 +298,11 @@ input.boton_justificado {
   margin-right: 5px;
 }
 
-.plaza_titulos_formato {
+#servicios_agente {
   background-color:#93B3F6;
   margin-top: 20px;
   margin-bottom: 5px;
-  padding: 3px;
+  padding: 5px;
   width:80px;
   text-align: center;
 }
@@ -363,71 +369,7 @@ input.boton_justificado {
 	margin-top:15px;
 }
 
-/*
-*  TODO: Que el container haga un autoresize de lo que está dentro
-*/
 
-.form_links_container {
-	margin: 15px;
-	margin-top: 0;
-	background-color:#657D64;
-	text-align: center;
-}
-
-#tiny {
-	width: 50px;
-}
-
-#smaller {
-	width: 100px;
-}
-
-#small {
-	width: 160px;
-}
-
-#medium {
-	width: 260px;
-}
-
-#large {
-	width:330px;
-}
-
-.form_links_back {
-	margin-left: 15px;
-	background-color:#657D64;
-	width:50px;
-	text-align: center;
-}
-
-#regresar {
-	color:#ffffff;
-}
-
-#related_object_title {
-	width: 100px;
-	background-color:#898F7E;
-	color: #BEC5AE;
-}
-
-.related_object_container {
-	width: 500px;
-	padding: 10px;
-	margin-bottom:10px;
-	background-color:#BEC5AE;
-}
-
-.related_object_links {
-	width: 80px;
-	background-color:#DBE3C8;
-	text-align: center;
-}
-
-.inner_related_object {
-	border:1px solid #979BA5;
-	margin: 10px;
-}
 
 /*
 * Estilos relacionados a la tabla

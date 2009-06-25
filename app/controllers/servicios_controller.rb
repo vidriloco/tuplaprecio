@@ -49,7 +49,7 @@ class ServiciosController < ApplicationController
   def edit
     @plaza = current_user.responsabilidad
     @metaservicios = Metaservicio.all
-    @servicio= Servicio.find(params[:id])
+    @servicio= Servicio.find(params[:id].gsub(/\D/,''))
     metaservicio = @servicio.metasubservicio.metaservicio
     @metasubservicios = metaservicio.metasubservicios
     @from_edit="EDIT"
@@ -57,7 +57,7 @@ class ServiciosController < ApplicationController
   end
   
   def update
-    @servicio = Servicio.find(params[:id])
+    @servicio = Servicio.find(params[:id].gsub(/\D/,''))
     if params.has_key?(:conceptos)
       params[:conceptos].each_key do |concepto_key| 
         @servicio.conceptos.find(concepto_key).update_attributes(params[:conceptos]["#{concepto_key}"]) 
@@ -85,6 +85,22 @@ class ServiciosController < ApplicationController
     end
   end
   
+  def listing
+    plaza= Plaza.find(params[:plaza_id])
+    @objetos = plaza.servicios
+    
+    respond_to do |format|
+       format.js do
+         render :update do |page|
+           page['servicios'].replace_html :partial => "compartidos/listing_modelo", 
+                                              :locals => {:modelo => 'servicio'}
+           page['servicios'].visual_effect :appear
+           page << "Nifty('div#servicios');"
+         end
+       end
+    end
+  end
+  
   def cambios_de_div
     if params[:id].blank?
       respond_to do |format|
@@ -96,7 +112,7 @@ class ServiciosController < ApplicationController
         end
       end
     else
-      @metaservicio = Metaservicio.find(params[:id])
+      @metaservicio = Metaservicio.find(params[:id].gsub(/\D/,''))
       @metaconceptos = @metaservicio.metaconceptos
       @servicio = Servicio.new
       @metaconceptos.size.times { @servicio.conceptos.build }

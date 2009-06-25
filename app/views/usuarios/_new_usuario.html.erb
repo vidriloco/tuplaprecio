@@ -1,4 +1,4 @@
-<h3 class='admin_modelo_titulo'>Rol</h3>
+<h3 class='admin_modelo_titulo'>Usuario</h3>
 <div class='container_admin'>
     
 <% @usuario.password = @usuario.password_confirmation = nil %>
@@ -23,7 +23,14 @@
 <%= f.password_field :password_confirmation %></p>
 
 <p><%= label_tag 'rol' %><br/>
-<%= f.select :rol_id, lista_hash_objetos_de_modelo("rol") %>
+<%= f.collection_select :rol_id, @roles, :id, :nombre, {}, {:onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value"), :include_blank => true} %>
+</p>
+
+<div id="usuario_plaza_form">
+<% unless @usuario.responsabilidad_id.nil? %>    
+    <%= render :partial => "usuario_plaza_form", :locals => {:plazas => @plazas} %>
+<% end %>
+</div>
 
 <p><%= submit_tag 'Registrar' %>| <%= link_to_remote "Cerrar", 
                                       :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
