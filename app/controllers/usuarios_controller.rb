@@ -17,7 +17,7 @@ class UsuariosController < ApplicationController
   
   def edit
     @roles = Rol.all
-    @plazas = Plaza.all
+    @estados = Estado.all
     super
   end
   
@@ -92,20 +92,35 @@ class UsuariosController < ApplicationController
     end
   end
   
-  def cambios_de_div
-    rol = Rol.find params[:id].gsub(/\D/,'')
-    plazas = Plaza.all
+  def rol_a_estado
+    rol = Rol.find params[:rol_id].gsub(/\D/,'')
+    estados = Estado.all
+    
     respond_to do |format|
       format.js do
         if rol.nombre.eql? "Encargado"
           render :update do |page|
-            page['usuario_plaza_form'].replace_html :partial => "usuario_plaza_form" , :locals => {:plazas => plazas}
-            page['usuario_plaza_form'].visual_effect :appear
+            page['usuario_estado_form'].replace_html :partial => "usuario_estado_form" , :locals => {:estados => estados}
+            page['usuario_estado_form'].visual_effect :appear
           end
         else
           render :update do |page|
-            page['usuario_plaza_form'].visual_effect :fade
+            page['usuario_estado_form'].visual_effect :fade
           end
+        end
+      end
+    end
+  end
+  
+  def estado_a_plaza
+    estado = Estado.find params[:estado_id].gsub(/\D/,'')
+    plazas = estado.plazas
+    
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page['usuario_plaza_form'].replace_html :partial => "usuario_plaza_form" , :locals => {:plazas => plazas}
+          page['usuario_plaza_form'].visual_effect :appear
         end
       end
     end

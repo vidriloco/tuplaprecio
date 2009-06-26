@@ -1,0 +1,16 @@
+<% if metasubservicios.empty? %>
+    <div id='preservicio' class='inlined'><h4>El catálogo no ha sido llenado aún</h4></div>
+    <div id='preservicio' class='inlined'>
+        <b><%= link_to_remote 'Atrás', :url => {:action => :recarga_metaservicios} %></b>
+    </div>
+<% else %>
+    <% metasubservicios.each do |m| %>
+        <div id='preservicio' class='inlined'>
+            <%= link_to_remote "#{m.nombre}", :url => {:action => 'metasubservicio_seleccionado', :id => m.id} %>
+        </div>
+    <% end %>
+    <div id='preservicio' class='inlined'>
+        <b><%= link_to_remote 'Atrás', :url => {:action => :recarga_metaservicios} %></b>
+    </div>
+    
+<% end %>

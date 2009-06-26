@@ -1,0 +1,7 @@
+<p><%= label_tag 'estado'%><br/>
+    <%= select_tag :estado, options_from_collection_for_select(estados.insert(0, Estado.new), :id, :nombre), 
+                   {:onchange => remote_function(:url => {:action => 'estado_a_plaza'}, :with => "'estado_id='+this.value")} 
+    %>
+</p>
+
+<div id="usuario_plaza_form"></div>

@@ -8,7 +8,7 @@
   <%= collection_select(:estado, :id, @estados, :id, :nombre,{:include_blank => true }, :onchange => remote_function(
                         :update => 'selector_de_plaza',
                         :url => { :action => :estado_seleccionado}, 
-                                  :with => "'estado_id='+this.options[this.selectedIndex].value")) %>
+                                  :with => "'id='+this.options[this.selectedIndex].value")) %>
    &nbsp;&nbsp;
   <b>Plaza </b>
   <div id='selector_de_plaza' class='inlined'>

@@ -1,7 +1,9 @@
 <% if metaservicios.empty? %>
-    El catálogo no ha sido llenado aún
+    <div id='preservicio'><h3>El catálogo no ha sido llenado aún</h3></div>
 <% else %>
     <% metaservicios.each do |m| %>
-        <span class='preservicio'><%= link_to_remote "#{m.nombre}", :url => {} %></span>
+        <div id='preservicio' class='inlined'>
+            <%= link_to_remote "#{m.nombre}", :url => {:action => 'metaservicio_seleccionado', :id => m.id} %>
+        </div>
     <% end %>
 <% end %>

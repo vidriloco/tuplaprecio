@@ -26,12 +26,7 @@ class Plaza < ActiveRecord::Base
   end
   
   def paquetes_
-    paquetes_nombres=paquetes.inject("") do |cdna, pqte|
-      cdna << "[#{pqte.internet}, #{pqte.telefonia}, #{pqte.television} ], "
-      cdna
-    end
-    return "-" if paquetes_nombres.blank?
-    paquetes_nombres.chop.chop
+    paquetes.size
   end
   
   def servicios_

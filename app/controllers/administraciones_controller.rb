@@ -20,8 +20,7 @@ class AdministracionesController < ApplicationController
                "metaconcepto", 
                "metaservicio", 
                "metasubservicio",
-               "usuario", 
-               "rol"]
+               "usuario"]
     respond_to do |format|
       format.html # index.html.erb
     end

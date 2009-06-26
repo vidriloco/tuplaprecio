@@ -1,3 +1,3 @@
 <p><%= label_tag 'plaza', "Asignar a plaza" %><br/>
-<%= collection_select :usuario, :responsabilidad_id, plazas, :id, :nombre %>
+<%= collection_select :usuario, :responsabilidad_id, plazas, :id, :nombre, :include_blank => true %>
 </p>

@@ -7,5 +7,5 @@
 
 <p>
     <%= f.label :metaservicio, "Tipo de Servicio" %><br />
-    <%= f.collection_select :metaservicio_id, metaservicios, :id, :nombre %>
+    <%= f.collection_select :metaservicio_id, metaservicios, :id, :nombre, :include_blank => true %>
 </p>

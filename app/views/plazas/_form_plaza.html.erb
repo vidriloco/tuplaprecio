@@ -8,5 +8,5 @@
     
     <p>
        <%= f.label :estado %><br />
-       <%= f.collection_select :estado_id, estados, :id, :nombre %>
+       <%= f.collection_select :estado_id, estados, :id, :nombre, :include_blank => true %>
     </p>
