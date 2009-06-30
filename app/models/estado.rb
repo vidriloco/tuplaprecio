@@ -30,4 +30,22 @@ class Estado < ActiveRecord::Base
     plazas_nombres.chop.chop
   end
   
+  # Realiza una busqueda con match usando LIKE en la base de datos en el atributo nombre,
+  # el cuál varios modelos tienen
+  def self.busca(algo)
+    resultados = [self.to_s]
+    fragmento = "nombre ILIKE ?"
+    if algo.length > 1
+      campo="nombre ILIKE ? OR "
+      campo=campo*(algo.length-1) + " #{fragmento}"
+      array_condition=[campo]
+      algo.each do |a|
+        array_condition << "%#{a}%"
+      end
+       resultados + self.find(:all, :conditions => array_condition)
+    else
+      resultados + self.find(:all, :conditions => [fragmento, "%#{algo}%"])
+    end
+  end
+  
 end

@@ -12,23 +12,6 @@ module Compartido
           3
         end
         
-        # Realiza una busqueda con match usando LIKE en la base de datos en el atributo nombre,
-        # el cuál varios modelos tienen
-        def self.busca(algo)
-          fragmento = "nombre LIKE ?"
-          if algo.length > 1
-            campo="nombre LIKE ? OR "
-            campo=campo*(algo.length-1) + " #{fragmento}"
-            array_condition=[campo]
-            algo.each do |a|
-              array_condition << "%#{a}%"
-            end
-            [self.to_s] + self.find(:all, :conditions => array_condition)
-          else
-            [self.to_s] + self.find(:all, :conditions => [fragmento, "%#{algo}%"])
-          end
-        end
-        
         def self.es_evaluable(atributo)
           hash_atributos={}
           return hash_atributos[atributo]

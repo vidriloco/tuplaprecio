@@ -33,7 +33,7 @@ class Concepto < ActiveRecord::Base
   end
   
   def costo_
-    return "$ #{costo}" if metaconcepto_es_tipo_a? && disponible
+    return "$ #{costo.to_s(2)}" if metaconcepto_es_tipo_a? && disponible
     "-"
   end
   

@@ -40,25 +40,25 @@ class Paquete < ActiveRecord::Base
   end
   
   def costo_primer_mitad_de_mes
-    return "$ #{costo_1_10}"
+    return "$ #{costo_1_10.to_s(2)}"
   end
   
   def costo_segunda_mitad_de_mes
-    return "$ #{costo_11_31}"
+    return "$ #{costo_11_31.to_s(2)}"
   end
   
   def costo_real_
-    return "$ #{costo_real}"
+    return "$ #{costo_real.to_s(2)}"
   end
   
   def ahorro_
-    return "$ #{ahorro}"
+    return "$ #{ahorro.to_s(2)}"
   end
   
   def self.busca(algo)
     resultados = ["Paquete"]
     
-    sentencia_no_num = "internet LIKE ? OR telefonia LIKE ? OR television LIKE ?"
+    sentencia_no_num = "internet ILIKE ? OR telefonia ILIKE ? OR television ILIKE ?"
     sentencia_num = "costo_1_10 = ? OR costo_11_31 = ? OR costo_real = ? OR ahorro = ?"
     
     arreglo_de_condiciones = []

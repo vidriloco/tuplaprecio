@@ -58,7 +58,7 @@ class Servicio < ActiveRecord::Base
   
   def self.busca(algo)
     resultados = ["Servicio"]
-    fragmento = "metasubservicios.nombre LIKE ? OR metaservicios.nombre LIKE ?"
+    fragmento = "metasubservicios.nombre ILIKE ? OR metaservicios.nombre ILIKE ?"
     
     arreglo_de_condiciones = []
     sql_statements = String.new
