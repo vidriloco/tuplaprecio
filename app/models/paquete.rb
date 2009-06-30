@@ -40,21 +40,47 @@ class Paquete < ActiveRecord::Base
   end
   
   def costo_primer_mitad_de_mes
-    return "$ #{costo_1_10} pesos"
+    return "$ #{costo_1_10}"
   end
   
   def costo_segunda_mitad_de_mes
-    return "$ #{costo_11_31} pesos"
+    return "$ #{costo_11_31}"
   end
   
   def costo_real_
-    return "$ #{costo_real} pesos"
+    return "$ #{costo_real}"
   end
   
   def ahorro_
-    return "$ #{ahorro} pesos"
+    return "$ #{ahorro}"
   end
   
+  def self.busca(algo)
+    resultados = ["Paquete"]
+    
+    sentencia_no_num = "internet LIKE ? OR telefonia LIKE ? OR television LIKE ?"
+    sentencia_num = "costo_1_10 = ? OR costo_11_31 = ? OR costo_real = ? OR ahorro = ?"
+    
+    arreglo_de_condiciones = []
+    sql_statements = String.new
+    algo.each do |a|
+      if a.numeric?
+        sql_statements << sentencia_num + " OR " 
+        arreglo_de_condiciones += ["#{a}"]*4
+        
+        sql_statements << sentencia_no_num + " OR " 
+        arreglo_de_condiciones += ["%#{a}%"]*3
+      else
+        sql_statements << sentencia_no_num + " OR "
+        arreglo_de_condiciones += ["%#{a}%"]*3
+      end
+    end
+    sql_statements = sql_statements[0, sql_statements.length - 4]
+    arreglo_de_condiciones.insert(0, sql_statements)
+    resultados +=  self.find(:all, :conditions => arreglo_de_condiciones) 
+
+    resultados
+  end
   
   def expose
     ["Paquete :", "#{nombre}"]

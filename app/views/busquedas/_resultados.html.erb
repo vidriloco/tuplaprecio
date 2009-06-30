@@ -1,20 +1,76 @@
-<%= javascript_tag("Nifty('#contenedor_de_resultados');Nifty('.resultado');") -%>
-<div id='contenedor_de_resultados'>
-    <div class='cerrar' onclick="<%= remote_function(:url => {:action => :esconde_div}, 
-                                                             :with=> "'div_id='+'area_de_resultados'")%>">x</div>
-    Encontrados <b><%=h @resultados.size %> resultados</b> que contienen: <%=h @cosa_a_buscar %>
-    
-    <div id='resultados'>
-        <% @resultados.each do |resultado| %>
-            <div class='resultado'>
-                <% datos= resultado.expose %>
-                <b>> <%=h datos[0] %> </b> <%=h datos[1] %>   
-                <div class='boton_derecha'>
-                    <%= button_to_remote "Más Detalle", :url=> {:action => :detalle, :id => resultado.id},
-                                                        :with => "'tipo='+'#{resultado.class.to_s}'" %>
+<%= javascript_tag("Nifty('.contenedor_de_resultados')") -%>
+ 
+        <% @resultados.each_key do |key| %>
+        
+            <% if key.eql?("Estado") %>
+                <% @estados = @resultados.delete(key) %>
+                <% unless @estados.empty? %>
+                    <div class='contenedor_de_resultados'>
+                        <div class='resultado'>
+                            <% if @estados.size == 1 %>
+                                <h3>Estado</h3>
+                            <% else %>
+                                <h3>Estados</h3>
+                            <% end %>
+                            <% @estados.each do |estado| %>
+                                <%= estado.nombre %>
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+            <% elsif key.eql?("Plaza") %>
+                <% @plazas = @resultados.delete(key) %>
+                <% unless @plazas.empty? %>
+                    <div class='contenedor_de_resultados'>
                     
-                </div>             
-            </div>
+                        <div class='resultado'>
+                            <% if @plazas.size == 1 %>
+                                <h3>Plaza</h3>
+                            <% else %>
+                                <h3>Plazas</h3>
+                            <% end %>
+                            <% @plazas.each do |plaza| %>
+                                <%= plaza.nombre %>
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+            <% elsif key.eql?("Paquete") %>
+                <% @paquetes = @resultados.delete(key) %>
+                <% unless @paquetes.empty? %>
+                
+                    <div class='resultado'>
+                        <% if @paquetes.size == 1 %>
+                            <h3>Paquete</h3>
+                        <% else %>
+                            <h3>Paquetes</h3>
+                        <% end %>
+                    </div>
+                <% @bs = 1 %>
+                <%= render :partial => "paquetes/listing_paquetes", :object => [@paquetes, @bs] %>
+                <br/>    
+                <% end %>
+            <% elsif key.eql?("Servicio") %>
+                <% @servicios = @resultados.delete(key) %>
+                <% unless @servicios.empty? %>
+                    <div class='resultado'>
+                        <% if @servicios.size == 1 %>
+                            <h3>Servicio</h3>
+                        <% else %>
+                            <h3>Servicios</h3>
+                        <% end %>
+                    </div>
+                <% @bs = 1 %>
+                <%= render :partial => "servicios/listing_servicios", :object => [@servicios, @bs] %>
+                <% end %>
+            <% end %>        
         <% end %>
+        <% cuenta = @servicios.size + @estados.size + @paquetes.size + @plazas.size %>
+        <% if cuenta == 1 %>
+            Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
+        <% else %>
+            Encontrados <b><%= cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
+        <% end %>
+        
     </div>
 </div>

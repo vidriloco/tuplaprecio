@@ -47,8 +47,8 @@ class PaquetesController < ApplicationController
   end
 
   def listing
-    plaza= Plaza.find(params[:plaza_id])
-    @objetos = plaza.paquetes
+    @plaza= Plaza.find cookies['plaza']
+    @objetos = @plaza.paquetes
     
     respond_to do |format|
        format.js do

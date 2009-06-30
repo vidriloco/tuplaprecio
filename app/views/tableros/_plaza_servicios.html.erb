@@ -3,39 +3,5 @@
     <h3>No hay servicios que mostrar</h3>
     <br/>
 <% else %>
-    
-    <% @servicios.each do |servicio| %>
-    <div class="contenedor_servicios_conceptos">
-        <table class="agente_servicios">
-        <tr>
-            <% Servicio.atributos_agente.each do |atributo| %>
-                <% if Servicio.es_evaluable(atributo) %>
-                    <td><%=h eval servicio.send(atributo) -%></td>
-                <% else %>
-                    <td><%=h servicio.send(atributo) -%></td>
-                <% end %>
-            <% end %>
-        </tr>
-        </table>
-        
-        <table class="agente_servicios_conceptos">
-            <tr>
-                <th>Concepto</th>
-                <th style="width:10px;">Disponible</th>
-                <th style="width:50px;">Costo</th>
-                <th style="width:10px;">Valor</th>
-                <th>Comentarios</th>
-            </tr>
-            <% servicio.conceptos.each do |c| %>
-                <tr class="distingible">
-                    <td><%=h c.metaconcepto.nombre %></td>
-                    <td style="width:10px;"><%=h c.disponibilidad %></td>
-                    <td style="width:50px;"><%=h c.costo_ %></td>
-                    <td style="width:10px;"><%=h c.valor_ %></td>
-                    <td><%=h c.comentarios %></td>
-                </tr>
-            <% end %>
-        </table>
-    </div>
-    <% end %>
+    <%= render :partial => "servicios/listing_servicios", :object => @servicios %>
 <% end %>

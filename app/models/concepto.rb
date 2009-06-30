@@ -3,10 +3,10 @@ class Concepto < ActiveRecord::Base
   
   belongs_to :metaconcepto
   belongs_to :servicio
-  validates_numericality_of :costo, :if => :metaconcepto_es_tipo_a?
-  validates_numericality_of :valor, :if => :metaconcepto_es_tipo_b?
-  validates_presence_of :costo, :if => :metaconcepto_es_tipo_a?
-  validates_presence_of :valor, :if => :metaconcepto_es_tipo_b?
+  validates_numericality_of :costo, :if => :metaconcepto_es_tipo_a?, :unless => :no_disponible?
+  validates_numericality_of :valor, :if => :metaconcepto_es_tipo_b?, :unless => :no_disponible?
+  validates_presence_of :costo, :if => :metaconcepto_es_tipo_a?, :unless => :no_disponible?
+  validates_presence_of :valor, :if => :metaconcepto_es_tipo_b?, :unless => :no_disponible?
     
   def metaconcepto_es_tipo_a?
     return true if metaconcepto.nil?
@@ -17,13 +17,14 @@ class Concepto < ActiveRecord::Base
     return true if metaconcepto.nil?
     metaconcepto.tipo.eql? "B"
   end
+  
+  def no_disponible?
+    return true unless disponible
+    false
+  end
     
   def self.per_page
     5
-  end
-  
-  def costo_
-    return "$ #{costo} pesos"
   end
   
   def disponibilidad
@@ -32,12 +33,12 @@ class Concepto < ActiveRecord::Base
   end
   
   def costo_
-    return "$ #{costo} pesos" if metaconcepto_es_tipo_a?
+    return "$ #{costo}" if metaconcepto_es_tipo_a? && disponible
     "-"
   end
   
   def valor_
-    return valor if metaconcepto_es_tipo_b?
+    return valor if metaconcepto_es_tipo_b? && disponible
     "-"
   end
   

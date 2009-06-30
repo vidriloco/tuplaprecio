@@ -7,6 +7,16 @@
     <h2><%=h @plaza.nombre -%></h2><h3><%=h @plaza.estado.nombre -%></h3>
 </div>
 
+<div id='paquetes_agente'><h4>Paquetes</h4></div>
+<% if @paquetes.empty? %>
+    <br/>
+    <h3>No hay paquetes que mostrar</h3>
+    <br/>
+<% else %>
+    <%= render :partial => "paquetes/listing_paquetes", :object => @paquetes %>
+<% end %>
+
+
 <div id='servicios_agente' class='inlined'><h4>Servicios</h4></div>
 
 <div id='listado_de_preservicios' class='inlined'>
@@ -15,34 +25,3 @@
 
 <div id='plaza_servicios'></div>
 
-<div id='paquetes_agente'><h4>Paquetes</h4></div>
-<% if @paquetes.empty? %>
-    <br/>
-    <h3>No hay paquetes que mostrar</h3>
-    <br/>
-<% else %>
-    <table class="agente_paquetes">
-        <tr>
-            <th>Tipo de Paquete</th>
-            <th>Televisión</th>
-            <th>Telefonía</th>
-            <th>Internet</th>
-            <th>Costo por paquete (pagando 1 - 10)</th>
-            <th>Costo Real</th>
-            <th>Ahorro</th>
-            <th>Costo por paquete (pagando 11 - día último)</th>
-        </tr>
-        <% @paquetes.each do |paquete| %>
-            <tr>
-                <td><%= paquete.tipo_de_paquete %></td>
-                <td><%= paquete.television %></td>
-                <td><%= paquete.telefonia %></td>
-                <td><%= paquete.internet %></td>
-                <td><%= paquete.costo_primer_mitad_de_mes %></td>
-                <td><%= paquete.costo_real_ %></td>
-                <td><%= paquete.ahorro_ %></td>
-                <td><%= paquete.costo_segunda_mitad_de_mes %></td>
-            </tr>
-        <% end %>
-    </table>
-<% end %>

@@ -170,8 +170,12 @@ input.boton_justificado {
 	height:10px;
 }
 
-tr.distingible:hover {
+tr.servicio_distingible:hover {
 	background-color:#E3F6AA;
+}
+
+tr.paquete_distingible:hover {
+	background-color:#FFC87B;
 }
 
 .agente_servicios tr td {
@@ -180,7 +184,7 @@ tr.distingible:hover {
 	width: 200px;
 	border: 1px solid #E4ECFF;
 	background-color:#EFF9A2;
-	color:#798840;
+	color:#485026;
 }
 
 #cabecera_agente_servicios {
@@ -196,13 +200,13 @@ tr.distingible:hover {
 }
 
 .agente_servicios_conceptos tr th {
-	font-size:10px;
+	font-size:11px;
 	width: 150px;
 	color:#647236;
 }
 
 .agente_servicios_conceptos tr td {
-	font-size:9px;
+	font-size:12px;
 	text-align:center;
 	color:#8A9B48;
 }
@@ -223,12 +227,12 @@ tr.distingible:hover {
 	width: 250px;
 	background-color:#FFDE9C;
 	height:10px;
-	font-size:10px;
+	font-size:11px;
 }
 
 .agente_paquetes tr td {
-	font-size: 9px;
-	color:#D29A6F;
+	font-size: 11px;
+	color:#974F2A;
 	text-align: center;
 }
 
@@ -490,7 +494,7 @@ tr.distingible:hover {
   margin-bottom: 5px;
 }
 
-#contenedor_de_resultados {
+.contenedor_de_resultados {
   background-color:#B5CE58;
   width: 963px;
   padding: 10px;

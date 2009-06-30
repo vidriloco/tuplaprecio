@@ -19,8 +19,7 @@
                   <%= button_to_remote genero_de(modelo, "Nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>
               </div>
               <div class='inlined_short'>
-                  <%= button_to_remote "Ver todos", :url => {:controller => modelo.pluralize, :action => 'listing'},
-                                                    :with => "'plaza_id=#{@plaza.id}'"%>
+                  <%= button_to_remote "Ver todos", :url => {:controller => modelo.pluralize, :action => 'listing'} %>
               </div>
           </div>
       </div>

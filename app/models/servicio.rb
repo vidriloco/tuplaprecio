@@ -35,11 +35,19 @@ class Servicio < ActiveRecord::Base
   
   def número_de_conceptos
     numero = conceptos.size
+    disponibles = conceptos.inject(0) {|i,c| i += 1 if c.disponible; i }
     return "'0 conceptos'" if numero==0
-    if numero==1
-      no_conceptos = "#{numero} concepto" 
+    
+    if disponibles==1
+      no_disponibles = "#{disponibles} disponible"
     else
-      no_conceptos = "#{numero} conceptos"
+      no_disponibles = "#{disponibles} disponibles"
+    end
+    
+    if numero==1
+      no_conceptos = "#{numero} concepto (#{no_disponibles})" 
+    else
+      no_conceptos = "#{numero} conceptos (#{no_disponibles})"
     end
     "link_to_remote '#{no_conceptos}', :url => {:action => 'detalles_asociados', :id => #{id}, :accion => 'mostrar' }"
   end
@@ -49,18 +57,20 @@ class Servicio < ActiveRecord::Base
   end
   
   def self.busca(algo)
-    fragmento = "detalles LIKE ?"
-    if algo.length > 1
-      campo="detalles LIKE ? OR "
-      campo=campo*(algo.length-1) + " #{fragmento}"
-      array_condition=[campo]
-      algo.each do |a|
-        array_condition << "%#{a}%"
-      end
-      self.find(:all, :conditions => array_condition)
-    else
-      self.find(:all, :conditions => [fragmento, "%#{algo}%"])
+    resultados = ["Servicio"]
+    fragmento = "metasubservicios.nombre LIKE ? OR metaservicios.nombre LIKE ?"
+    
+    arreglo_de_condiciones = []
+    sql_statements = String.new
+    algo.each do |a|
+      sql_statements << fragmento + " OR "
+      arreglo_de_condiciones += ["%#{a}%"]*2
     end
+    sql_statements = sql_statements[0, sql_statements.length - 4]
+    arreglo_de_condiciones.insert(0, sql_statements)
+    resultados +=  self.find(:all, :include => [:plaza,{:metasubservicio => :metaservicio}], :conditions => arreglo_de_condiciones) 
+    
+    resultados
   end
   
   protected

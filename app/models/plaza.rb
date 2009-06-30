@@ -39,10 +39,6 @@ class Plaza < ActiveRecord::Base
     servicios_re.chop.chop
   end
   
-  def self.busca(algo)
-    self.find(:all, :conditions => ["nombre LIKE ?", "%#{algo}%"])
-  end
-  
   def to_label
     "#{nombre}"
   end

@@ -15,7 +15,7 @@ class ServiciosController < ApplicationController
   # GET /servicios/new
   # GET /servicios/new.xml
   def new
-    @plaza = current_user.responsabilidad
+    @plaza = current_user.responsabilidad || Plaza.find(cookies['plaza'])
     @metaservicios = Metaservicio.all
     super
   end
@@ -47,7 +47,7 @@ class ServiciosController < ApplicationController
 
   # GET /servicios/1/edit
   def edit
-    @plaza = current_user.responsabilidad
+    @plaza = current_user.responsabilidad || Plaza.find(cookies['plaza'])
     @metaservicios = Metaservicio.all
     @servicio= Servicio.find(params[:id].gsub(/\D/,''))
     metaservicio = @servicio.metasubservicio.metaservicio
@@ -86,8 +86,8 @@ class ServiciosController < ApplicationController
   end
   
   def listing
-    plaza= Plaza.find(params[:plaza_id])
-    @objetos = plaza.servicios
+    @plaza= Plaza.find cookies['plaza']
+    @objetos = @plaza.servicios
     
     respond_to do |format|
        format.js do

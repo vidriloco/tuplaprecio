@@ -97,28 +97,6 @@ module ApplicationHelper
     end
   end
   
-  
-  def genera_forma_para(modelo,f)
-      "<p>#{ f.select modelo.pluralize.to_sym, lista_hash_objetos_de_modelo(modelo) }</p>"
-  end
-  
-  # Genera check_box_tag's para "modelo" con datos de "objeto"
-  def genera_checkboxes_para(modelo, objeto=nil)
-    # Cadena de salida
-    out = String.new
-    if modelo.eql? "categoria"
-      c_ids=objeto.ids_of(:categorias)
-      
-      modelo.capitalize.constantize.all.each do |instancia|
-        estado_seleccion=!c_ids.index(instancia.id).nil?
-        
-        out+="<div class='form_opcion' id='small'>#{ check_box_tag "#{modelo.pluralize}[]", instancia.id, estado_seleccion} #{instancia.nombre} </div>"
-      end
-    end
-    out
-  end
-
-  
   # Verifica el nivel del usuario que está actualmente logeado
   def logged_in_on?(args)
     return false if session[:usuario_id].nil?

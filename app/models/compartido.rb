@@ -23,9 +23,9 @@ module Compartido
             algo.each do |a|
               array_condition << "%#{a}%"
             end
-            self.find(:all, :conditions => array_condition)
+            [self.to_s] + self.find(:all, :conditions => array_condition)
           else
-            self.find(:all, :conditions => [fragmento, "%#{algo}%"])
+            [self.to_s] + self.find(:all, :conditions => [fragmento, "%#{algo}%"])
           end
         end
         

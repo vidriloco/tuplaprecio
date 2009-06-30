@@ -1,0 +1,35 @@
+
+<table class="agente_paquetes">
+    <thead>
+        <tr>
+            <% if @bs.eql?(1) %>
+                <th style="background-color:#A14D17;">Plaza</th>
+            <% end %>
+            <th>Tipo de Paquete</th>
+            <th>Televisión</th>
+            <th>Telefonía</th>
+            <th>Internet</th>
+            <th>Costo por paquete (pagando 1 - 10)</th>
+            <th>Costo Real</th>
+            <th>Ahorro</th>
+            <th>Costo por paquete (pagando 11 - día último)</th>
+        </tr>
+    <thead>
+    <tbody>    
+    <% @paquetes.each do |paquete| %>
+        <tr class="paquete_distingible">
+            <% if @bs.eql?(1) %>
+                <td><%= paquete.plaza.nombre %></td>
+            <% end %>
+            <td><%= paquete.tipo_de_paquete %></td>
+            <td><%= paquete.television %></td>
+            <td><%= paquete.telefonia %></td>
+            <td><%= paquete.internet %></td>
+            <td><%= paquete.costo_primer_mitad_de_mes %></td>
+            <td><%= paquete.costo_real_ %></td>
+            <td><%= paquete.ahorro_ %></td>
+            <td><%= paquete.costo_segunda_mitad_de_mes %></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>

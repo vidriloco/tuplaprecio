@@ -1,0 +1,46 @@
+
+<% @servicios.each do |servicio| %>
+<% if @bs.eql?(1) %>
+    <table class="agente_servicios">
+        <tr>
+            <td><b><%= servicio.plaza.nombre %></b></td>
+        </tr>
+    </table>
+<% end %>
+<div class="contenedor_servicios_conceptos">
+    <table class="agente_servicios">
+    <tr>
+        <% Servicio.atributos_agente.each do |atributo| %>
+            <% if Servicio.es_evaluable(atributo) %>
+                <td><%=h eval servicio.send(atributo) -%></td>
+            <% else %>
+                <td><%=h servicio.send(atributo) -%></td>
+            <% end %>
+        <% end %>
+    </tr>
+    </table>
+    
+    <table class="agente_servicios_conceptos">
+        <thead>
+            <tr>
+                <th>Concepto</th>
+                <th style="width:10px;">Disponible</th>
+                <th style="width:10px;">Costo</th>
+                <th style="width:10px;">Valor</th>
+                <th style="max-width:130px;">Comentarios</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% servicio.conceptos.each do |c| %>
+                <tr class="servicio_distingible">
+                    <td><%=h c.metaconcepto.nombre %></td>
+                    <td style="width:10px;"><%=h c.disponibilidad %></td>
+                    <td style="width:10px;"><%=h c.costo_ %></td>
+                    <td style="width:10px;"><%=h c.valor_ %></td>
+                    <td style="max-width:150px;"><%=h c.comentarios %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+<% end %>

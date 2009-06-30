@@ -25,6 +25,7 @@ class TablerosController < ApplicationController
   def index_nivel_dos
     @usuario = current_user
     @plaza = @usuario.responsabilidad
+    cookies['plaza'] = {:value => @plaza.id}
     @modelos=["servicio", "paquete"]
   end
   
