@@ -5,7 +5,7 @@ class Servicio < ActiveRecord::Base
   has_many :conceptos, :validate => false
   
   validates_presence_of :metasubservicio_id, :message => "no puede ir en blanco"
-  validates_uniqueness_of :metasubservicio_id
+  validates_uniqueness_of :metasubservicio_id, :scope => :plaza_id
   validate :atributos_de_conceptos
     
   def self.atributos
