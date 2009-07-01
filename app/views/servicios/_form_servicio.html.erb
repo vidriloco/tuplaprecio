@@ -2,9 +2,13 @@
 
 <%= f.hidden_field :plaza_id, :value => @plaza.id %>
 
+<% if !defined?(@from_edit) && !@from_edit.eql?("EDIT") %>
+    <% @metaservicios.insert(0,Metaservicio.new) %>
+<% end %>
+
 <p>
    <%= label_tag :metaservicio, "Tipo de Servicio" %><br />
-   <%= select_tag(:id, options_from_collection_for_select(@metaservicios.insert(0,Metaservicio.new), :id, :nombre), { :onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value")}) %>
+   <%= select_tag(:id, options_from_collection_for_select(@metaservicios, :id, :nombre), { :onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value")}) %>
 </p>
 
 <div id="metasubservicio_forma">

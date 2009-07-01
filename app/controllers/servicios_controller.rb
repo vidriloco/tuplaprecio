@@ -6,7 +6,7 @@ class ServiciosController < ApplicationController
     controller.nivel_logged_in(["nivel 1"])
   end
   
-  before_filter :only => [:new, :create, :edit, :update, :destroy, :update_conceptos, :separar_objetos] do |controller|
+  before_filter :only => [:new, :create, :edit, :update, :destroy] do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
     # definidas en "only"
     controller.nivel_logged_in(["nivel 1", "nivel 2"])
@@ -15,7 +15,7 @@ class ServiciosController < ApplicationController
   # GET /servicios/new
   # GET /servicios/new.xml
   def new
-    @plaza = current_user.responsabilidad || Plaza.find(cookies['plaza'])
+    @plaza = current_user.responsabilidad
     @metaservicios = Metaservicio.all
     super
   end
@@ -23,6 +23,7 @@ class ServiciosController < ApplicationController
   def create
     @servicio = Servicio.new(params[:servicio])
     params[:conceptos].each_value { |concepto| @servicio.conceptos.build(concepto) } if params.has_key?(:conceptos)
+    @plaza = current_user.responsabilidad
     
     respond_to do |format|
       format.js do
@@ -47,11 +48,25 @@ class ServiciosController < ApplicationController
 
   # GET /servicios/1/edit
   def edit
-    @plaza = current_user.responsabilidad || Plaza.find(cookies['plaza'])
+    @plaza = current_user.responsabilidad
     @metaservicios = Metaservicio.all
-    @servicio= Servicio.find(params[:id].gsub(/\D/,''))
-    metaservicio = @servicio.metasubservicio.metaservicio
-    @metasubservicios = metaservicio.metasubservicios
+    @servicio= Servicio.find(params[:id].gsub(/\D/,''), :include => [{:metasubservicio => {:metaservicio => :metaconceptos}}, :conceptos])
+    
+    # Trata el caso en el que se hayan añadido más metaconceptos al metaservicio.
+    # Averigua cuál es la diferencia entre los metaconceptos del metaservicio y la instancia del servicio ligado al metaservicio,
+    # después actualiza los conceptos del servicio.
+    metaconceptos=@servicio.metasubservicio.metaservicio.metaconceptos.size
+    conceptos = @servicio.conceptos.size
+    if conceptos < metaconceptos
+      metaconceptos_agregables=@servicio.metasubservicio.metaservicio.metaconceptos.last(metaconceptos-conceptos) 
+      metaconceptos_agregables.each do |mc|
+        concepto = Concepto.create
+        concepto.metaconcepto=mc
+        @servicio.conceptos << concepto
+      end
+    end
+    @servicio.save
+    @metasubservicios = @servicio.metasubservicio.metaservicio.metasubservicios
     @from_edit="EDIT"
     super
   end
@@ -86,7 +101,7 @@ class ServiciosController < ApplicationController
   end
   
   def listing
-    @plaza= Plaza.find cookies['plaza']
+    @plaza = current_user.responsabilidad
     @objetos = @plaza.servicios
     
     respond_to do |format|
