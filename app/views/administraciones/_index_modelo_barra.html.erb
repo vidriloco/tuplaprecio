@@ -1,5 +1,9 @@
 <div class='m_i_modelo_barra'>
-    <% cuenta, modelo_cuenta = modelo_info(modelo) %>
+    <% if current_user.responsabilidad.is_a? Plaza %>
+        <% cuenta, modelo_cuenta = modelo_info(modelo, eval("current_user.responsabilidad.#{modelo.pluralize}.size")) %>
+    <% else %>
+        <% cuenta, modelo_cuenta = modelo_info(modelo) %>
+    <% end %>
   
     <p class='inlined_short' id=<%="cuenta#{modelo.capitalize}"%>><b><%= cuenta %></b></p>
     <p class='inlined_large' id=<%="sustantivo#{modelo.capitalize}"%>><%= modelo_cuenta %></p>
