@@ -1,6 +1,8 @@
 class Rol < ActiveRecord::Base
   include Compartido
   
+  acts_as_reportable
+  
   has_many :usuarios
   
   attributes_to_serialize :nombre, :associated => [:usuarios]
@@ -9,6 +11,10 @@ class Rol < ActiveRecord::Base
   
   def self.atributos
     ["nombre", "usuarios_"]
+  end
+  
+  def self.atributos_exportables
+    [:nombre]
   end
   
   def usuarios_
@@ -20,6 +26,9 @@ class Rol < ActiveRecord::Base
     usuarios_nombres.chop.chop
   end
   
-  def self.busqueda 
+  def limpia_todos_excepto(este)
+    Rol.all.each do |r|
+      r.delete unless r.eql?(este)
+    end
   end
 end

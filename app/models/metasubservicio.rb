@@ -1,5 +1,8 @@
 class Metasubservicio < ActiveRecord::Base
   include Compartido
+  
+  acts_as_reportable
+  
   belongs_to :metaservicio
   has_many :servicios, :dependent => :destroy
   
@@ -8,6 +11,10 @@ class Metasubservicio < ActiveRecord::Base
   
   def self.atributos
     ["nombre", "es_un_servicio_de_tipo"]
+  end
+  
+  def self.atributos_exportables
+    [:nombre]
   end
   
   def es_un_servicio_de_tipo

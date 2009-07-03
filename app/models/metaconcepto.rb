@@ -1,6 +1,8 @@
 class Metaconcepto < ActiveRecord::Base
   include Compartido
   
+  acts_as_reportable
+  
   has_many :conceptos, :dependent => :destroy
   has_and_belongs_to_many :metaservicios
   
@@ -8,6 +10,10 @@ class Metaconcepto < ActiveRecord::Base
   
   def self.atributos
     ["nombre", "tipo", "detalles_de_tipo", "metaservicios_"]
+  end
+  
+  def self.atributos_exportables
+    [:nombre, :tipo]
   end
   
   def detalles_de_tipo

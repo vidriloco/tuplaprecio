@@ -1,6 +1,8 @@
 class Plaza < ActiveRecord::Base
   include Compartido
   
+  acts_as_reportable
+  
   belongs_to :estado
   has_many :paquetes
   has_many :usuarios, :as => :responsabilidad, :autosave => true, :dependent => :nullify
@@ -10,6 +12,10 @@ class Plaza < ActiveRecord::Base
   
   def self.atributos
     ["nombre", "estado_", "usuarios_", "paquetes_", "servicios_"]
+  end
+  
+  def self.atributos_exportables
+    [:nombre]
   end
   
   def estado_

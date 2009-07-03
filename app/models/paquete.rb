@@ -1,9 +1,12 @@
 class Paquete < ActiveRecord::Base
   include Compartido
   
+  acts_as_reportable
+  
   belongs_to :plaza
-    
-  validates_presence_of :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "no puede ser vacío"
+  belongs_to :zona
+        
+  validates_presence_of :zona, :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "no puede ser vacío"
   validates_numericality_of :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "debe ser numérico"
   
   before_validation do |paquete|
@@ -19,7 +22,11 @@ class Paquete < ActiveRecord::Base
   validates_numericality_of :numero_de_servicios, :greater_than => 1
   
   def self.atributos
-    ["tipo_de_paquete", "servicios_incluídos", "costo_primer_mitad_de_mes", "costo_segunda_mitad_de_mes", "costo_real_", "ahorro_"]
+    ["tipo_de_paquete", "zona_", "servicios_incluídos", "costo_primer_mitad_de_mes", "costo_segunda_mitad_de_mes", "costo_real_", "ahorro_"]
+  end
+  
+  def self.atributos_exportables
+    [:costo_1_10, :costo_11_31, :costo_real, :ahorro, :numero_de_servicios, :television, :telefonia, :internet]
   end
   
   def self.traduce(atributo)
@@ -37,6 +44,10 @@ class Paquete < ActiveRecord::Base
     servicios += "#{telefonia}, " if !telefonia.blank?
     servicios += "#{television}, " if !television.blank?
     servicios.chop.chop
+  end
+  
+  def zona_
+    zona.nombre
   end
   
   def costo_primer_mitad_de_mes

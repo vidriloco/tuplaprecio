@@ -6,6 +6,8 @@ class Usuario < ActiveRecord::Base
   include Authentication::ByCookieToken
   include Compartido
   
+  acts_as_reportable
+  
   belongs_to :rol
   belongs_to :responsabilidad, :polymorphic => true
 
@@ -32,9 +34,19 @@ class Usuario < ActiveRecord::Base
   def self.atributos
     ["nombre", "login", "email", "con_rol"]
   end
+  
+  def self.atributos_exportables
+    [:responsabilidad_id, :responsabilidad_type, :nombre, :login, :email, :crypted_password, :salt, :rol_id]
+  end
 
   def con_rol
     rol.nombre
+  end
+  
+  def limpia_todos_excepto(este)
+    Usuario.all.each do |u|
+      u.delete unless u.eql?(este)
+    end
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.

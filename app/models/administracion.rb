@@ -2,12 +2,16 @@ class Administracion < ActiveRecord::Base
   has_many :usuarios, :as => :responsabilidad
   include Compartido
   
-  attributes_to_serialize :associated => [:usuarios]
+  acts_as_reportable  
   
   def agrega_nuevo_usuario(usuario)
     unless self.usuarios.exists? usuario
       self.usuarios << usuario
     end
+  end
+  
+  def self.atributos_exportables
+    [:nivel_alto, :nivel_medio, :nivel_bajo]
   end
   
   def eliminar_usuario(usuario)

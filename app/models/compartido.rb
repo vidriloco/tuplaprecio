@@ -1,7 +1,7 @@
 # TODO: Share this code
-
+require 'ruport'
 module Compartido
-  
+    
   def self.included receiver
       receiver.extend ClassMethods
       receiver.class_eval do

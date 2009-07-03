@@ -1,4 +1,7 @@
 class Servicio < ActiveRecord::Base
+  include Compartido
+  
+  acts_as_reportable
   
   belongs_to :plaza
   belongs_to :metasubservicio
@@ -14,6 +17,10 @@ class Servicio < ActiveRecord::Base
   
   def self.atributos_agente
     ["tipo_de_servicio", "nombre_del_servicio"]
+  end
+  
+  def self.atributos_exportables
+    []
   end
   
   def self.es_evaluable(atributo)

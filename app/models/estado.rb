@@ -1,13 +1,18 @@
 class Estado < ActiveRecord::Base
   include Compartido
   
-  attributes_to_serialize :nombre, :associated => [:plazas]
+  acts_as_reportable
+  
   validates_presence_of :nombre, :message => "no puede ser vacío"
     
   has_many :plazas
-  
+    
   def self.atributos
     ["nombre", "plazas_"]
+  end
+  
+  def self.atributos_exportables
+    [:nombre]
   end
   
   def agrega_nueva_plaza(plaza)
