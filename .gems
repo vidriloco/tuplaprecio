@@ -3,3 +3,4 @@ thoughtbot-factory_girl --source http://gems.github.com
 rubyzip
 fastercsv
 ruport
+acts_as_reportable
