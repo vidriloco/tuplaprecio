@@ -51,7 +51,7 @@ class Utilidades
                       :estado => [:plaza], 
                       :servicio => [:concepto], 
                       :metaconcepto => [:concepto, :metaservicio],
-                      :metaservicio => [:metasubservicio]
+                      :metaservicio => [:metasubservicio],
                       :metasubservicio => [:servicio]} 
     end
     
