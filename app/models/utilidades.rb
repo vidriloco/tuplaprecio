@@ -51,6 +51,9 @@ class Utilidades
                       :metaconcepto => [:concepto], :metaconcepto => [:metaservicio]} 
     end
     
+    migrador=Migrador.new                    
+    cadena_guardados=String.new
+    
     #funcion para generar codigo ruby de cada tupla en la tabla modelo
     modelo_creator = Proc.new do |modelo|
       puts "Escribiendo: #{modelo}"
@@ -68,7 +71,8 @@ class Utilidades
         unless hash_cadena.blank?
           hash_cadena.chop!.chop!
         end
-        cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.create(#{hash_cadena})\n"
+        cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.new(#{hash_cadena})\n"
+        migrador.agrega_marcado(modelo.to_s.downcase, m.id) ? (cadena_guardados << "#{modelo.to_s.downcase}_#{m.id}.save\n") : false
         cadena_final << cadena_modelo
         
       end
@@ -87,7 +91,6 @@ class Utilidades
           m_id=m.send(modelo_has_many)
           if m_id != nil
             cadena_modelo = "#{modelo_belongs_to.to_s.downcase}_#{m.id}.#{modelo_has_many} = #{modelo_has_many}_#{m_id.id}\n"
-            cadena_modelo << "#{modelo_belongs_to.to_s.downcase}_#{m.id}.save!\n"
             cadena_final << cadena_modelo
           end
         elsif m.respond_to?(modelo_has_many.to_s.pluralize)
@@ -96,10 +99,12 @@ class Utilidades
           if !m_id.empty?
             m_id.each do |mid|
               cadena_modelo = "#{modelo_belongs_to.to_s.downcase}_#{m.id}.#{modelo_has_many.to_s.pluralize} << #{modelo_has_many}_#{mid.id}\n"
-              cadena_modelo << "#{modelo_belongs_to.to_s.downcase}_#{m.id}.save!\n"
               cadena_final << cadena_modelo
             end
           end
+        end
+        if migrador.agrega_marcado(modelo_belongs_to.to_s.downcase, m.id) 
+           cadena_guardados << "#{modelo_belongs_to.to_s.downcase}_#{m.id}.save\n"
         end
       end
       
@@ -107,7 +112,6 @@ class Utilidades
     end
     puts "Inciando..."
     cadena_de_salida=String.new
-    migrador=Migrador.new                    
     puts "Datos de entrada: #{modelos_hash}"
     # Devuelve la llave que es un modelo en simbolo (ie {:modelo1 => -----} )
     modelos_hash.each_key do |key_modelo|
@@ -133,6 +137,7 @@ class Utilidades
     
     File.open("migracion_ruby.rb", "wb") do |f|
       f.write cadena_de_salida
+      f.write cadena_guardados
     end
   end
   
