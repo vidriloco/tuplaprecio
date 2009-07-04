@@ -62,8 +62,9 @@ class Utilidades
         hash_cadena=String.new
 
         atributos_modelo.each do |atr|
-          hash_cadena << " :#{atr.to_s} => \"#{m.send(atr)}\","
+          hash_cadena << ":#{atr.to_s} => \"#{m.send(atr)}\", "
         end
+        hash_cadena.chop!.chop!
         puts "Valores de cadena: #{hash_cadena}"
         unless hash_cadena.blank?
           hash_cadena << "{#{hash_cadena}}"
