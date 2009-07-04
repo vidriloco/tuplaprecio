@@ -64,9 +64,9 @@ class Utilidades
         atributos_modelo.each do |atr|
           hash_cadena << ":#{atr.to_s} => \"#{m.send(atr)}\", "
         end
-        hash_cadena.chop!.chop!
         puts "Valores de cadena: #{hash_cadena}"
         unless hash_cadena.blank?
+          hash_cadena.chop!.chop!
           hash_cadena << "{#{hash_cadena}}"
         end
         cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.create(#{hash_cadena})\n"
