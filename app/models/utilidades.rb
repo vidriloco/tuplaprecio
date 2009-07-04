@@ -67,7 +67,6 @@ class Utilidades
         puts "Valores de cadena: #{hash_cadena}"
         unless hash_cadena.blank?
           hash_cadena.chop!.chop!
-          hash_cadena << "{#{hash_cadena}}"
         end
         cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.create(#{hash_cadena})\n"
         cadena_final << cadena_modelo
