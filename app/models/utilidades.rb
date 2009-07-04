@@ -47,8 +47,11 @@ class Utilidades
   def self.migracion_exporta_rb(modelos_hash=nil)
     
     if modelos_hash.nil?
-      modelos_hash = {:plaza => [:paquete, :servicio], :estado => [:plaza], :servicio => [:concepto], :metasubservicio => [:servicio], 
-                      :metaconcepto => [:concepto], :metaconcepto => [:metaservicio]} 
+      modelos_hash = {:plaza => [:paquete, :servicio], 
+                      :estado => [:plaza], 
+                      :servicio => [:concepto], 
+                      :metaconcepto => [:concepto, :metaservicio],
+                      :metasubservicio => [:servicio]} 
     end
     
     migrador=Migrador.new                    
