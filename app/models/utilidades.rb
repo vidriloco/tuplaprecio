@@ -59,15 +59,14 @@ class Utilidades
       cadena_final = String.new
       
       modelo.to_s.capitalize.constantize.all.each do |m|
-        hash_cadena=String.new("{")
+        hash_cadena=String.new
 
         atributos_modelo.each do |atr|
           hash_cadena << " :#{atr.to_s} => \"#{m.send(atr)}\","
         end
         puts "Valores de cadena: #{hash_cadena}"
         unless hash_cadena.blank?
-          hash_cadena.chop!
-          hash_cadena << "}"
+          hash_cadena << "{#{hash_cadena}}"
         end
         cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.create(#{hash_cadena})\n"
         cadena_final << cadena_modelo
