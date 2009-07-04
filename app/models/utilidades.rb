@@ -65,9 +65,11 @@ class Utilidades
           hash_cadena << " :#{atr.to_s} => \"#{m.send(atr)}\","
         end
         puts "Valores de cadena: #{hash_cadena}"
-        
-        hash_cadena.chop!
-        cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.create(#{hash_cadena}})\n"
+        unless hash_cadena.blank?
+          hash_cadena.chop!
+          hash_cadena << "}"
+        end
+        cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.create(#{hash_cadena})\n"
         cadena_final << cadena_modelo
         
       end
