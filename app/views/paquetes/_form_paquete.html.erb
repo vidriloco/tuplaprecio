@@ -6,6 +6,7 @@
 
 <table width="900px">
     <tr>
+        <th>Zona</th>
         <th>Internet</th>
         <th>Televisión</th>
         <th>Telefonía</th>
@@ -15,6 +16,7 @@
         <th>Ahorro</th>
     </tr>
     <tr>
+        <td><%= f.collection_select :zona_id, zonas, :id, :nombre, :include_blank => true %></td>
         <td><%= f.text_field :internet, :size => 15 -%></td>
         <td><%= f.text_field :television, :size => 15 -%></td>
         <td><%= f.text_field :telefonia, :size => 15 -%></td>

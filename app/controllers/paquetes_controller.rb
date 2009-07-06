@@ -25,6 +25,7 @@ class PaquetesController < ApplicationController
   
   def edit
     @plaza = current_user.responsabilidad
+    @zonas = Zona.all
     super
   end
 
@@ -43,11 +44,12 @@ class PaquetesController < ApplicationController
   # GET /paquetes/new.xml
   def new
     @plaza = current_user.responsabilidad
+    @zonas = Zona.all
     super
   end
 
   def listing
-    @plaza= Plaza.find cookies['plaza']
+    @plaza = current_user.responsabilidad
     @objetos = @plaza.paquetes
     
     respond_to do |format|

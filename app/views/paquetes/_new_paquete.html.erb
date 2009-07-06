@@ -5,7 +5,7 @@
 
 <% form_remote_for(@paquete) do |f| %>
 
-  <%= render :partial => 'form_paquete', :locals => {:f => f, :plaza => @plaza} %>
+  <%= render :partial => 'form_paquete', :locals => {:f => f, :plaza => @plaza, :zonas => @zonas} %>
   <p>
     <%= f.submit 'Crear' %> | <%= link_to_remote "Cerrar", 
                                           :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
