@@ -1,6 +1,0 @@
-<% unless conceptos %>
-    <%= f.select :concepto_id, ["Selecciona una categoría"] %>
-<% else %>
-    <%= select :servicio, :concepto_id, lista_hash_objetos(conceptos) %>
-<% end %>
-
