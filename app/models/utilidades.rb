@@ -47,8 +47,10 @@ class Utilidades
   def self.migracion_exporta_rb(modelos_hash=nil)
     
     if modelos_hash.nil?
-      modelos_hash = {:plaza => [:paquete, :servicio], 
+      modelos_hash = {:plaza => [:paquete, :servicio, :usuario],
+                      :rol => [:usuario],
                       :estado => [:plaza], 
+                      :zona => [:paquete],
                       :servicio => [:concepto], 
                       :metaconcepto => [:concepto, :metaservicio],
                       :metaservicio => [:metasubservicio],
@@ -75,7 +77,7 @@ class Utilidades
         unless hash_cadena.blank?
           hash_cadena.chop!.chop!
         end
-        cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.new(#{hash_cadena})\n"
+        cadena_modelo = "#{modelo.to_s.downcase}_#{m.id} = #{modelo.to_s.capitalize}.create(#{hash_cadena})\n"
         migrador.agrega_marcado(modelo.to_s.downcase, m.id) ? (cadena_guardados << "#{modelo.to_s.downcase}_#{m.id}.save\n") : false
         cadena_final << cadena_modelo
         
@@ -139,10 +141,12 @@ class Utilidades
       end
     end
     
-    File.open("migracion_ruby.rb", "wb") do |f|
+    t = Tempfile.new("migracion_db_ruby.rb")
+    File.open(t.path, "wb") do |f|
       f.write cadena_de_salida
       f.write cadena_guardados
     end
+    t.path
   end
   
   def self.migracion_importa_rb(archivo)

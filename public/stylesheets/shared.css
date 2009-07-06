@@ -1,0 +1,136 @@
+/*
+	  Autor: Alejandro Eduardo Cruz Paz : 2009
+	  CSS para los divs mas externos de la aplicación
+	  
+*/
+
+* { padding: 0; margin: 0; }
+
+body { background-color: #fff; color: #333; }
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+
+#wrapper { 
+ margin: auto;
+ width: 1200px;
+}
+
+.header {
+ margin: 10px 0px 5px 0px;
+ display:inline-block;
+}
+
+.header p{ 
+	color: #000;
+	font-weight: 100;
+	text-align: center;
+}
+
+#leftH {
+	width: 400px;
+	background-color: #D3D3E2;
+}
+
+#rightH {
+	width: 795px;
+	background-color: #4F5055;
+}
+
+#rightH p{color:#ffffff;}
+
+#anuncios {
+	width: 500px;
+}
+
+#sesion{
+	background-color: #E6FBA5;
+	margin: 10px 0px 5px 0px;
+	width: 360px;
+}
+
+.form {
+	text-align:center;
+	margin: 5px;
+}
+
+.form p {
+	font-size:12px;
+	margin-top:13px;
+}
+
+p {
+	padding: 5px; 
+	font-size: 10pt;
+}
+
+#content { 
+ width: 900px;
+ padding: 10px;
+ height: 350px;
+}
+
+a { text-decoration:none; color: #000; font-size:11px;}
+
+a:hover { font-style: italic;  }
+
+.fieldWithErrors {
+  color: red;
+  margin-bottom:-13px;
+}
+
+.errorExplanation {
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0d6dc;
+  border: 1pt #BA2E2C solid;
+}
+
+.errorExplanation h3 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  background-color: #c00;
+  color: #fff;
+}
+
+.errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+.errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+.modelo_barra {
+  width: 1000px;
+  margin-bottom: 15px;
+  background-color: #CEBBDC;
+}
+
+.m_i_modelo_barra {
+  padding: 8px;
+}
+
+.mensaje_barra {
+  width: 400px;
+  background-color: #C9DC9E;
+  margin-top:5px;
+  padding: 8px;
+  text-align:center;
+}
+
+.spinner {
+  position: relative;
+  top: 5px;
+}

@@ -1,0 +1,92 @@
+/*
+* Estilos para controller: tablero
+*/
+
+/* búsqueda */
+
+#contenedor_de_barra_de_informacion_de_plaza {
+  width: 350px;
+}
+
+#barra_de_informacion_de_plaza {
+  background-color:#ACBFED;
+}
+
+#barra_de_busqueda {
+  background-color:#5264FF;
+  padding: 10px;
+  width: 300px;
+  margin-bottom: 5px;
+}
+
+#selector_de_estados {
+  background-color:#ED9635;
+  padding: 10px;
+  width: 500px;
+}
+
+.enfasis_en_selector {
+  font-weight: bold;
+  background-color:#FFA03A;	
+  padding: 5px;
+  margin-right: 5px;
+}
+
+#resultados {
+  background-color:#EEF2EF;
+  width: 980px;
+  margin-top: 10px;
+}
+
+.boton_derecha {
+  display: inline;
+  position: absolute;
+  right: 35px;	
+}
+
+
+
+#contenedor_cambiante {
+  position:relative;
+  margin-top:30px;
+  width: 980px;
+  margin-bottom: 50px;
+}
+
+#detallados_contenedor {
+  position:relative;
+  margin-top:30px;
+  width: 980px;
+}
+
+#listado_de_preservicios {
+  width: 875px;
+  margin-bottom: 15px;
+  background-color: #ee7538;
+}
+
+#preservicio {
+	margin-left:20px;
+	background-color:#F97A3B;
+	padding:5px;
+}
+
+
+
+#servicios_agente {
+  background-color:#93B3F6;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  padding: 5px;
+  width:80px;
+  text-align: center;
+}
+
+#paquetes_agente {
+  background-color:#85A1E2;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  padding: 5px;
+  width:80px;
+  text-align: center;
+}

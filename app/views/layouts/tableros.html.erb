@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>TuplaPrecio</title>
+  <%= stylesheet_link_tag 'shared', 'tableros', 'niftyCorners' %>
+  <%= javascript_include_tag :defaults, 'niftycube' %>
+
+  <% javascript_tag do %>
+      NiftyLoad=function(){
+      Nifty("div.header");
+      Nifty("div#sesion");
+      }
+    <% end %>
+
+</head>
+<body>
+    <div id="wrapper">  
+        <div class='header' id='leftH'>
+    	    <%= logged_in_as %>	 
+    	</div>
+    		 
+		<div class='header' id='rightH'>
+		    <%= yield(:rightH) || "<p><b>#{controller.controller_name.singularize.capitalize}</b></p>" %>
+		</div>
+		
+		<div id="anuncios"></div>
+		 
+		<div id='contenedor_de_barra_de_informacion_de_plaza' class='header'>
+		    <%= yield(:barra_de_informacion_de_plaza) %>
+		</div>
+		    
+		<div id='barra_de_busqueda' class='header'>
+            <%= yield(:busqueda) %>
+		</div> 
+		
+		<div id='selector_de_estados' class='header'>
+            <%= yield(:selector_de_estados) %>
+        </div>
+		
+		<div id='container'> 
+            <%= yield %>
+        </div>
+        
+        <!--<p style="color: green"><%= flash[:notice] %></p>-->
+    </div>
+
+</body>
+</html>

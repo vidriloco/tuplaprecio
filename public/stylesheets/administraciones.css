@@ -1,11 +1,3 @@
-body { background-color: #fff; color: #333; }
-
-body, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size:   13px;
-  line-height: 18px;
-}
-
 pre {
   background-color: #eee;
   padding: 10px;
@@ -14,51 +6,55 @@ pre {
 
 h2 a { font-size:20px; color:#53475D;}
 
-a { text-decoration:none; color: #000; font-size:11px;}
-
-a:hover { font-style: italic;  }
-
-.fieldWithErrors {
-  color: red;
-  margin-bottom:-13px;
-}
-
-.errorExplanation {
-  margin-left: auto;
-  margin-right: auto;
-  width: 450px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #f0d6dc;
-  border: 1pt #BA2E2C solid;
-}
-
-.errorExplanation h3 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  background-color: #c00;
-  color: #fff;
-}
-
-.errorExplanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 5px;
-}
-
-.errorExplanation ul li {
-  font-size: 12px;
-  list-style: square;
-}
-
 input.boton_justificado {
   margin-left: 20px;	
   margin-bottom: 20px;
 }
 
 
+#contenedor_izq_admin {
+  display: inline-block;
+  margin: 10px 0px 5px 0px;
+  width: 800px;
+  float:left;
+}
+
+#contenedor_der_admin {
+  display: inline-block;
+  margin: 10px 0px 5px 0px;
+  width: 395px;
+  float: right;
+}
+
+.modelo_barra_admin {
+  width: 800px;
+  margin-bottom: 15px;
+  background-color: #7D81B7;
+}
+
+#migracion {
+  background-color:#FFAB60;	
+}
+
+#logger {
+  background-color:#FF6B30;	
+}
+
+.bloque {
+ margin-left: 5px;
+}
+
+.bloque h4 {
+ margin-top:5px;
+ margin-bottom: 10px;
+ text-align: center;
+}
+
+.bloque div {
+ background-color:#EC9F59;	
+ margin: 5px;
+ padding: 5px;
+}
 
 .modelo_relacionado_admin {
   width: 500px;
@@ -98,26 +94,6 @@ input.boton_justificado {
   width: 70px;	
 }
 
-
-/* Administrador container:general_admin:modelo_admin[*] */
-/* Mismo div  (los elementos iniciales contienen a los que siguen) */
-#general_admin {
-  display:inline-block;
-  position:absolute;
-  top:0;
-  right:20px;
-}
-
-.modelo_barra {
-  width: 960px;
-  margin-bottom: 15px;
-  background-color: #CEBBDC;
-}
-
-.m_i_modelo_barra {
-  padding: 8px;
-}
-
 /* Encargado container */
 
 .informativa_barra {
@@ -131,7 +107,7 @@ input.boton_justificado {
 */
 
 .generica {
-	width:900px; 
+	width:780px; 
 	border-color:#675569;
 }
 
@@ -256,70 +232,6 @@ tr.paquete_distingible:hover {
 	padding: 5px;
 	text-align: center;
 }
-
-/*
-* Estilos para controller: tablero
-*/
-
-#contenedor_cambiante {
-  position:relative;
-  margin-top:30px;
-  width: 980px;
-  margin-bottom: 50px;
-}
-
-#detallados_contenedor {
-  position:relative;
-  margin-top:30px;
-  width: 980px;
-}
-
-#listado_de_estados_contenedor {
-  background-color:#DAED79;
-  padding: 10px;
-  width: 630px;
-  position:absolute;
-  top:0;
-  right:18px;
-}
-
-#listado_de_preservicios {
-  width: 875px;
-  margin-bottom: 15px;
-  background-color: #ee7538;
-}
-
-#preservicio {
-	margin-left:20px;
-	background-color:#F97A3B;
-	padding:5px;
-}
-
-#titulo_en_contenedor {
-  background-color:#CBDD7E;	
-  padding: 5px;
-  margin-right: 5px;
-}
-
-#servicios_agente {
-  background-color:#93B3F6;
-  margin-top: 20px;
-  margin-bottom: 5px;
-  padding: 5px;
-  width:80px;
-  text-align: center;
-}
-
-#paquetes_agente {
-  background-color:#85A1E2;
-  margin-top: 20px;
-  margin-bottom: 5px;
-  padding: 5px;
-  width:80px;
-  text-align: center;
-}
-
-
 
 .cerrar {
   font-weight: 900;
@@ -483,40 +395,4 @@ tr.paquete_distingible:hover {
 
 .margen_a_doce{
 	margin-top: 12px;
-}
-
-/* búsqueda */
-
-#barra_de_busqueda {
-  background-color:#949BAE;
-  padding: 10px;
-  width: 300px;
-  margin-bottom: 5px;
-}
-
-.contenedor_de_resultados {
-  background-color:#B5CE58;
-  width: 963px;
-  padding: 10px;
-  margin-bottom: 5px;
-}
-
-#resultados {
-  padding-top:5px;
-  padding-left: 10px;
-}
-
-.resultado {
-  padding: 3px;
-  padding-left: 10px;
-  margin:2px;
-  width: 840px;
-  background-color: #BEDD60;
-/*  background-color: #6b993d;*/
-}
-
-.boton_derecha {
-  display: inline;
-  position: absolute;
-  right: 35px;	
 }

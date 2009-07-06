@@ -6,7 +6,7 @@ class Paquete < ActiveRecord::Base
   belongs_to :plaza
   belongs_to :zona
         
-  validates_presence_of :zona, :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "no puede ser vacío"
+  validates_presence_of :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "no puede ser vacío"
   validates_numericality_of :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "debe ser numérico"
   
   before_validation do |paquete|
@@ -47,7 +47,8 @@ class Paquete < ActiveRecord::Base
   end
   
   def zona_
-    zona.nombre
+    zona.nombre unless zona.nil?
+    "-"
   end
   
   def costo_primer_mitad_de_mes

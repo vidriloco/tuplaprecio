@@ -40,10 +40,11 @@ class Usuario < ActiveRecord::Base
   end
 
   def con_rol
-    rol.nombre
+    rol.nombre unless rol.nil?
+    "No asignado aún"
   end
   
-  def limpia_todos_excepto(este)
+  def self.limpia_todos_excepto(este)
     Usuario.all.each do |u|
       u.delete unless u.eql?(este)
     end

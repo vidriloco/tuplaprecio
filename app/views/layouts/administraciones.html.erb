@@ -5,13 +5,16 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>TuplaPrecio</title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag 'administraciones', 'niftyCorners', 'shared' %>
   <%= javascript_include_tag :defaults, 'niftycube' %>
 
   <% javascript_tag do %>
     NiftyLoad=function(){
     Nifty("div.informativa_barra");        
     Nifty("div.header");
+    Nifty("div.modelo_barra_admin"); 
+    Nifty("div.bloque");
+    
     Nifty("div#sesion");
     Nifty("div.modelo_relacionado_admin");
     Nifty("div.form_container", "tr bottom");
@@ -45,9 +48,17 @@
 		<div class="header" id="rightH">
 		    <%= yield(:rightH) || "<p><b>#{controller.controller_name.singularize.capitalize}</b></p>" %>
 		</div>
+		
+		<div id="anuncios">
+		    <%= yield(:anuncios_cambiantes) %>
+		</div>
 		 
-		<div id="container"> 
-            <%= yield %>
+		<div id="contenedor_izq_admin"> 
+            <%= yield(:contenedor_izq_admin) %>
+        </div>
+        
+        <div id="contenedor_der_admin"> 
+            <%= yield(:contenedor_der_admin) %>
         </div>
         
         <!--<p style="color: green"><%= flash[:notice] %></p>-->

@@ -1,13 +1,81 @@
-<div id='general_admin'>
-	<% javascript_tag do %>
-	    NiftyLoad=function(){ Nifty("div.modelo_barra"); }
-	<% end %>
-    <% @modelos.each do |modelo| %>
-      <div class='modelo_barra' id="<%= modelo.pluralize %>">
-          <%= render :partial => "index_modelo_barra", :locals => {:modelo => modelo} %>
-      </div>
-    <% end %>
+<% content_for :contenedor_izq_admin do %>
+    <div id="modelo_barras_admin">
+        <%= render :partial => "modelo_barras" %>
+    </div>
+<% end %>
+
+<% content_for :contenedor_der_admin do %>
+    <div id="migracion" class="bloque">
+            <h4>Migración de Base de Datos</h4>
+            
+            <div>
+                <% form_tag 'administraciones/entrada_rb',
+                              :multipart => true, 
+                              :target => 'upload_frame',
+                              :onSubmit => "$('a_4').show(); Nifty('div.mensaje_barra')"  do -%>
+                    <tr>
+                      <td><b>Restaurar Copía de seguridad: </b></td>   
+                       
+                      <td><%= file_field_tag "zipo" -%></td>
+                      <td><%= submit_tag 'Cargar' -%></td>
+                    </tr>
+                <% end %>
+                <iframe id='upload_frame' name="upload_frame"
+                style="width:1px;height:1px;
+                       border:0px" src="about:blank"></iframe>
+            </div>
+            
+             <div>
+                <% form_tag :action => :salida_rb do -%>
+                    <tr>
+                        <td><b>Copía de Seguridad: </b></td>
+                        <td><%= submit_tag 'Descargar' -%></td>
+                    </tr>
+                <% end -%>
+            </div>
+            
+            <div>
+            <% form_tag :action => :salida_csv do -%>
+                <tr>
+                    <td><b>Obtener csv: </b></td>
+                    <td><%= submit_tag 'Descargar' -%></td>
+                </tr>
+            <% end -%>
+            </div>
+           
+            
+            <div>
+                <tr>
+                    <td><b>Base de Datos:</b></td>
+                    <% complete = "Nifty('div.mensaje_barra'); $('a_1').show(); $('a_2').hide()" %>
+                    <td><%= button_to_remote "Borrar", :url => {:action => "limpia_bd"}, 
+                                                       :confirm => "¿Desea borrar la base de datos de la aplicación?", 
+                                                       :update => "modelo_barras_admin",
+                                                       :loading => "Nifty('div.mensaje_barra'); $('a_2').show()", 
+                                                       :complete => complete  %></td>
+                </tr>
+            </div>
+    </div>
     
-</div>
+    <div id="logger" class="bloque">
+    </div>
+<% end %>
 
-
+<% content_for :anuncios_cambiantes do %>
+    <div class="anuncio">
+        <div id="a_1"  style="display:none;" onclick="$(this).fade()">
+          <div style="display:inline-block;" class="mensaje_barra"><h3>Limpieza finalizada.</h3></div>
+        </div>
+        <div id="a_2"  style="display:none;">
+            <%= image_tag "spinner2-black.gif", :class => "spinner" %>
+            <div style="display:inline-block;" class="mensaje_barra"><h3>Borrando datos...</h3></div>
+        </div>
+        <div id="a_3" style="display:none;" onclick="$(this).fade()">
+            <div style="display:inline-block;" class="mensaje_barra"><h3>Restauración finalizada.</h3></div>
+        </div>
+        <div id="a_4" style="display:none;" onclick="$(this).fade()">
+            <%= image_tag "spinner2-black.gif", :class => "spinner" %>
+            <div style="display:inline-block;" class="mensaje_barra"><h3>Restaurando datos...</h3></div>
+        </div>
+    </div>
+<% end %>
