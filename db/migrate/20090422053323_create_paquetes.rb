@@ -4,13 +4,14 @@ class CreatePaquetes < ActiveRecord::Migration
       t.float    :costo_1_10
       t.float    :costo_11_31
       t.float    :costo_real
-      t.integer  :ahorro
+      t.float    :ahorro
       t.integer  :numero_de_servicios
       t.string   :television
       t.string   :telefonia
       t.string   :internet
 
       t.integer  :plaza_id
+      t.integer  :zona_id
       t.timestamps
     end
 

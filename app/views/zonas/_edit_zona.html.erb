@@ -1,0 +1,15 @@
+<h3 class='admin_modelo_titulo'>Zona</h3>
+<div class='container_admin'>
+    <div class='form'>
+        <% form_remote_for(:zona, @zona, :url => zona_path(@zona), :html => {:method => :put}) do |f| %>
+          
+          <%= render :partial => "form_zona", :locals => {:f => f} %>
+          
+          <p>
+            <%= f.submit 'Guardar cambios' %> | <%= link_to_remote "Cerrar", 
+                                            :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                            :with => "'modelo=#{modelo}'" %>
+          </p>
+        <% end %>
+    </div>
+</div>

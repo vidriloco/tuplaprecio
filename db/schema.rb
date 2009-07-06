@@ -19,31 +19,13 @@ ActiveRecord::Schema.define(:version => 20090510162912) do
     t.datetime "updated_at"
   end
 
-  create_table "categorias", :force => true do |t|
-    t.string   "nombre"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "categorias_conceptos", :id => false, :force => true do |t|
-    t.integer "concepto_id"
-    t.integer "categoria_id"
-  end
-
-  add_index "categorias_conceptos", ["categoria_id"], :name => "index_categorias_conceptos_on_categoria_id"
-  add_index "categorias_conceptos", ["concepto_id"], :name => "index_categorias_conceptos_on_concepto_id"
-
   create_table "conceptos", :force => true do |t|
-    t.string   "nombre"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "especializados", :force => true do |t|
+    t.boolean  "disponible"
+    t.integer  "valor"
     t.float    "costo"
-    t.boolean  "activo"
+    t.text     "comentarios"
     t.integer  "servicio_id"
-    t.integer  "plaza_id"
+    t.integer  "metaconcepto_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -54,30 +36,48 @@ ActiveRecord::Schema.define(:version => 20090510162912) do
     t.datetime "updated_at"
   end
 
-  create_table "incorporados", :force => true do |t|
-    t.float    "costo"
-    t.integer  "servicio_id"
-    t.integer  "paquete_id"
-    t.date     "vigente_desde"
-    t.date     "vigente_hasta"
-    t.string   "detalles"
+  create_table "metaconceptos", :force => true do |t|
+    t.string   "nombre"
+    t.string   "tipo"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "paquetes", :force => true do |t|
+  create_table "metaconceptos_metaservicios", :id => false, :force => true do |t|
+    t.integer "metaservicio_id"
+    t.integer "metaconcepto_id"
+  end
+
+  add_index "metaconceptos_metaservicios", ["metaconcepto_id"], :name => "index_metaconceptos_metaservicios_on_metaconcepto_id"
+  add_index "metaconceptos_metaservicios", ["metaservicio_id"], :name => "index_metaconceptos_metaservicios_on_metaservicio_id"
+
+  create_table "metaservicios", :force => true do |t|
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "paquetes_plazas", :id => false, :force => true do |t|
-    t.integer "plaza_id"
-    t.integer "paquete_id"
+  create_table "metasubservicios", :force => true do |t|
+    t.string   "nombre"
+    t.integer  "metaservicio_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "paquetes_plazas", ["paquete_id"], :name => "index_paquetes_plazas_on_paquete_id"
-  add_index "paquetes_plazas", ["plaza_id"], :name => "index_paquetes_plazas_on_plaza_id"
+  create_table "paquetes", :force => true do |t|
+    t.float    "costo_1_10"
+    t.float    "costo_11_31"
+    t.float    "costo_real"
+    t.float    "ahorro"
+    t.integer  "numero_de_servicios"
+    t.string   "television"
+    t.string   "telefonia"
+    t.string   "internet"
+    t.integer  "plaza_id"
+    t.integer  "zona_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "plazas", :force => true do |t|
     t.string   "nombre"
@@ -93,9 +93,8 @@ ActiveRecord::Schema.define(:version => 20090510162912) do
   end
 
   create_table "servicios", :force => true do |t|
-    t.text     "detalles"
-    t.integer  "concepto_id"
-    t.integer  "categoria_id"
+    t.integer  "plaza_id"
+    t.integer  "metasubservicio_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -116,5 +115,11 @@ ActiveRecord::Schema.define(:version => 20090510162912) do
   end
 
   add_index "usuarios", ["login"], :name => "index_usuarios_on_login", :unique => true
+
+  create_table "zonas", :force => true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

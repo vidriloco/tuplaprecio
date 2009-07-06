@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :conceptos, :metaconceptos
 
-  map.resources :paquetes
+  map.resources :paquetes, :zonas
 
   map.resources :plazas
 
@@ -33,10 +33,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :estados
   
   map.resources :roles
-  
-  map.resources :incorporados
-  
-  map.resources :especializados
   
   map.resources :tableros, :collection => {:lista_ajax => :get}
   
