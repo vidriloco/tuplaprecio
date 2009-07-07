@@ -1,0 +1,26 @@
+body { background-color: #232323; color: #B9B9B9; }
+
+#sesion{
+	background-color: #3B3F4F;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:100px;
+	margin-bottom:100px;
+	width: 360px;
+	padding: 50px;
+}
+
+#sesion .form label {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+#sesion .form input.text {
+	margin: 10px;
+	border: 0;
+	font-size:20px;
+	background-color:#7D889F;
+	color:#51586A;
+}
+
+

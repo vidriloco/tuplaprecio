@@ -22,6 +22,8 @@ body, p, ol, ul, td {
 .header {
  margin: 10px 0px 5px 0px;
  display:inline-block;
+ _zoom: 1;
+ _display: inline;
 }
 
 .header p{ 
@@ -44,12 +46,6 @@ body, p, ol, ul, td {
 
 #anuncios {
 	width: 500px;
-}
-
-#sesion{
-	background-color: #E6FBA5;
-	margin: 10px 0px 5px 0px;
-	width: 360px;
 }
 
 .form {
