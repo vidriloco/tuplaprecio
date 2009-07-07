@@ -27,12 +27,12 @@
 </p>
 
 <div id="usuario_estado_form">
-    <% unless @usuario.responsabilidad_id.nil? %>    
+    <% unless @usuario.no_tiene_rol %>    
         <%= render :partial => "usuario_estado_form", :locals => {:estados => @estados} %>
     <% end %>
 </div>
 
-<p><%= submit_tag 'Registrar' %>| <%= link_to_remote "Cerrar", 
+<p><%= submit_tag 'Registrar' %> | <%= link_to_remote "Cerrar", 
                                       :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
                                       :with => "'modelo=#{modelo}'" %>
 </p>

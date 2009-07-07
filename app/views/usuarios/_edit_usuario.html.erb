@@ -1,5 +1,24 @@
-<h3>Sección no disponible aún</h3>
+<h3 class='admin_modelo_titulo'>Usuario</h3>
+<div class='container_admin'>
+    
+<div class='form'>
+    <div id="errores_usuario" class="errorExplanation" style="display:none"></div>
+    
+<% form_remote_for(:usuario, @usuario, :url => usuario_path(@usuario), :html => {:method => :put}) do |f| -%>
+    <p><%= label_tag 'rol' %><br/>
+    <%= f.collection_select :rol_id, @roles, :id, :nombre, {:include_blank => true}, 
+    :onchange => remote_function(:url => {:action => 'rol_a_estado'}, :with => "'rol_id='+this.value") %>
+    </p>
 
-<p><%= link_to_remote "Cerrar", 
-                                      :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
-                                      :with => "'modelo=#{modelo}'" %></p>
+    <div id="usuario_estado_form">
+        <% unless @usuario.no_tiene_rol %>    
+            <%= render :partial => "usuario_estado_form", :locals => {:estados => @estados, :plazas => @plazas} %>
+        <% end %>
+    </div>
+
+    <p><%= submit_tag 'Actualizar' %> | <%= link_to_remote "Cerrar", 
+                                          :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                          :with => "'modelo=#{modelo}'" %></p>
+<% end %>
+
+</div>

@@ -4,4 +4,8 @@
     %>
 </p>
 
-<div id="usuario_plaza_form"></div>
+<div id="usuario_plaza_form">
+    <% if instance_variable_defined?("@usuario") and !@usuario.no_tiene_rol %>
+        <%= render :partial => "usuario_plaza_form", :locals => {:plazas => @plazas} %>
+    <% end %>
+</div>
