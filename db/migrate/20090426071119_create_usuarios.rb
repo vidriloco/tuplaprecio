@@ -1,7 +1,6 @@
 class CreateUsuarios < ActiveRecord::Migration
   def self.up
     create_table "usuarios", :force => true do |t|
-      t.references :responsabilidad,       :polymorphic => true
       t.column :nombre,                    :string, :limit => 100, :default => '', :null => true
       t.column :login,                     :string, :limit => 40              
       t.column :email,                     :string, :limit => 100
@@ -13,6 +12,7 @@ class CreateUsuarios < ActiveRecord::Migration
       t.column :remember_token_expires_at, :datetime
 
       t.column :rol_id,                    :integer
+      t.column :plaza_id,                  :integer
     end
     add_index :usuarios, :login, :unique => true
     
