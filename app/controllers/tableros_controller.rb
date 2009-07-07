@@ -1,15 +1,15 @@
 class TablerosController < ApplicationController
   
-  before_filter :only => [:index_nivel_tres] do |controller|
+  before_filter :except => [:index_nivel_dos] do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
     # definidas en "only"
-    controller.nivel_logged_in(["nivel 3"])
+    controller.usuario_es?(:agente)
   end
   
   before_filter :only => [:index_nivel_dos] do |controller|
     # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
     # definidas en "only"
-    controller.nivel_logged_in(["nivel 2"])
+    controller.usuario_es?(:encargado)
   end
   
   
@@ -24,8 +24,7 @@ class TablerosController < ApplicationController
   
   def index_nivel_dos
     @usuario = current_user
-    @plaza = @usuario.responsabilidad
-    cookies['plaza'] = {:value => @plaza.id}
+    @plaza = @usuario.plaza
     @modelos=["servicio", "paquete"]
   end
   

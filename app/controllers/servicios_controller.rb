@@ -1,21 +1,13 @@
 class ServiciosController < ApplicationController
   
-  before_filter :only => [:some] do |controller|
-    # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 podrán ejecutar la acción definida
-    # en "only"
-    controller.nivel_logged_in(["nivel 1"])
-  end
-  
   before_filter :only => [:new, :create, :edit, :update, :destroy] do |controller|
-    # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
-    # definidas en "only"
-    controller.nivel_logged_in(["nivel 1", "nivel 2"])
+    controller.usuario_es?(:encargado)
   end
   
   # GET /servicios/new
   # GET /servicios/new.xml
   def new
-    @plaza = current_user.responsabilidad
+    @plaza = current_user.plaza
     @metaservicios = Metaservicio.all
     super
   end
@@ -23,7 +15,7 @@ class ServiciosController < ApplicationController
   def create
     @servicio = Servicio.new(params[:servicio])
     params[:conceptos].each_value { |concepto| @servicio.conceptos.build(concepto) } if params.has_key?(:conceptos)
-    @plaza = current_user.responsabilidad
+    @plaza = current_user.plaza
     
     respond_to do |format|
       format.js do
@@ -48,7 +40,7 @@ class ServiciosController < ApplicationController
 
   # GET /servicios/1/edit
   def edit
-    @plaza = current_user.responsabilidad
+    @plaza = current_user.plaza
     @metaservicios = Metaservicio.all
     @servicio= Servicio.find(params[:id].gsub(/\D/,''), :include => [{:metasubservicio => {:metaservicio => :metaconceptos}}, :conceptos])
     
@@ -101,7 +93,7 @@ class ServiciosController < ApplicationController
   end
   
   def listing
-    @plaza = current_user.responsabilidad
+    @plaza = current_user.plaza
     @objetos = @plaza.servicios
     
     respond_to do |format|

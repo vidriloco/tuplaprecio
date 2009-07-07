@@ -16,18 +16,16 @@ class SesionesController < ApplicationController
       self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
-      rol = user.rol
-      nivel_usuario=Administracion.nivel_de(rol.nombre)
-      if nivel_usuario.eql? "nivel 1"
+    
+      if user.es_administrador?
           redirect_to administraciones_path
-      elsif nivel_usuario.eql?("nivel 2") 
+      elsif user.es_encargado?
           redirect_to tablero_nivel_dos_path
-      elsif nivel_usuario.eql?("nivel 3")
+      elsif user.es_agente?
           redirect_to tablero_nivel_tres_path
       else
           render :action => 'new'
       end
-      flash[:notice] = "Logged in successfully"
     else
       note_failed_signin
       @login       = params[:login]

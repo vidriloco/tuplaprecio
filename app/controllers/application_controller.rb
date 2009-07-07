@@ -7,11 +7,14 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   include AuthenticatedSystem
   
-  def nivel_logged_in(args)
+  def usuario_es?(*args)
+    alguno = false
     if logged_in?
-      if args.index(Administracion.nivel_de(current_user.rol.nombre)).nil?
-        redirect_to :back
+      args.each do |a|
+        alguno = eval("current_user.es_#{a.to_s}?") 
+        break if alguno
       end
+      redirect_to(:back) unless alguno
       current_user
     else
       redirect_to(new_sesion_path)

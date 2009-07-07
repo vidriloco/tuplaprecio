@@ -1,45 +1,36 @@
 class UsuariosController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
+    
+  before_filter :only => [:edit_by_user, :update] do |controller|
+    controller.usuario_es?(:administrador, :encargado)
+  end
   
-  
-  before_filter do |controller|
-    # Invocando filtro "nivel_logged_in". Sólo usuarios de nivel 1 y 2 podrán ejecutar las acciones
-    # definidas en "only"
-    controller.nivel_logged_in(["nivel 1"])
+  before_filter :only => [:new, :create, :edit, :destroy, :rol_a_estado, :estado_a_plaza] do |controller|
+    controller.usuario_es?(:administrador)
   end
 
   # render new.rhtml
   def new
     @roles = Rol.all
+    @estados = Estado.all
     super
   end
   
   def edit
     @roles = Rol.all
     @estados = Estado.all
+    @plazas = Plaza.all
     super
   end
   
-  def some
-    tipo = params[:tipo]
-    instance_variable_set "@#{tipo.downcase}", tipo.constantize.find(params[:id])
-    @usuarios = eval("Usuario.paginate_by_#{tipo.downcase}_id @#{tipo.downcase}.id, :page => params[:page]")
-
-    respond_to do |format|
-      format.html { render 'index.html.erb' }
-    end
+  def edit_by_user
+    
   end
  
   def create
     #logout_keeping_session!
     @user = Usuario.new(params[:usuario])
-    if @user.rol.nombre.eql?("Encargado")
-      @user.responsabilidad=Plaza.find(params[:usuario][:responsabilidad_id])
-    elsif @user.rol.nombre.eql?("Administrador")
-      @user.responsabilidad=Administracion.first
-    end
-
 
     success = @user && @user.save
     respond_to do |format|
@@ -66,27 +57,6 @@ class UsuariosController < ApplicationController
             page["errores_usuario"].appear                                    
             page["errores_usuario"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"
           end
-        end
-      end
-    end
-  end
-  
-  def separar_objetos
-    id_super, submodelo, id_sub, identificador = recibir_parametros_comunes
-    
-    @subM=submodelo.capitalize.constantize.find(id_sub)
-    @usuario=Usuario.find(id_super)
-    if submodelo.eql? "Plaza"
-      eval("@usuario.responsabilidad=nil")
-      @usuario.save!
-    elsif submodelo.eql? "Rol"
-      @usuario.rol=nil
-      @usuario.save!
-    end
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html identificador, ""
         end
       end
     end
