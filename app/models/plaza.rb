@@ -5,7 +5,7 @@ class Plaza < ActiveRecord::Base
   
   belongs_to :estado
   has_many :paquetes
-  has_many :usuarios, :as => :responsabilidad, :autosave => true, :dependent => :nullify
+  has_many :usuarios, :autosave => true, :dependent => :nullify
   has_many :servicios
       
   validates_presence_of :nombre, :message => "no puede ser vacío"

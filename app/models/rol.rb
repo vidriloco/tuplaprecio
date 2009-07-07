@@ -26,7 +26,7 @@ class Rol < ActiveRecord::Base
     usuarios_nombres.chop.chop
   end
   
-  def limpia_todos_excepto(este)
+  def self.limpia_todos_excepto(este)
     Rol.all.each do |r|
       r.delete unless r.eql?(este)
     end

@@ -1,6 +1,6 @@
 <div class='m_i_modelo_barra'>
-    <% if current_user.responsabilidad.is_a? Plaza %>
-        <% cuenta, modelo_cuenta = modelo_info(modelo, eval("current_user.responsabilidad.#{modelo.pluralize}.size")) %>
+    <% if current_user.es_encargado? %>
+        <% cuenta, modelo_cuenta = modelo_info(modelo, eval("current_user.plaza.#{modelo.pluralize}.size")) %>
     <% else %>
         <% cuenta, modelo_cuenta = modelo_info(modelo) %>
     <% end %>

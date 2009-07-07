@@ -9,9 +9,7 @@ class Usuario < ActiveRecord::Base
   acts_as_reportable
   
   belongs_to :rol
-  belongs_to :responsabilidad, :polymorphic => true
-
-  attributes_to_serialize :nombre, :login, :email, :responsable_de, :associated => [:responsabilidad, :rol]
+  belongs_to :plaza
 
   validates_presence_of     :login,   :message => "no puede estar vacío"
   validates_length_of       :login,    :within => 4 ..40, :message => "es muy corto (mínimo 4 caracteres)"
@@ -29,18 +27,18 @@ class Usuario < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :nombre, :password, :password_confirmation, :rol_id
+  attr_accessible :login, :email, :nombre, :password, :password_confirmation, :rol_id, :plaza_id
 
   def self.atributos
     ["nombre", "login", "email", "con_rol"]
   end
   
   def self.atributos_exportables
-    [:responsabilidad_id, :responsabilidad_type, :nombre, :login, :email, :crypted_password, :salt, :rol_id]
+    [:nombre, :login, :email, :crypted_password, :salt, :rol_id, :plaza_id]
   end
 
   def con_rol
-    rol.nombre unless rol.nil?
+    return rol.nombre unless rol.nil?
     "No asignado aún"
   end
   
@@ -100,5 +98,22 @@ class Usuario < ActiveRecord::Base
   def self.busqueda
   end
   
-
+  def es_agente?
+    return false if rol.nil?
+    rol.nombre.eql?("Agente")
+  end
+  
+  def es_administrador?
+    return false if rol.nil?
+    rol.nombre.eql?("Administrador")
+  end
+  
+  def es_encargado?
+    return false if rol.nil?
+    rol.nombre.eql?("Encargado")
+  end
+  
+  def no_tiene_rol
+    rol.nil?
+  end
 end
