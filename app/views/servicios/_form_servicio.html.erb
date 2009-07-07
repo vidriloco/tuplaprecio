@@ -20,7 +20,7 @@
 <div id="conceptos_forma">
     <% if defined?(@from_edit) && @from_edit.eql?("EDIT") %>
         <% if @servicio.conceptos.size != 0 %>
-            <%= render :partial => "conceptos_forma_edit", :object => @servicio %>    
+            <%= render :partial => "conceptos_forma_edit" %>    
         <% end %>
     <% end %>
 </div>

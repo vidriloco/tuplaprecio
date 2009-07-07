@@ -4,8 +4,7 @@
     <div class='form'>
 <% form_remote_for(:servicio, @servicio, :url => servicio_path(@servicio), :html => {:method => :put}) do |f| %>
 
-  <%= render :partial => 'form_servicio', :locals => {:f => f}, 
-                                          :object => [@servicio, @metaservicios, @metasubservicios, @plaza, @from_edit] %>
+  <%= render :partial => 'form_servicio', :locals => {:f => f} %>
 
   <p>
     <%= f.submit 'Guardar cambios' %> | <%= link_to_remote "Cerrar", 
