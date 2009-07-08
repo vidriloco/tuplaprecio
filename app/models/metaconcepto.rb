@@ -9,19 +9,11 @@ class Metaconcepto < ActiveRecord::Base
   validates_presence_of :nombre, :tipo, :message => "no puede ser vacío"
   
   def self.atributos
-    ["nombre", "tipo", "detalles_de_tipo", "metaservicios_"]
+    ["nombre", "tipo", "metaservicios_"]
   end
   
   def self.atributos_exportables
     [:nombre, :tipo]
-  end
-  
-  def detalles_de_tipo
-    if tipo.eql?("A")
-      "Con campo 'costo' para introducir precios"
-    elsif tipo.eql?("B")
-      "Con campo 'valor' para introducir números que no son precios"
-    end
   end
   
   def metaservicios_

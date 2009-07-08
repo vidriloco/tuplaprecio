@@ -281,3 +281,13 @@ input.boton_justificado {
 .margen_a_doce{
 	margin-top: 12px;
 }
+
+#aclaracion {
+	font-size:9px;
+	border: 1px solid #CBB8DF;
+	width: 350px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:left;
+	padding-left: 10px;
+}

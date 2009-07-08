@@ -13,6 +13,13 @@
           <% else %>
           <% atributos = modelo.capitalize.constantize.atributos %>
           <% width = 900/(atributos.size+1) %>
+          <% if modelo.eql?("metaconcepto")%>
+              <div id="aclaracion">
+                <span>Tipo <b>A</b> genera una entrada adecuada para introducir costos</span><br/>
+                <span>Tipo <b>B</b> genera una entrada adecuada para introducir valores unitarios</span>
+              </div>
+          <% end %>
+          <br/>
           <table class="generica">
             <tr>
             <% atributos.each do |atributo| %>
