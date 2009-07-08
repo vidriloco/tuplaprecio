@@ -1,28 +1,9 @@
 <div id='general_admin'>
 
-	<% javascript_tag do %>
-	    NiftyLoad=function(){ Nifty("div.modelo_barra"); Nifty("div.informativa_barra"); Nifty("div.header"); }
-	<% end %>
 	<div class='informativa_barra'>
 	    <p align="center"><span class="plaza_nombre"><%= @plaza.nombre %></span> <b>en</b> <%= @plaza.estado.nombre %></p>
 	</div>
 	
-    <% @modelos.each do |modelo| %>
-      <div class='modelo_barra' id="<%= modelo.pluralize %>">
-          <div class='m_i_modelo_barra'>
-              <% cuenta, modelo_cuenta = modelo_info(modelo, eval("@plaza.#{modelo.pluralize}.size")) %>
-
-              <p class='inlined_short' id=<%="cuenta#{modelo.capitalize}"%>><b><%= cuenta %></b></p>
-              <p class='inlined_large' id=<%="sustantivo#{modelo.capitalize}"%>><%= modelo_cuenta %></p>
-
-              <div class='inlined_short'>
-                  <%= button_to_remote genero_de(modelo, "Nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>
-              </div>
-              <div class='inlined_short'>
-                  <%= button_to_remote "Ver todos", :url => {:controller => modelo.pluralize, :action => 'listing'} %>
-              </div>
-          </div>
-      </div>
-    <% end %>
+    <%= render :partial => "administraciones/modelo_barras" %>
     
 </div>

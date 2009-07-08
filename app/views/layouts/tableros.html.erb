@@ -12,8 +12,10 @@
       NiftyLoad=function(){
       Nifty("div.header");
       Nifty("div#sesion");
+      Nifty('div.modelo_barra_admin'); 
+      Nifty('div.informativa_barra');
       }
-    <% end %>
+  <% end %>
 
 </head>
 <body>
@@ -27,18 +29,17 @@
 		</div>
 		
 		<div id="anuncios"></div>
-		 
-		<div id='contenedor_de_barra_de_informacion_de_plaza' class='header'>
-		    <%= yield(:barra_de_informacion_de_plaza) %>
-		</div>
-		    
-		<div id='barra_de_busqueda' class='header'>
-            <%= yield(:busqueda) %>
-		</div> 
 		
-		<div id='selector_de_estados' class='header'>
-            <%= yield(:selector_de_estados) %>
-        </div>
+		<% if current_user.es_agente? %>    
+		    <div id='selector_de_estados' class='header'>
+                <%= yield(:selector_de_estados) %>
+            </div>
+		    <div id='barra_de_busqueda' class='header'>
+                <%= yield(:busqueda) %>
+    		</div> 
+		<% end %>
+		
+		
 		
 		<div id='container'> 
             <%= yield %>

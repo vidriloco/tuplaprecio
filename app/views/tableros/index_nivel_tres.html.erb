@@ -1,21 +1,23 @@
+<% content_for :busqueda do %>
+    <% form_remote_tag :url => {:controller =>:busquedas, :action => :inicial}, 
+                                :update => 'area_de_resultados',
+                                :complete => visual_effect(:appear, 'area_de_resultados') do -%>
+        <tr>
+            <td><b>Búsqueda: </b></td>
+            <td><%= text_field_tag 'query', '', :size => 20 %></td>
+            <td><%= submit_tag 'Buscar' %></td>
+        </tr>
+    <% end -%>
+<% end %>
 
-<div id='barra_de_busqueda' class='inlined'>
-
-<% form_remote_tag :url => {:controller =>:busquedas, :action => :inicial}, 
-                            :update => 'area_de_resultados',
-                            :complete => visual_effect(:appear, 'area_de_resultados') do -%>
-    <div class='inlined'><b>Búsqueda: </b></div>
-    <%= text_field_tag 'query', '', :class => 'inlined', :size => 20 %>
-    <div class='inlined'><%= submit_tag 'Buscar' %></div>
-<% end -%>
-
-</div>
 <div id='area_de_resultados'></div>
 
 <div id='detallados_contenedor'></div>
 
-<%= render :partial => 'lista_de_estados', :object => @estados %>
+<% content_for :selector_de_estados do %>
+    <%= render :partial => 'lista_de_estados' %>
+<% end %>
 
-<div id='contenedor_cambiante'></div>
+<div id='contenedor_cambiante' style="display:none;"></div>
 
 

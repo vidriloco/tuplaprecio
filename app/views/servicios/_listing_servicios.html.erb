@@ -3,7 +3,7 @@
 <% if @bs.eql?(1) %>
     <table class="agente_servicios">
         <tr>
-            <td><b><%= servicio.plaza.nombre %></b></td>
+            <td style="background-color:#1C1B3D; color:#F5A325;"><b><%= servicio.plaza.nombre %></b></td>
         </tr>
     </table>
 <% end %>
@@ -23,11 +23,11 @@
     <table class="agente_servicios_conceptos">
         <thead>
             <tr>
-                <th>Concepto</th>
-                <th style="width:10px;">Disponible</th>
-                <th style="width:10px;">Costo</th>
-                <th style="width:10px;">Valor</th>
-                <th style="max-width:130px;">Comentarios</th>
+                <th style="width:250px;">Concepto</th>
+                <th style="width:50px;">Disponible</th>
+                <th style="width:50px;">Costo</th>
+                <th style="width:50px;">Valor</th>
+                <th style="max-width:700px;">Comentarios</th>
             </tr>
         </thead>
         <tbody>

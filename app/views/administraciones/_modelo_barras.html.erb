@@ -2,6 +2,6 @@
 
 <% @modelos.each do |modelo| %>
   <div class='modelo_barra_admin' id="<%= modelo.pluralize %>">
-      <%= render :partial => "index_modelo_barra", :locals => {:modelo => modelo} %>
+      <%= render :partial => "administraciones/index_modelo_barra", :locals => {:modelo => modelo} %>
   </div>
 <% end %>

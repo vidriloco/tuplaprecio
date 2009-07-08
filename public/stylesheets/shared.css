@@ -84,8 +84,8 @@ a:hover { font-style: italic;  }
   width: 450px;
   padding-bottom: 12px;
   margin-bottom: 20px;
-  background-color: #f0d6dc;
-  border: 1pt #BA2E2C solid;
+  background-color: #E6CFD1;
+  border-bottom: 10px solid #C83939;
 }
 
 .errorExplanation h3 {
@@ -93,7 +93,7 @@ a:hover { font-style: italic;  }
   font-weight: bold;
   padding: 5px 5px 5px 15px;
   font-size: 12px;
-  background-color: #c00;
+  background-color: #C83939;
   color: #fff;
 }
 
@@ -129,4 +129,31 @@ a:hover { font-style: italic;  }
 .spinner {
   position: relative;
   top: 5px;
+}
+
+.modelo_barra_admin {
+  width: 800px;
+  margin-bottom: 15px;
+  background-color: #7D81B7;
+}
+
+.inlined_large {
+  display:inline-block;
+  width: 230px;
+}
+
+.inlined_medium {
+  display:inline-block;
+  width: 120px;
+}
+
+
+.inlined {
+  display:inline-block;
+  width: auto;	
+}
+
+.inlined_short {
+  display:inline-block;
+  width: 70px;	
 }

@@ -3,12 +3,12 @@
     <thead>
         <tr>
             <% if @bs.eql?(1) %>
-                <th style="background-color:#A14D17;">Plaza</th>
+                <th style="color:#646AD0;">Plaza</th>
             <% end %>
             <th>Tipo de Paquete</th>
             <th>Zona</th>
-            <th>Televisión</th>
-            <th>Telefonía</th>
+            <th style="width:500px">Televisión</th>
+            <th style="width:500px">Telefonía</th>
             <th>Internet</th>
             <th>Costo por paquete (pagando 1 - 10)</th>
             <th>Costo Real</th>
@@ -20,7 +20,7 @@
     <% @paquetes.each do |paquete| %>
         <tr class="paquete_distingible">
             <% if @bs.eql?(1) %>
-                <td><%= paquete.plaza.nombre %></td>
+                <td style="color:#646AD0;"><%= paquete.plaza.nombre %></td>
             <% end %>
             <td><%= paquete.tipo_de_paquete %></td>
             <td><%= paquete.zona_ %></td>

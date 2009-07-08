@@ -40,11 +40,12 @@ class ApplicationController < ActionController::Base
       else
         @errores=@objeto.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
         format.js do 
-          render :update do |page|
+          render :update do |page|            
             page["errores_#{modelo}"].replace_html :partial => "compartidos/errores_modelo", 
-                                                :locals => {:modelo => modelo} 
+                                                :locals => {:modelo => modelo}   
             page["errores_#{modelo}"].appear                                    
             page["errores_#{modelo}"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"
+            page << "Nifty('#errores_#{modelo} h3', 'top');"                                              
           end
         end
       end
@@ -149,6 +150,7 @@ class ApplicationController < ActionController::Base
                                                   :locals => {:modelo => modelo} 
             page["errores_#{modelo}"].appear                                    
             page["errores_#{modelo}"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"
+            page << "Nifty('#errores_#{modelo} h3', 'top');"                                              
           end
         end 
       end

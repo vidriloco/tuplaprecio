@@ -44,6 +44,14 @@ class TablerosController < ApplicationController
   # Responde desplegando una plaza, su estado, y una lista de categorias de donde escoger
   # para ver los servicios relacionados a la plaza
   def plaza_seleccionada
+    if params[:id].empty?
+      render :update do |page|
+        page["estado_de_seleccion"].replace_html "Seleccionar:"
+        page["contenedor_cambiante"].visual_effect :fade, :duration => 3
+      end
+      return
+    end
+    
     plaza_id = params[:id].gsub(/\D/,'')
     render(:nothing => true) && return if plaza_id.blank?
     @plaza = Plaza.find plaza_id
@@ -51,8 +59,12 @@ class TablerosController < ApplicationController
     @paquetes = @plaza.paquetes
     @metaservicios = Metaservicio.all
     respond_to do |format|
-      format.js do
-        render :partial => 'contenido_de_plaza'
+      format.js do   
+        render :update do |page|
+          page["estado_de_seleccion"].replace_html "Seleccionado:"
+          page["contenedor_cambiante"].replace_html :partial => 'contenido_de_plaza'
+          page["contenedor_cambiante"].visual_effect :appear, :duration => 3
+        end
       end
     end
   end
@@ -68,7 +80,7 @@ class TablerosController < ApplicationController
                                                        :locals => {:metasubservicios => metasubservicios,
                                                                    :metaservicio_id => metaservicio_id}
           page['listado_de_preservicios'].visual_effect :appear
-          page << "Nifty('#listado_de_preservicios');"
+          page << "Nifty('#listado_de_preservicios', 'bottom tr');"
         end
       end
     end
@@ -83,7 +95,7 @@ class TablerosController < ApplicationController
           page['listado_de_preservicios'].replace_html :partial => 'lista_de_metaservicios', 
                                                        :locals => {:metaservicios => metaservicios}
           page['listado_de_preservicios'].visual_effect :appear
-          page << "Nifty('#listado_de_preservicios');"
+          page << "Nifty('#listado_de_preservicios', 'bottom tr');"
         end
       end
     end
@@ -100,7 +112,6 @@ class TablerosController < ApplicationController
         render :update do |page|
           page['plaza_servicios'].replace_html :partial => 'plaza_servicios'
           page['plaza_servicios'].visual_effect :appear
-          page << "Nifty('#listado_de_preservicios');"
         end
       end
     end

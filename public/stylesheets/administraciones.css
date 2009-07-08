@@ -26,12 +26,6 @@ input.boton_justificado {
   float: right;
 }
 
-.modelo_barra_admin {
-  width: 800px;
-  margin-bottom: 15px;
-  background-color: #7D81B7;
-}
-
 #migracion {
   background-color:#FFAB60;	
 }
@@ -73,34 +67,7 @@ input.boton_justificado {
   color:#D0B504;
 }
 
-.inlined_large {
-  display:inline-block;
-  width: 230px;
-}
 
-.inlined_medium {
-  display:inline-block;
-  width: 120px;
-}
-
-
-.inlined {
-  display:inline-block;
-  width: auto;	
-}
-
-.inlined_short {
-  display:inline-block;
-  width: 70px;	
-}
-
-/* Encargado container */
-
-.informativa_barra {
-  width: 960px;
-  margin-bottom: 15px;
-  background-color: #a3aaec;
-}
 
 /*
 * Estilos para tabla de instancias de modelo administrador action :index
@@ -128,88 +95,6 @@ input.boton_justificado {
 	padding: 10px;
 	margin: 10px;
 	background-color:#DBBFE7;
-}
-
-
-/*
-* Estilos para tabla de instancias de servicios bajo usuario agente
-*/
-
-.agente_servicios {
-	width:978px;
-}
-
-.agente_servicios tr th {
-	color:#899242;
-	width: 200px;
-	background-color:#E3F470;
-	height:10px;
-}
-
-tr.servicio_distingible:hover {
-	background-color:#E3F6AA;
-}
-
-tr.paquete_distingible:hover {
-	background-color:#FFC87B;
-}
-
-.agente_servicios tr td {
-	font-size:11px;
-	text-align:center;
-	width: 200px;
-	border: 1px solid #E4ECFF;
-	background-color:#EFF9A2;
-	color:#485026;
-}
-
-#cabecera_agente_servicios {
-	margin-top:10px;
-	margin-bottom:5px;
-	width: 983px;
-	margin-left:-2px;
-}
-
-.agente_servicios_conceptos {
-	margin-bottom: 5px;
-	width:978px;
-}
-
-.agente_servicios_conceptos tr th {
-	font-size:11px;
-	width: 150px;
-	color:#647236;
-}
-
-.agente_servicios_conceptos tr td {
-	font-size:12px;
-	text-align:center;
-	color:#8A9B48;
-}
-
-.contenedor_servicios_conceptos {
-	border:1px solid #DEEE6D;
-	width: 978px;
-	margin-bottom: 10px;
-}
-
-.agente_paquetes {
-	width:980px;
-	margin-top:10px;
-}
-
-.agente_paquetes tr th {
-	color:#D26C40;
-	width: 250px;
-	background-color:#FFDE9C;
-	height:10px;
-	font-size:11px;
-}
-
-.agente_paquetes tr td {
-	font-size: 11px;
-	color:#974F2A;
-	text-align: center;
 }
 
 /*

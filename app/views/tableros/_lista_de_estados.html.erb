@@ -1,18 +1,19 @@
-<%= javascript_tag "Nifty('div.pagination');" %>
-
-<div id='listado_de_estados_contenedor' class='inlined'>
-  <span id='titulo_en_contenedor'><b>Selecciona un estado y una plaza: </b></span>
+<tr>  
+  <td><span id="estado_de_seleccion" class="enfasis_en_selector">Seleccionar: </span></td>
+  <!-- Espacio de 2 -->
   &nbsp;
-  <b>Estado </b>
+  <!-- -->
+  <td><b>Estado </b></td>
 
-  <%= collection_select(:estado, :id, @estados, :id, :nombre,{:include_blank => true }, :onchange => remote_function(
+  <td><%= collection_select(:estado, :id, @estados, :id, :nombre,{:include_blank => true }, :onchange => remote_function(
                         :update => 'selector_de_plaza',
                         :url => { :action => :estado_seleccionado}, 
-                                  :with => "'id='+this.options[this.selectedIndex].value")) %>
+                                  :with => "'id='+this.options[this.selectedIndex].value")) %></td>
    &nbsp;&nbsp;
   <b>Plaza </b>
-  <div id='selector_de_plaza' class='inlined'>
-    <%= render :partial => 'selector_de_plaza' %>
-  </div>
-</div>
-
+  <td>
+      <span id='selector_de_plaza'>
+        <%= render :partial => 'selector_de_plaza' %>
+      </span>
+  </td>
+</tr>

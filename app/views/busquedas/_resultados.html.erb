@@ -1,18 +1,25 @@
 <% javascript_tag do %>
     Nifty('#resultados');
+    Nifty('#cuenta_resultados');
 <% end %>
  
-<div id="resultados">
+ 
+<div id="resultados_contenedor">
+    <div id="resultados" onclick="$('resultados_contenedor').fade()"><h3>Resultados de Búsqueda</h3></div>
+    <br/>
+    <br/>
     <% @resultados.each_key do |key| %>
         <% if key.eql?("Estado") %>
             <% @estados = @resultados.delete(key) %>
             <% unless @estados.empty? %>
-
+                        <%= javascript_tag "Nifty('#estado');" %>
+                        <div id="estado" class="resultado">
                         <% if @estados.size == 1 %>
-                            <h3>Estado</h3>
+                            <h4>Estado</h4>
                         <% else %>
-                            <h3>Estados</h3>
+                            <h4>Estados</h4>
                         <% end %>
+                        </div>
                         <% @estados.each do |estado| %>
                             <%= estado.nombre %>
                         <% end %>
@@ -20,12 +27,14 @@
         <% elsif key.eql?("Plaza") %>
             <% @plazas = @resultados.delete(key) %>
             <% unless @plazas.empty? %>
-             
+                        <%= javascript_tag "Nifty('#plaza');" %>
+                        <div id="plaza" class="resultado">
                         <% if @plazas.size == 1 %>
-                            <h3>Plaza</h3>
+                            <h4>Plaza</h4>
                         <% else %>
-                            <h3>Plazas</h3>
+                            <h4>Plazas</h4>
                         <% end %>
+                        </div>
                         <% @plazas.each do |plaza| %>
                             <%= plaza.nombre %>
                         <% end %>
@@ -35,36 +44,42 @@
         <% elsif key.eql?("Paquete") %>
             <% @paquetes = @resultados.delete(key) %>
             <% unless @paquetes.empty? %>
-            
-               
+                    <%= javascript_tag "Nifty('#paquete');" %>
+                    <div id="paquete" class="resultado">
                     <% if @paquetes.size == 1 %>
-                        <h3>Paquete</h3>
+                        <h4>Paquete</h4>
                     <% else %>
-                        <h3>Paquetes</h3>
+                        <h4>Paquetes</h4>
                     <% end %>
+                    </div>
               
             <% @bs = 1 %>
-            <%= render :partial => "paquetes/listing_paquetes", :object => [@paquetes, @bs] %>
+            <%= render :partial => "paquetes/listing_paquetes" %>
             <br/>    
             <% end %>
         <% elsif key.eql?("Servicio") %>
             <% @servicios = @resultados.delete(key) %>
             <% unless @servicios.empty? %>
+                    <%= javascript_tag "Nifty('#servicio');" %>
+                    <div id="servicio" class="resultado">
                     <% if @servicios.size == 1 %>
-                        <h3>Servicio</h3>
+                        <h4>Servicio</h4>
                     <% else %>
-                        <h3>Servicios</h3>
+                        <h4>Servicios</h4>
                     <% end %>
+                    </div>
             <% @bs = 1 %>
-            <%= render :partial => "servicios/listing_servicios", :object => [@servicios, @bs] %>
+            <%= render :partial => "servicios/listing_servicios" %>
             <% end %>
         <% end %>        
     <% end %>
         
     <% cuenta = @servicios.size + @estados.size + @paquetes.size + @plazas.size %>
-    <% if cuenta == 1 %>
-        Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
-    <% else %>
-        Encontrados <b><%= cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
-    <% end %>
+    <div id="cuenta_resultados">
+        <% if cuenta == 1 %>
+            Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
+        <% else %>
+            Encontrados <b><%= cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
+        <% end %>
+    </div>
 </div>

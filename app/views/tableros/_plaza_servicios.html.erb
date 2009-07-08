@@ -1,7 +1,5 @@
 <% if @servicios.empty? %>
-    <br/>
-    <h3>No hay servicios que mostrar</h3>
-    <br/>
+    <p class="empty">No hay servicios que mostrar</p>
 <% else %>
     <%= render :partial => "servicios/listing_servicios", :object => @servicios %>
 <% end %>

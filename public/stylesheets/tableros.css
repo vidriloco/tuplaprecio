@@ -4,25 +4,35 @@
 
 /* búsqueda */
 
-#contenedor_de_barra_de_informacion_de_plaza {
-  width: 350px;
-}
+body { background-color: #1C1B3D; color: #333; }
+
 
 #barra_de_informacion_de_plaza {
   background-color:#ACBFED;
 }
 
 #barra_de_busqueda {
-  background-color:#5264FF;
   padding: 10px;
-  width: 300px;
+  width: 405px;
   margin-bottom: 5px;
+  color:#6A7BAA;
 }
+
+#barra_de_busqueda #query {
+	border: 0;
+	font-size:18px;
+	background-color:#C7CEE4;
+	color:#41509B;
+	margin-left:5px;
+	margin-right:5px;
+} 
 
 #selector_de_estados {
   background-color:#ED9635;
-  padding: 10px;
-  width: 500px;
+  padding:10px;
+  padding-top: 12.5px;
+  padding-bottom:12.5px;
+  width: 750px;
 }
 
 .enfasis_en_selector {
@@ -32,10 +42,33 @@
   margin-right: 5px;
 }
 
-#resultados {
-  background-color:#EEF2EF;
-  width: 980px;
+#resultados_contenedor {
+  width: 1200px;
   margin-top: 10px;
+}
+
+#resultados {
+  width: 1180px;
+  background-color:#000;
+  text-align:center;
+  color:#F2C44E;
+  padding: 10px;
+}
+
+.resultado h4 {
+  background-color:#0D0D27;	
+  color:#F2C44E;
+  padding: 10px;
+  padding-left: 15px;
+  width: 100px;
+  text-align:center;
+}
+
+#cuenta_resultados {
+  width: 800px;
+  background-color:#000;
+  padding: 5px;
+  padding-left: 15px;	
 }
 
 .boton_derecha {
@@ -60,33 +93,123 @@
 }
 
 #listado_de_preservicios {
-  width: 875px;
+  width: 1200px;
   margin-bottom: 15px;
   background-color: #ee7538;
 }
 
 #preservicio {
-	margin-left:20px;
-	background-color:#F97A3B;
-	padding:5px;
+  margin-left:10px;
+  background-color:#FF8449;
+  padding:5px;
 }
 
-
-
-#servicios_agente {
+.titulo_en_agente {
   background-color:#93B3F6;
-  margin-top: 20px;
-  margin-bottom: 5px;
   padding: 5px;
   width:80px;
   text-align: center;
 }
 
-#paquetes_agente {
-  background-color:#85A1E2;
-  margin-top: 20px;
-  margin-bottom: 5px;
-  padding: 5px;
-  width:80px;
-  text-align: center;
+.empty {
+  width: 500px;
+  background-color: #CBCBCB;
+  margin:20px;
+  padding: 10px;
+  margin-left:0px;
+  text-align:center;
 }
+
+.empty p {
+  font-size:2em;
+  color:#7F82A3;
+}
+
+/* Encargado container */
+
+.informativa_barra {
+  width: 960px;
+  margin-bottom: 15px;
+  background-color: #a3aaec;
+}
+
+.agente_paquetes {
+	width:1200px;
+	margin-top:10px;
+	margin-bottom:30px;
+}
+
+.agente_paquetes tr th {
+	color:#D26C40;
+	width: 200px;
+	height:10px;
+	font-size:11px;
+}
+
+.agente_paquetes tr td {
+	font-size: 11px;
+	color:#974F2A;
+	text-align: center;
+}
+
+/*
+* Estilos para tabla de instancias de servicios bajo usuario agente
+*/
+
+.agente_servicios {
+	width:1200px;
+}
+
+.agente_servicios tr th {
+	color:#899242;
+	width: 200px;
+	background-color:#e3f470;
+	height:10px;
+}
+
+tr.servicio_distingible:hover {
+	background-color:#3a3883;
+}
+
+tr.paquete_distingible:hover {
+	background-color:#2C3069;
+}
+
+.agente_servicios tr td {
+	font-size:11px;
+	text-align:center;
+	width: 200px;
+	background-color:#4D5B8A;
+	color:#B5CDEB;
+}
+
+#cabecera_agente_servicios {
+	margin-top:10px;
+	margin-bottom:5px;
+	width: 1200px;
+	margin-left:-2px;
+}
+
+.agente_servicios_conceptos {
+	margin-bottom: 5px;
+	width:1200px;
+}
+
+.agente_servicios_conceptos tr th {
+	font-size:11px;
+	width: 500px;
+	color:#708DB8;
+}
+
+.agente_servicios_conceptos tr td {
+	font-size:12px;
+	text-align:center;
+	color:#99C0FF;
+}
+
+.contenedor_servicios_conceptos {
+	border:1px solid #5F73B5;
+	width: 1200px;
+	margin-bottom: 10px;
+}
+

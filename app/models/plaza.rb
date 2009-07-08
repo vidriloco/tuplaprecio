@@ -8,7 +8,7 @@ class Plaza < ActiveRecord::Base
   has_many :usuarios, :autosave => true, :dependent => :nullify
   has_many :servicios
       
-  validates_presence_of :nombre, :message => "no puede ser vacío"
+  validates_presence_of :nombre, :estado_id, :message => "no puede ser vacío"
   
   def self.atributos
     ["nombre", "estado_", "usuarios_", "paquetes_", "servicios_"]
@@ -19,7 +19,8 @@ class Plaza < ActiveRecord::Base
   end
   
   def estado_
-    estado.nombre
+    return estado.nombre unless estado.nil?
+    "No asignado aún"
   end
   
   def usuarios_
@@ -59,12 +60,13 @@ class Plaza < ActiveRecord::Base
       campo=campo*(algo.length-1) + " #{fragmento}"
       array_condition=[campo]
       algo.each do |a|
-        array_condition << ["%#{a}%","%#{a}%"]
+        array_condition += ["%#{a}%","%#{a}%"]
       end
-      resultados self.find(:all, :include => [:estado], :conditions => array_condition)
+      resultados += self.find(:all, :include => [:estado], :conditions => array_condition)
     else
-      resultados + self.find(:all, :include => [:estado], :conditions => [fragmento, "%#{algo}%", "%#{algo}%"])
+      resultados += self.find(:all, :include => [:estado], :conditions => [fragmento, "%#{algo}%", "%#{algo}%"])
     end
+    resultados
   end
   
 end
