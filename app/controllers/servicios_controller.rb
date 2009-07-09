@@ -21,15 +21,16 @@ class ServiciosController < ApplicationController
       format.js do
         if @servicio.save
           render :update do |page|
-            page['servicios'].replace_html :partial => 'administraciones/index_modelo_barra', 
-                                                          :locals => {:modelo => 'servicio'}
+            page['servicios'].replace_html :partial => 'tableros/index_modelo_barra', :locals => {:modelo => 'servicio'}
             page['servicios'].visual_effect :appear
+            page << "Nifty('#servicios');"                                      
           end
         else
           @errores=@servicio.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
           render :update do |page|    
             page["errores_servicio"].replace_html :partial => "compartidos/errores_modelo", 
-                                                :locals => {:modelo => "servicio"} 
+                                                :locals => {:modelo => "servicio"}
+            page << "Nifty('#errores_servicio h3', 'top');"                                      
             page["errores_servicio"].appear                                    
             page["errores_servicio"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"  
           end
@@ -75,15 +76,17 @@ class ServiciosController < ApplicationController
       format.js do
         if @servicio.update_attributes(params[:servicio])
           render :update do |page|
-            page['servicios'].replace_html :partial => 'administraciones/index_modelo_barra', 
+            page['servicios'].replace_html :partial => 'tableros/index_modelo_barra', 
                                            :locals => {:modelo => 'servicio'}
             page['servicios'].visual_effect :appear
+            page << "Nifty('div#servicios');"
           end
         else
           @errores=@servicio.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
           render :update do |page|    
             page["errores_servicio"].replace_html :partial => "compartidos/errores_modelo", 
                                                   :locals => {:modelo => "servicio"} 
+            page << "Nifty('#errores_servicio h3', 'top');"                                      
             page["errores_servicio"].appear                                    
             page["errores_servicio"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"  
           end
@@ -155,6 +158,31 @@ class ServiciosController < ApplicationController
           end
         end
       end
+    end
+  end
+  
+  def destroy
+    super do
+      render :update do |page|
+         if current_user.plaza.servicios.count == 0
+           page["servicios"].replace_html :partial => "tableros/index_modelo_barra", 
+                                               :locals => {:modelo => "servicio"}
+           page["servicios"].visual_effect :appear
+           page << "Nifty('div#servicios');"
+         else   
+           page["servicio_#{params[:id]}"].visual_effect :fade
+         end
+       end
+    end
+  end
+  
+  def listing
+    @objetos = current_user.plaza.servicios
+    render :update do |page|
+      page["servicios"].replace_html :partial => "compartidos/listing_modelos_encargado", 
+                                         :locals => {:modelo => "servicio"}
+      page["servicios"].visual_effect :appear
+      page << "Nifty('div#servicios');"
     end
   end
   

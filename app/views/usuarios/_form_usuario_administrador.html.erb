@@ -1,0 +1,10 @@
+<p><%= label_tag 'nombre' %><br/>
+<%= f.text_field :nombre %></p>
+
+<p><%= label_tag 'login' %><br/>
+<%= f.text_field :login %></p>
+    
+<p><%= label_tag 'rol' %><br/>    
+<%= f.collection_select :rol_id, @roles, :id, :nombre, {:include_blank => true}, 
+:onchange => remote_function(:url => {:action => 'rol_a_estado'}, :with => "'rol_id='+this.value") %>
+</p>

@@ -30,11 +30,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       if @objeto.save
         format.js do
-           render :update do |page|
-             page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
-                                                   :locals => {:modelo => modelo}
-             page[modelo.pluralize].visual_effect :appear
-             page << "Nifty('div##{modelo.pluralize}');"
+           if block_given?
+             yield
+           else
+             render :update do |page|
+                page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                      :locals => {:modelo => modelo}
+                page[modelo.pluralize].visual_effect :appear
+                page << "Nifty('div##{modelo.pluralize}');"
+             end
            end
          end
       else
@@ -96,19 +100,22 @@ class ApplicationController < ActionController::Base
     
     respond_to do |format|
        format.js do
-         render :update do |page|
-           if modelo.capitalize.constantize.count == 0
-             page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
-                                                 :locals => {:modelo => modelo}
-             page[modelo.pluralize].visual_effect :appear
-             page << "Nifty('div##{modelo.pluralize}');"
-           else   
-             page["#{modelo}_#{params[:id]}"].visual_effect :fade
+         if block_given?
+           yield 
+         else
+           render :update do |page|
+             if modelo.capitalize.constantize.count == 0
+               page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                   :locals => {:modelo => modelo}
+               page[modelo.pluralize].visual_effect :appear
+               page << "Nifty('div##{modelo.pluralize}');"
+             else   
+               page["#{modelo}_#{params[:id]}"].visual_effect :fade
+             end
            end
          end
        end
     end
-    
   end
   
   # GET /objeto/new.js
@@ -136,11 +143,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js do
         if @objeto.update_attributes(params[modelo.to_sym])
-          render :update do |page|
-            page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
-                                                  :locals => {:modelo => modelo}
-            page[modelo.pluralize].visual_effect :appear
-            page << "Nifty('div##{modelo.pluralize}');"
+          if block_given?
+            yield
+          else
+            render :update do |page|
+              page[modelo.pluralize].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                    :locals => {:modelo => modelo}
+              page[modelo.pluralize].visual_effect :appear
+              page << "Nifty('div##{modelo.pluralize}');"
+            end
           end
         else
           @errores=@objeto.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, "; h }

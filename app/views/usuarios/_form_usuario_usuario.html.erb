@@ -5,14 +5,15 @@
     <div id="errores_usuario" class="errorExplanation" style="display:none"></div>
     
 <% form_remote_for(:usuario, @usuario, :url => usuario_path(@usuario), :html => {:method => :put}) do |f| -%>
-    
-    <%= render :partial => "form_usuario_administrador", :locals => {:f => f} %>
 
-    <div id="usuario_estado_form">
-        <% unless @usuario.no_tiene_rol %>    
-            <%= render :partial => "usuario_estado_form", :locals => {:estados => @estados, :plazas => @plazas} %>
-        <% end %>
-    </div>
+<p><%= label_tag 'email' %><br/>
+<%= f.text_field :email %></p>
+
+<p><%= label_tag 'password', 'Contraseña' %><br/>
+<%= f.password_field :password %></p>
+
+<p><%= label_tag 'password_confirmation', 'Confirma Contraseña' %><br/>
+<%= f.password_field :password_confirmation %></p>
 
     <p><%= submit_tag 'Actualizar' %> | <%= link_to_remote "Cerrar", 
                                           :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},

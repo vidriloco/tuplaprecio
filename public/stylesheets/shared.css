@@ -108,12 +108,6 @@ a:hover { font-style: italic;  }
   list-style: square;
 }
 
-.modelo_barra {
-  width: 1000px;
-  margin-bottom: 15px;
-  background-color: #CEBBDC;
-}
-
 .m_i_modelo_barra {
   padding: 8px;
 }

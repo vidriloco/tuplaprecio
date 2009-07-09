@@ -25,6 +25,12 @@ class Paquete < ActiveRecord::Base
     ["tipo_de_paquete", "zona_", "servicios_incluídos", "costo_primer_mitad_de_mes", "costo_segunda_mitad_de_mes", "costo_real_", "ahorro_"]
   end
   
+  def self.cambia(atributo)
+    dicc = {'costo_primer_mitad_de_mes' => 'Costo (1 al día 10)', 'costo_segunda_mitad_de_mes' => 'Costo (11 al fin de mes)'}
+    return dicc[atributo] unless dicc[atributo].nil?
+    atributo.humanize
+  end
+  
   def self.atributos_exportables
     [:costo_1_10, :costo_11_31, :costo_real, :ahorro, :numero_de_servicios, :television, :telefonia, :internet]
   end
@@ -47,7 +53,7 @@ class Paquete < ActiveRecord::Base
   end
   
   def zona_
-    zona.nombre unless zona.nil?
+    return zona.nombre unless zona.nil?
     "No asignada aún"
   end
   

@@ -21,7 +21,6 @@ class Usuario < ActiveRecord::Base
 
   validates_presence_of     :email,    :message => "no puede estar vacío"
   validates_length_of       :email,    :within => 6..100, :message => "es muy corto (mínimo 6 caracteres)"
-  validates_uniqueness_of   :email,    :message => "debe ser único en la base de datos"
   validates_format_of       :email,    :with => Authentication.email_regex, :message => "debe tener la forma que un email tiene"  
 
   # HACK HACK HACK -- how to do attr_accessible from here?
@@ -116,4 +115,17 @@ class Usuario < ActiveRecord::Base
   def no_tiene_rol
     rol.nil?
   end
+  
+  #Metodo que se encarga de guardar un usuario sin hacer una verificación sobre los atributos password y email si
+  #el parametro es 'true' (significando que es un administrador quién está guardando)
+  def guarda(bol)
+    if bol
+      self.password="cablecom_#{login}"
+      self.password_confirmation="cablecom_#{login}"
+      self.email="cambia_tu_mail@porfavor.com"
+      self.save
+    else
+      false
+    end
+  end  
 end

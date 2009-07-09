@@ -1,9 +1,7 @@
-<div id='general_admin'>
 
-	<div class='informativa_barra'>
-	    <p align="center"><span class="plaza_nombre"><%= @plaza.nombre %></span> <b>en</b> <%= @plaza.estado.nombre %></p>
-	</div>
-	
-    <%= render :partial => "administraciones/modelo_barras" %>
-    
+<div id='barra_estado_plaza_actual'>
+    <p align="center"><span class="plaza_nombre"><%= @plaza.nombre %></span> <b>en</b> <%= @plaza.estado.nombre %></p>
 </div>
+
+<%= render :partial => "encargado_modelo_barras" %>
+    

@@ -25,10 +25,18 @@ class AdministracionesController < ApplicationController
     modelo = params[:modelo]
     respond_to do |format|
       format.js do
-        render :update do |page|
-          page[modelo.pluralize].replace_html :partial => "index_modelo_barra", :locals => {:modelo => modelo}
-          page[modelo.pluralize].visual_effect :appear
-          page << "Nifty('div##{modelo.pluralize}');"
+        if current_user.es_administrador?
+          render :update do |page|
+            page[modelo.pluralize].replace_html :partial => "index_modelo_barra", :locals => {:modelo => modelo}
+            page[modelo.pluralize].visual_effect :appear
+            page << "Nifty('div##{modelo.pluralize}');"
+          end
+        elsif current_user.es_encargado?
+          render :update do |page|
+            page[modelo.pluralize].replace_html :partial => "tableros/index_modelo_barra", :locals => {:modelo => modelo}
+            page[modelo.pluralize].visual_effect :appear
+            page << "Nifty('div##{modelo.pluralize}');"
+          end
         end
       end
     end

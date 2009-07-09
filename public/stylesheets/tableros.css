@@ -77,7 +77,11 @@ body { background-color: #1C1B3D; color: #333; }
   right: 35px;	
 }
 
-
+.modelo_barra_encargado {
+  width: 1200px;
+  margin-bottom: 15px;
+  background-color: #6F75F8;
+}
 
 #contenedor_cambiante {
   position:relative;
@@ -127,10 +131,11 @@ body { background-color: #1C1B3D; color: #333; }
 
 /* Encargado container */
 
-.informativa_barra {
-  width: 960px;
+#barra_estado_plaza_actual {
+  width: 1200px;
+  margin-top:5px;
   margin-bottom: 15px;
-  background-color: #a3aaec;
+  background-color: #EEB558;
 }
 
 .agente_paquetes {
@@ -212,4 +217,79 @@ tr.paquete_distingible:hover {
 	width: 1200px;
 	margin-bottom: 10px;
 }
+
+.encargado_modelo_titulo {
+	color:#10083A;
+	padding: 10px;
+	text-align:center;
+}
+
+table.generica_encargado {
+	margin-left:auto;
+	margin-right:auto;
+	width:1100px;
+}
+
+table.generica_encargado tr {
+	padding:10px;
+}
+
+table.generica_encargado th {
+	font-size:10px;
+	text-align:center;
+	
+}
+
+table.generica_encargado td {
+	font-size:10px;
+	padding-left: 10px;
+	text-align:left;
+}
+
+table.generica_encargado tr:hover {
+	background-color:#00052D;
+	color:#A1A1FA;
+	padding:10px;
+}
+
+table.generica_encargado tr:hover td a{
+	color:#FEFFFF;
+}
+
+table.entrada_encargado {
+	margin-left:auto;
+	margin-right:auto;
+	width:1100px;
+}
+
+table.entrada_encargado tr {
+	padding:10px;
+}
+
+table.entrada_encargado th {
+	font-size:10px;
+	text-align:center;
+}
+
+table.entrada_encargado td {
+	font-size:10px;
+	padding-left: 10px;
+	text-align:center;
+}
+
+table.entrada_encargado tr:hover {}
+
+h2 a { font-size:20px; color:#B8B9FB;}
+
+h4 { color:#B8B9FB;}
+
+#contenedor_conceptos {
+	padding-top:10px;
+	padding-bottom:10px;
+	border: 1px solid #8A8AF9;
+	width:1100px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
 

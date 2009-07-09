@@ -1,26 +1,28 @@
 <div class="tabla_interior">
-<h3>Conceptos <i><%= @servicio.metasubservicio.nombre %></i></h3>
-<br/>
-<table class="generica">
-    <tr>
-        <th>Concepto</th>
-        <th>Disponible</th>
-        <th>Costo</th>
-        <th>Valor</th>
-        <th>Comentarios</th>
-    </tr>
-    <% @conceptos.each do |c| %>
-
-            <tr>
-                <td><%= c.metaconcepto.nombre %></td>
-                <td><%= c.disponibilidad %></td>
-                <td><%= c.costo_ %></td>
-                <td><%= c.valor_ %></td>
-                <td><%= c.comentarios %></td>
-            </tr>
-    <% end %>
-    </table>
-    
+    <h4 class='encargado_modelo_titulo'>Conceptos</h4>
     <br/>
-    <%= link_to_remote "Cerrar", :url => {:action => :detalles_asociados}, :with => "'accion=esconder'" %>
+    <div id="contenedor_conceptos">
+        <table class="generica_encargado">
+            <tr>
+                <th>Concepto</th>
+                <th>Disponible</th>
+                <th>Costo</th>
+                <th>Valor</th>
+                <th>Comentarios</th>
+            </tr>
+            <% @conceptos.each do |c| %>
+
+                    <tr>
+                        <td><%= c.metaconcepto.nombre %></td>
+                        <td><%= c.disponibilidad %></td>
+                        <td><%= c.costo_ %></td>
+                        <td><%= c.valor_ %></td>
+                        <td><%= c.comentarios %></td>
+                    </tr>
+            <% end %>
+        </table>
+    
+        <br/>
+        <%= link_to_remote "Cerrar", :url => {:action => :detalles_asociados}, :with => "'accion=esconder'" %>
+    </div>
 </div>

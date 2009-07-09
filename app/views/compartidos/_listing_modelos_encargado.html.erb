@@ -1,0 +1,85 @@
+<h3 class='encargado_modelo_titulo'><%= modelo.capitalize.pluralize %></h3>
+<div class='form'>
+<% if @objetos.empty? %>
+    <h2>No hay <%= modelo.pluralize %> disponibles aún</h2><br/>
+    <h2>Crear 
+        <%= link_to_remote  genero_de(modelo, "nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>  
+        ó
+        <%= link_to_remote "cerrar", :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                               :with => "'modelo=#{modelo}'" %>
+    </h2>
+<% else %>
+<% atributos = modelo.capitalize.constantize.atributos %>
+
+<% if modelo.eql? "servicio" %>
+    <table class="generica_encargado">
+        <tr>
+        <% atributos.each do |atributo| %>
+          <th width="230px"><%= modelo.capitalize.constantize.cambia(atributo) %></th>
+        <% end %>
+          <th width="230px"></th>
+        </tr>  
+    </table>
+    <% @objetos.each do |objeto| %>  
+        <table class="generica_encargado">
+    
+              <tr id="<%= "#{modelo}_#{objeto.id}" %>">
+                <% atributos.each do |atributo| %>
+                    <td style="text-align:center;" width="230px">
+                        <% if modelo.capitalize.constantize.es_evaluable(atributo) %>
+                            <%= eval objeto.send(atributo) %>
+                        <% else %>
+                            <%= objeto.send(atributo) %>
+                        <% end %>
+                    </td>
+                <% end %>
+            	<td  style="text-align:center;" width="230px">
+                  <%= button_to_remote "Borrar", :url => {:controller => modelo.pluralize, :action => "destroy",
+                                                          :id => objeto}, :method => :delete,  
+                                                          :confirm => "¿Borrar #{genero_de(modelo, "éste")} #{modelo}?" %>
+                  <%= button_to_remote "Editar", :url => {:controller => modelo.pluralize, :action => "edit",
+                                                          :id => objeto}, :method => :get %>
+                </td>
+              
+              </tr>
+        </table> 
+        <div id="<%= "#{modelo}_show_#{objeto.id}" %>"> </div>
+    <% end %>
+<% elsif modelo.eql? "paquete" %>
+  <table class="generica_encargado">
+        <tr>
+            <% atributos.each do |atributo| %>
+                <th><%= modelo.capitalize.constantize.cambia(atributo) %></th>
+            <% end %>
+            <th></th>
+        </tr>
+        <% @objetos.each do |objeto| %>  
+           <tr id="<%= "#{modelo}_#{objeto.id}" %>">
+             <% atributos.each do |atributo| %>
+                 <td>
+                     <% if modelo.capitalize.constantize.es_evaluable(atributo) %>
+                         <%= eval objeto.send(atributo) %>
+                     <% else %>
+                         <%= objeto.send(atributo) %>
+                     <% end %>
+                 </td>
+             <% end %>
+         	<td>
+               <%= button_to_remote "Borrar", :url => {:controller => modelo.pluralize, :action => "destroy",
+                                                     :id => objeto}, :method => :delete,  
+                                                     :confirm => "¿Borrar #{genero_de(modelo, "éste")} #{modelo}?" %>
+               <%= button_to_remote "Editar", :url => {:controller => modelo.pluralize, :action => "edit",
+                                                       :id => objeto}, :method => :get %>
+             </td>
+
+           </tr>
+        <% end %>
+   </table> 
+<% end %>     
+  <b><p style="text-align:center;">
+    <%= link_to_remote "Cerrar", :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                 :with => "'modelo=#{modelo}'" %>
+  </p></b>
+<% end %>
+</div>
+  <br/>

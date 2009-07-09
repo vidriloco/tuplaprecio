@@ -1,17 +1,21 @@
 <div class='m_i_modelo_barra'>
-    <% if current_user.es_encargado? %>
-        <% cuenta, modelo_cuenta = modelo_info(modelo, eval("current_user.plaza.#{modelo.pluralize}.size")) %>
-    <% else %>
-        <% cuenta, modelo_cuenta = modelo_info(modelo) %>
-    <% end %>
-  
-    <p class='inlined_short' id=<%="cuenta#{modelo.capitalize}"%>><b><%= cuenta %></b></p>
-    <p class='inlined_large' id=<%="sustantivo#{modelo.capitalize}"%>><%= modelo_cuenta %></p>
 
-    <div class='inlined_short'>
-        <%= button_to_remote genero_de(modelo, "Nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>
-    </div>
-    <div class='inlined_short'>
-        <%= button_to_remote "Ver todos", :url => {:controller => modelo.pluralize, :action => 'listing'} %>
-    </div>
+    <% cuenta, modelo_cuenta = modelo_info(modelo) %>
+ 
+    <table>
+        <tr>
+            <td style="width:100px; text-align:center;">
+                <p id=<%="cuenta#{modelo.capitalize}"%>><b><%= cuenta %></b></p>
+            </td>
+            <td style="width:300px; text-align:left;">
+                <p id=<%="sustantivo#{modelo.capitalize}"%>><%= modelo_cuenta %></p>
+            </td>
+            <td style="width:400px; text-align:right;">
+                <%= button_to_remote genero_de(modelo,"Nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>
+            </td>
+            <td style="width:150px; text-align:center;">
+                <%= button_to_remote "Ver todos", :url => {:controller => modelo.pluralize, :action => 'listing'} %>
+            </td>
+        </tr>
+    </table>
 </div>

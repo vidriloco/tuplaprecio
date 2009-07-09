@@ -32,7 +32,7 @@ class UsuariosController < ApplicationController
     #logout_keeping_session!
     @user = Usuario.new(params[:usuario])
 
-    success = @user && @user.save
+    success = @user && @user.guarda(current_user.es_administrador?)
     respond_to do |format|
       format.js do
         if success && @user.errors.empty?

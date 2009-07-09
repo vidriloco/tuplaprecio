@@ -6,11 +6,17 @@ pre {
 
 h2 a { font-size:20px; color:#53475D;}
 
+
 input.boton_justificado {
   margin-left: 20px;	
   margin-bottom: 20px;
 }
 
+.modelo_barra {
+  width: 1000px;
+  margin-bottom: 15px;
+  background-color: #CEBBDC;
+}
 
 #contenedor_izq_admin {
   display: inline-block;
@@ -89,6 +95,10 @@ input.boton_justificado {
 	text-align:center;
 	width: 200px;
 	
+}
+
+.generica tr:hover {
+	background-color:#9692C0;
 }
 
 .tabla_interior {

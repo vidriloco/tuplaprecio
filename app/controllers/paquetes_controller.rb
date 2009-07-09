@@ -44,5 +44,52 @@ class PaquetesController < ApplicationController
        end
     end
   end
+  
+  def create
+    super do
+      render :update do |page|
+          page["paquetes"].replace_html :partial => "tableros/index_modelo_barra", 
+                                                :locals => {:modelo => "paquete"}
+          page["paquetes"].visual_effect :appear
+          page << "Nifty('div#paquetes');"
+      end
+    end
+  end
+  
+  def update
+    super do
+      render :update do |page|
+          page["paquetes"].replace_html :partial => "tableros/index_modelo_barra", 
+                                                :locals => {:modelo => "paquete"}
+          page["paquetes"].visual_effect :appear
+          page << "Nifty('div#paquetes');"
+      end
+    end
+  end
+  
+  def destroy
+    super do
+      render :update do |page|
+         if current_user.plaza.paquetes.count == 0
+           page["paquetes"].replace_html :partial => "tableros/index_modelo_barra", 
+                                               :locals => {:modelo => "paquete"}
+           page["paquetes"].visual_effect :appear
+           page << "Nifty('div#paquetes');"
+         else   
+           page["paquete_#{params[:id]}"].visual_effect :fade
+         end
+       end
+    end
+  end
+  
+  def listing
+    @objetos = current_user.plaza.paquetes
+    render :update do |page|
+      page["paquetes"].replace_html :partial => "compartidos/listing_modelos_encargado", 
+                                         :locals => {:modelo => "paquete"}
+      page["paquetes"].visual_effect :appear
+      page << "Nifty('div#paquetes');"
+    end
+  end
 
 end
