@@ -25,4 +25,9 @@ class Metaconcepto < ActiveRecord::Base
     mservicios_nombres.chop.chop    
   end
   
+  def posicion_
+    return posicion unless posicion.nil?
+    "Sin posición"
+  end
+  
 end

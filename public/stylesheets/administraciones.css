@@ -282,7 +282,7 @@ input.boton_justificado {
 	margin-top: 12px;
 }
 
-#aclaracion {
+.aclaracion {
 	font-size:9px;
 	border: 1px solid #CBB8DF;
 	width: 350px;
@@ -290,4 +290,9 @@ input.boton_justificado {
 	margin-right:auto;
 	text-align:left;
 	padding-left: 10px;
+}
+
+table.aclarativa td {
+	font-size:9px;
+	padding:5px;
 }

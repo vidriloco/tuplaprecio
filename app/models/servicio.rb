@@ -80,6 +80,10 @@ class Servicio < ActiveRecord::Base
     resultados
   end
   
+  def conceptos_asociados_en_orden
+    Concepto.find :all, :conditions => {:servicio_id => id}, :include => 'metaconcepto', :order => "metaconceptos.posicion ASC"
+  end
+  
   protected
     def atributos_de_conceptos
       conceptos.each do |c|

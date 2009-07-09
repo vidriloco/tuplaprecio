@@ -13,12 +13,30 @@
           <% else %>
           <% atributos = modelo.capitalize.constantize.atributos %>
           <% width = 900/(atributos.size+1) %>
+          
           <% if modelo.eql?("metaconcepto")%>
-              <div id="aclaracion">
-                <span>Tipo <b>A</b> genera una entrada adecuada para introducir costos</span><br/>
-                <span>Tipo <b>B</b> genera una entrada adecuada para introducir valores unitarios</span>
-              </div>
+              <table style="margin-left:auto; margin-right:auto;">
+                  <tr>
+                      <td>
+                          <div class="aclaracion">
+                            <span>Tipo <b>A</b> genera una entrada adecuada para introducir costos</span><br/>
+                            <span>Tipo <b>B</b> genera una entrada adecuada para introducir valores unitarios</span>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="aclaracion">
+                              <span>Establecer un orden sobre los elementos de éste listado
+                                <%= button_to_remote "Ordenar", :url => {:controller => "metaconceptos", 
+                                                                         :action => "plantilla_de_ordenamiento"},
+                                                                :update => "metaconceptos" %>
+                              </span>
+                          </div>
+                      </td>
+                  </tr>
+              </table>
           <% end %>
+          
+          
           <br/>
           <table class="generica">
             <tr>

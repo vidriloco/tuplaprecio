@@ -31,7 +31,7 @@
             </tr>
         </thead>
         <tbody>
-            <% servicio.conceptos.each do |c| %>
+            <% servicio.conceptos_asociados_en_orden.each do |c| %>
                 <tr class="servicio_distingible">
                     <td style="text-align:left; padding-left:10px;"><%=h c.metaconcepto.nombre %></td>
                     <td style="width:10px;"><%=h c.disponibilidad %></td>

@@ -1,0 +1,56 @@
+<h3 class='admin_modelo_titulo'>Metaconcepto</h3>
+<div class='container_admin'>
+
+    <div class="aclaracion" style="width: 670px;">
+        <table class="aclarativa">
+            <tr>
+                <td>1. Establezca una numeración para cada elemento en la lista.</td> 
+                <td>2. Pueden haber números repetidos. (Leer punto 4) </td>
+            </tr>        
+            <tr>                                                     
+                <td>3. Listado en orden ascendente.</td>
+                <td>4. Dos elementos con categorías disjuntas pueden tener un mismo número. <br/>
+                        (<b>i.e</b> TV Adicional y Líneas Telefónicas)</td>                                                          
+            </tr>
+        </table>
+        
+        <div style="text-align:center;">
+        <%= button_to_remote "Recargar Lista", :url => {:action => "plantilla_de_ordenamiento"}, :update => "metaconceptos" %> |
+        <b><%= link_to_remote "Cerrar", :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+          :with => "'modelo=metaconcepto'" %></b></div>
+    </div>
+    <br/>
+
+    <table style="align:center;" class="generica">
+        <thead>
+            <tr>
+              <th style="width:100px;">Posicion</th>
+              <th style="width:400px;">Nombre</th>
+              <th style="width:400px;">Metaservicios</th>
+            </tr>  
+        </thead>
+        <tbody>
+            <% @metaconceptos.each do |metaconcepto| %>
+                <% @metaconcepto = metaconcepto %>
+                <tr>
+                    <td>
+                        <span  id="metaconcepto<%= metaconcepto.id %>"><%= metaconcepto.posicion_ %></span>
+                    </td>
+                    <%= in_place_editor "metaconcepto#{metaconcepto.id}", 
+                                        {:url => url_for(:action => "posiciona", :id => metaconcepto.id), 
+                                         :size => 2,
+                                         :cancel_text => "Cancelar",
+                                         :save_text => "Guardar",
+                                         :saving_text => "Guardando...",
+                                         :loading_text => "Cargando...",
+                                         :click_to_edit_text => "Modificar",
+                                         :text_between_controls => "   "} %>
+                                                                       
+                    <td style="text-align:left;"><%=h metaconcepto.nombre %></td>
+                    <td style="text-align:left;"><%=h metaconcepto.metaservicios_ %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+</div>
