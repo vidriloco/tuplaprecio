@@ -1,23 +1,26 @@
-<h3 class='admin_modelo_titulo'>Usuario</h3>
-<div class='container_admin'>
+<%= javascript_tag "Nifty('#detalles_usuario');" %>
+
+<div id="detalles_usuario">
+
+<h4>Modificación información de usuario</h4>
     
 <div class='form'>
     <div id="errores_usuario" class="errorExplanation" style="display:none"></div>
     
-<% form_remote_for(:usuario, @usuario, :url => usuario_path(@usuario), :html => {:method => :put}) do |f| -%>
+    <% form_remote_for(:usuario, @usuario, :url => usuario_path(@usuario), :html => {:method => :put}) do |f| -%>
 
-<p><%= label_tag 'email' %><br/>
-<%= f.text_field :email %></p>
+    <p><%= label_tag 'email' %><br/>
+    <%= f.text_field :email %></p>
 
-<p><%= label_tag 'password', 'Contraseña' %><br/>
-<%= f.password_field :password %></p>
+    <p><%= label_tag 'password', 'Contraseña' %><br/>
+    <%= f.password_field :password %></p>
 
-<p><%= label_tag 'password_confirmation', 'Confirma Contraseña' %><br/>
-<%= f.password_field :password_confirmation %></p>
+    <p><%= label_tag 'password_confirmation', 'Confirma Contraseña' %><br/>
+    <%= f.password_field :password_confirmation %></p>
 
-    <p><%= submit_tag 'Actualizar' %> | <%= link_to_remote "Cerrar", 
-                                          :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
-                                          :with => "'modelo=#{modelo}'" %></p>
-<% end %>
+    <p><%= submit_tag 'Actualizar' %> | <b><%= link_to_remote "Cerrar" , '', :onClick => "$('detalles').fade();" %></b></p>
+    <% end %>
 
 </div>
+</div>
+

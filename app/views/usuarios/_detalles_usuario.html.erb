@@ -1,0 +1,17 @@
+<%= javascript_tag "Nifty('#detalles_usuario');" %>
+
+<div id="detalles_usuario">
+    <h4>Información de tu cuenta de usuario</h4>
+    
+    <p><b>Nombre: </b><%= @usuario.nombre %></p>
+    
+    <p><b>Login: </b><%= @usuario.login %></p>
+    
+    <p><b>Correo Electrónico: </b><%= @usuario.email %></p>
+    
+    <div style="border: 1px solid #9D81F9; margin-bottom: 5px;"></div>
+    
+    <%= button_to_remote "Modificar", :url => {:controller => "usuarios", :action => "detalles_usuario"}, 
+                                      :update => "detalles", :with => "'modify_one=true'" %> 
+    <b><%= link_to_remote "Cerrar" , '', :onClick => "$('detalles').fade();" %></b>
+</div>

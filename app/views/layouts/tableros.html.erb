@@ -23,7 +23,14 @@
 <body>
     <div id="wrapper">  
         <div class='header' id='leftH'>
-    	    <%= logged_in_as %>	 
+            <% if current_user.es_encargado? || current_user.es_administrador? %>
+    	    <%= link_to_remote logged_in_as, :url => {:controller => 'usuarios', 
+    	                                              :action => 'detalles_usuario', :id => current_user},
+    	                                     :update => "detalles", :with => "'read=true'", 
+    	                                     :complete => visual_effect(:appear, "detalles") %>	 
+    	    <% else %>
+    	        <%= logged_in_as%>	 
+    	    <% end %>
     	</div>
     		 
 		<div class='header' id='rightH'>
@@ -31,6 +38,7 @@
 		</div>
 		
 		<div id="anuncios"></div>
+		<div id="detalles"></div>
 		
 		<% if current_user.es_agente? %>    
 		    <div id='selector_de_estados' class='header'>

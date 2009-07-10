@@ -1,0 +1,22 @@
+<%= javascript_tag "Nifty('#detalles_usuario');" %>
+
+<div id="detalles_usuario">
+
+    <h4>Verificación de Identidad</h4>
+    
+    <div class='form'>
+    
+        <% form_remote_tag :url => 'usuarios/detalles_usuario' do -%>
+            <p><%= label_tag 'password', 'Contraseña actual' %><br/>
+            <%= password_field_tag :password %></p>
+            <%= hidden_field_tag :modify_two, true %>
+            <p>
+                <%= submit_tag 'Autenticarme' %> | 
+                <b><%= link_to_remote "Cerrar" , '', :onClick => "$('detalles').fade();" %></b>
+            </p>
+          <% end -%>
+        
+
+    </div>
+</div>
+

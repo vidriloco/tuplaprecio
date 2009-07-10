@@ -1,0 +1,9 @@
+<p class="mensaje_error">Verifica los campos siguientes:</p>
+
+<% @errores.each_key do |key| %>
+    <% if @errores[key].index(",") != 0 %>
+       <p><b><%= key.humanize %>: </b><%= @errores[key].chop.chop %></p>
+    <% else %>
+       <p><b><%= key.humanize %>: </b><%= @errores[key] %></p>
+    <% end %>
+<% end %>

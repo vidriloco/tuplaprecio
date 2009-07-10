@@ -18,6 +18,10 @@ class Usuario < ActiveRecord::Base
 
   validates_presence_of     :nombre,   :message => "no puede ser vacío"
   validates_length_of       :nombre,   :maximum => 100, :message => "no puede ser mayor a 100 caracteres"
+  
+  validates_presence_of     :password,   :message => "no puede ser vacío"
+  validates_confirmation_of :password
+  validates_length_of       :password, :within => 6...15, :message => "es muy corto (mínimo 6 caracteres)"
 
   validates_presence_of     :email,    :message => "no puede estar vacío"
   validates_length_of       :email,    :within => 6..100, :message => "es muy corto (mínimo 6 caracteres)"

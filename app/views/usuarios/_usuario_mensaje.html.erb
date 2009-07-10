@@ -1,0 +1,11 @@
+<div onClick="$('anuncios').fade()">
+<% if correcto %>
+    <div id="mensaje_bien" class="mensaje_c">
+        <p><%= @mensaje %></p>
+    </div>
+<% else %>
+    <div id="mensaje_mal" class="mensaje_c">
+        <p><%= @mensaje %></p>
+    </div>
+<% end %>
+</div>
