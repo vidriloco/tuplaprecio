@@ -5,10 +5,10 @@
     <table>
         <tr>
             <td style="width:100px; text-align:center;">
-                <p id=<%="cuenta#{modelo.capitalize}"%>><b><%= cuenta %></b></p>
+                <p><b><%= cuenta %></b></p>
             </td>
             <td style="width:300px; text-align:left;">
-                <p id=<%="sustantivo#{modelo.capitalize}"%>><%= modelo_cuenta %></p>
+                <p><%= modelo_cuenta %></p>
             </td>
             <td style="width:400px; text-align:right;">
                 <%= button_to_remote genero_de(modelo,"Nuevo"), :url => {:controller => modelo.pluralize, :action => 'new'} %>

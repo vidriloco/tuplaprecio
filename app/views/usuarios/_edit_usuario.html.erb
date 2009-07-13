@@ -9,7 +9,7 @@
     <%= render :partial => "form_usuario_administrador", :locals => {:f => f} %>
 
     <div id="usuario_estado_form">
-        <% unless @usuario.no_tiene_rol %>    
+        <% if !@usuario.no_tiene_rol && @usuario.es_encargado? %>    
             <%= render :partial => "usuario_estado_form", :locals => {:estados => @estados, :plazas => @plazas} %>
         <% end %>
     </div>

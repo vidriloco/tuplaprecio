@@ -1,19 +1,18 @@
-<tr>  
-  <td><span id="estado_de_seleccion" class="enfasis_en_selector">Seleccionar: </span></td>
-  <!-- Espacio de 2 -->
-  &nbsp;
-  <!-- -->
-  <td><b>Estado </b></td>
+<table>
+    <tr>  
+      <td><span id="estado_de_seleccion" class="enfasis_en_selector">Seleccionar: </span></td>
+     
+      <td><b>Estado </b></td>
 
-  <td><%= collection_select(:estado, :id, @estados, :id, :nombre,{:include_blank => true }, :onchange => remote_function(
-                        :update => 'selector_de_plaza',
-                        :url => { :action => :estado_seleccionado}, 
-                                  :with => "'id='+this.options[this.selectedIndex].value")) %></td>
-   &nbsp;&nbsp;
-  <b>Plaza </b>
-  <td>
-      <span id='selector_de_plaza'>
-        <%= render :partial => 'selector_de_plaza' %>
-      </span>
-  </td>
-</tr>
+      <td><%= collection_select(:estado, :id, @estados, :id, :nombre,{:include_blank => true }, :onchange => remote_function(
+                            :update => 'selector_de_plaza',
+                            :url => { :action => :estado_seleccionado}, 
+                                      :with => "'id='+this.options[this.selectedIndex].value")) %></td>
+      <td><b>&nbsp;Plaza</b></td>
+      <td>
+          <span id='selector_de_plaza'>
+            <%= render :partial => 'selector_de_plaza' %>
+          </span>
+      </td>
+    </tr>
+</table>

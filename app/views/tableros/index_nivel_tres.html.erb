@@ -2,11 +2,13 @@
     <% form_remote_tag :url => {:controller =>:busquedas, :action => :inicial}, 
                                 :update => 'area_de_resultados',
                                 :complete => visual_effect(:appear, 'area_de_resultados') do -%>
+    <table>
         <tr>
             <td><b>Búsqueda: </b></td>
             <td><%= text_field_tag 'query', '', :size => 20 %></td>
             <td><%= submit_tag 'Buscar' %></td>
         </tr>
+    </table>
     <% end -%>
 <% end %>
 

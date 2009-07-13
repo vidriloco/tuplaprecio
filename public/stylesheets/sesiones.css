@@ -1,4 +1,4 @@
-body { background-color: #232323; color: #B9B9B9; }
+body { background-color: #232323; color: #B9B9B9;}
 
 #sesion{
 	background-color: #3B3F4F;
@@ -21,6 +21,15 @@ body { background-color: #232323; color: #B9B9B9; }
 	font-size:20px;
 	background-color:#7D889F;
 	color:#51586A;
+}
+
+#footer {
+	border: 1px solid #343748;
+	margin-bottom:0px;
+	width:93px;
+	margin-left:auto;
+	margin-right:auto;
+	float: center;
 }
 
 

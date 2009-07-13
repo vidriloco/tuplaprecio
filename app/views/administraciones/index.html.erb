@@ -12,13 +12,15 @@
                 <% form_tag 'administraciones/entrada_rb',
                               :multipart => true, 
                               :target => 'upload_frame',
-                              :onSubmit => "$('a_4').show(); Nifty('div.mensaje_barra')"  do -%>
-                    <tr>
-                      <td><b>Restaurar Copía de seguridad: </b></td>   
+                              :onsubmit => "$('a_4').show(); Nifty('div.mensaje_barra')"  do -%>
+                    <table>
+                        <tr>
+                            <td><b>Restaurar Copía de seguridad: </b></td>   
                        
-                      <td><%= file_field_tag "zipo" -%></td>
-                      <td><%= submit_tag 'Cargar' -%></td>
-                    </tr>
+                            <td><%= file_field_tag "zipo" -%></td>
+                            <td><%= submit_tag 'Cargar' -%></td>
+                        </tr>
+                    </table>
                 <% end %>
                 <iframe id='upload_frame' name="upload_frame"
                 style="width:1px;height:1px;
@@ -27,24 +29,29 @@
             
              <div>
                 <% form_tag :action => :salida_rb do -%>
-                    <tr>
-                        <td><b>Copía de Seguridad: </b></td>
-                        <td><%= submit_tag 'Descargar' -%></td>
-                    </tr>
+                    <table>
+                        <tr>
+                            <td><b>Copía de Seguridad: </b></td>
+                            <td><%= submit_tag 'Descargar' -%></td>
+                        </tr>
+                    </table>
                 <% end -%>
             </div>
             
             <div>
             <% form_tag :action => :salida_csv do -%>
-                <tr>
-                    <td><b>Obtener csv: </b></td>
-                    <td><%= submit_tag 'Descargar' -%></td>
-                </tr>
+                <table>
+                    <tr>
+                        <td><b>Obtener csv: </b></td>
+                        <td><%= submit_tag 'Descargar' -%></td>
+                    </tr>
+                </table>
             <% end -%>
             </div>
            
             
             <div>
+              <table>
                 <tr>
                     <td><b>Base de Datos:</b></td>
                     <% complete = "Nifty('div.mensaje_barra'); $('a_1').show(); $('a_2').hide()" %>
@@ -54,6 +61,7 @@
                                                        :loading => "Nifty('div.mensaje_barra'); $('a_2').show()", 
                                                        :complete => complete  %></td>
                 </tr>
+              </table>
             </div>
     </div>
     
