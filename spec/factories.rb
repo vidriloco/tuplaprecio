@@ -22,8 +22,8 @@ Factory.define :paquete do |p|
   p.ahorro 20
 end
 
-Factory.define :subcategoria do |sc|
-  sc.nombre "Alguna Subcategoria"
+Factory.define :metaservicio do |ms|
+  ms.nombre "Algún Metasubservicio"
 end
 
 Factory.define :metaconcepto do |mc|
@@ -31,12 +31,12 @@ Factory.define :metaconcepto do |mc|
 end
 
 Factory.define :metaconcepto_tipo_a, :class => Metaconcepto do |mc|
-  mc.nombre "Un Metaconcepto"
+  mc.nombre "Un Metaconcepto de tipo A"
   mc.tipo "A"
 end
 
 Factory.define :metaconcepto_tipo_b, :class => Metaconcepto do |mc|
-  mc.nombre "Un Metaconcepto"
+  mc.nombre "Un Metaconcepto de tipo B"
   mc.tipo "B"
 end
 
@@ -45,8 +45,6 @@ Factory.define :categoria do |c|
 end
 
 Factory.define :concepto do |c|
-  c.vigente_desde Date.today
-  c.vigente_hasta Date.tomorrow
   c.disponible true
   c.comentarios "algunos que puedan interesar"
   c.costo 100

@@ -10,49 +10,122 @@ describe Concepto do
 #    exposure[1].should == ""
 #  end
   
-  it "should require that it's attribute 'costo' is a number if it's associated metaconcepto is of 'tipo' 'A'" do
-    concepto = Factory.build(:concepto, :costo => "esto no es un número")
-    concepto.metaconcepto = Factory.create(:metaconcepto_tipo_a)
-    concepto.save.should be_false
+  describe "disponible" do
+    describe "associated to metaconcepto 'tipo' A" do
+  
+      it "should require that it's attribute 'costo' is a number" do
+        concepto = Factory.build(:concepto, :costo => "esto no es un número")
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_a)
+        concepto.save.should be_false
+      end
+  
+      it "should correctly save provided the correct values" do
+        concepto = Factory.build(:concepto, :valor => nil)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_a)
+        concepto.save.should be_true
+      end
+  
+      it "should require that it's attribute 'costo' is not nil" do
+        concepto = Factory.build(:concepto, :costo => nil)
+        concepto.metaconcepto = Factory.build(:metaconcepto_tipo_a)
+        concepto.save.should be_false
+      end
+      
+      it "should correctly retrieve stored values" do
+        concepto = Factory.build(:concepto, :valor => nil, :costo => 100.00)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
+        concepto.save
+        concepto.valor.should be_nil
+        concepto.costo.should == 100.00
+      end
+    end
+  
+    describe "associated to metaconcepto 'tipo' B" do
+  
+      it "should require that it's attribute 'valor' is a number" do
+        concepto = Factory.build(:concepto, :valor => "esto no es un número")
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
+        concepto.save.should be_false
+      end
+ 
+      it "should correctly save provided the correct values" do
+        concepto = Factory.build(:concepto, :costo => nil)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
+        concepto.save.should be_true
+      end
+      
+      it "should correctly retrieve stored values" do
+        concepto = Factory.build(:concepto, :valor => 4, :costo => nil)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
+        concepto.save
+        concepto.valor.should == 4
+        concepto.costo.should be_nil
+      end
+  
+      it "should require that it's attribute 'valor' is not nil" do
+        concepto = Factory.build(:concepto, :valor => "")
+        concepto.metaconcepto = Factory.build(:metaconcepto_tipo_b)
+        concepto.save.should be_false
+      end
+    end
+    
+    it "should return the value of it's attribute 'costo' in a human readable format" do
+      concepto = Factory.build(:concepto)
+      concepto.costo_.should == "$ #{concepto.costo.to_s(2)}"
+    end
+    
   end
   
-  it "should require that it's attribute 'valor' is a number if it's associated metaconcepto is of 'tipo' 'B'" do
-    concepto = Factory.build(:concepto, :valor => "esto no es un número")
-    concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
-    concepto.save.should be_false
+  describe "no disponible" do
+    describe "associated to metaconcepto 'tipo' A" do
+  
+      it "should not validate that it's attribute 'costo' is a number" do
+        concepto = Factory.build(:concepto, :costo => "esto no es un número", :disponible => false)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_a)
+        concepto.save.should be_true
+      end
+  
+      it "should correctly save when metaconcepto is the only not nil value" do
+        concepto = Factory.build(:concepto, :costo => nil, :valor => nil, :disponible => false)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_a)
+        concepto.save.should be_true
+      end
+  
+      it "should not matter that it's attribute 'costo' is nil" do
+        concepto = Factory.build(:concepto, :costo => nil, :disponible => false)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_a)
+        concepto.save.should be_true
+      end
+    end
+  
+    describe "associated to metaconcepto 'tipo' B" do
+  
+      it "should not validate that it's attribute 'costo' is a number" do
+        concepto = Factory.build(:concepto, :costo => "esto no es un número", :disponible => false)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
+        concepto.save.should be_true
+      end
+  
+      it "should correctly save when metaconcepto is the only not nil value" do
+        concepto = Factory.build(:concepto, :costo => nil, :valor => nil, :disponible => false)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
+        concepto.save.should be_true
+      end
+  
+      it "should not matter that it's attribute 'value' is nil" do
+        concepto = Factory.build(:concepto, :valor => nil, :disponible => false)
+        concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
+        concepto.save.should be_true
+      end
+    end
+    
+    it "should return the value of it's attribute 'costo' in a human readable format" do
+      concepto = Factory.build(:concepto)
+      concepto.costo_.should == "$ #{concepto.costo.to_s(2)}"
+    end
+
+  
   end
   
-  it "should be possible to build a new instance of concepto tipo 'A' provided the correct values" do
-    concepto = Factory.build(:concepto, :valor => nil)
-    concepto.metaconcepto = Factory.create(:metaconcepto_tipo_a)
-    concepto.save.should be_true
-  end
-  
-  it "should be possible to build a new instance of concepto tipo 'B' provided the correct values" do
-    concepto = Factory.build(:concepto, :costo => nil)
-    concepto.metaconcepto = Factory.create(:metaconcepto_tipo_b)
-    concepto.save.should be_true
-  end
-  
-  it "should return the value of it's attribute 'costo' in a human readable format" do
-    concepto = Factory.build(:concepto)
-    concepto.costo_.should == "$ #{concepto.costo} pesos"
-  end
-  
-  it "should require that it's attribute 'valor' is not blank if it's associated metaconcepto is of 'tipo' 'B'" do
-    concepto = Factory.build(:concepto, :valor => "")
-    concepto.metaconcepto = Factory.build(:metaconcepto_tipo_b)
-    concepto.save.should be_false
-  end
-  
-  it "should require that it's attribute 'costo' is not nil if it's associated metaconcepto is of 'tipo' 'A'" do
-    concepto = Factory.build(:concepto, :costo => "")
-    concepto.metaconcepto = Factory.build(:metaconcepto_tipo_a)
-    concepto.save.should be_false
-  end
-  
-  it "should return in a human readable format the value of it's attribute 'vigente_desde'"
-  
-  it "should return in a human readable format the value of it's attribute 'vigente_hasta'"
   
 end

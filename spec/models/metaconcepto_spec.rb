@@ -5,14 +5,6 @@ describe Metaconcepto do
   it "should create a new metaconcepto instance" do
     Factory.create(:metaconcepto_tipo_a).should be_true
   end
-
-  it "should be possible to assign many categorias to it" do
-    mc=Factory.create(:metaconcepto_tipo_a)
-    3.times do
-      mc.categorias << Factory.create(:categoria)
-    end
-    mc.reload.categorias.should have(3).categorias
-  end
   
   it "should be possible to assign many conceptos to it" do
     mc=Factory.create(:metaconcepto_tipo_a)
@@ -46,8 +38,19 @@ describe Metaconcepto do
     Concepto.find(:all, :conditions => {:comentarios => "ligado a un metaconcepto eliminado"}).should be_empty
   end
   
-  it "should generate a tipo 'a' form for it's input attributes if it's tipo is 'a'"
+  it "should return 'Sin posición' when it has not yet been assigned a posición" do
+    mc=Factory.create(:metaconcepto_tipo_a)
+    mc.posicion_.should be_eql("Sin posición")
+  end
   
-  it "should generate a tipo 'b' form for it's input attributes if it's tipo is 'b'"
+  it "should return a list of all the nombres of the metaservicios this metaconcepto is assigned to" do
+    mc=Factory.create(:metaconcepto_tipo_a)
+    @mss=["Internet", "Telefonía", "Televisión"].each do |ms|
+      mc.metaservicios << Factory.create(:metaservicio, :nombre => ms)
+    end
+    
+    mc.save
+    mc.metaservicios_.should be_eql(@mss)
+  end
   
 end

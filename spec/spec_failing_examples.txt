@@ -1,1 +1,143 @@
+Concepto should require that it's attribute 'costo' is a number if it's associated metaconcepto is of 'tipo' 'A'
+Concepto should require that it's attribute 'valor' is a number if it's associated metaconcepto is of 'tipo' 'B'
+Concepto should be possible to build a new instance of concepto tipo 'A' provided the correct values
+Concepto should be possible to build a new instance of concepto tipo 'B' provided the correct values
+Concepto should return the value of it's attribute 'costo' in a human readable format
+Concepto should require that it's attribute 'valor' is not blank if it's associated metaconcepto is of 'tipo' 'B'
+Concepto should require that it's attribute 'costo' is not nil if it's associated metaconcepto is of 'tipo' 'A'
+Paquete should return in a human readable format the value of it's attribute 'costo_1'
+Paquete should return in a human readable format the value of it's attribute 'costo'
+Paquete should return in a human readable format the value of it's attribute 'costo'
+Paquete should return in a human readable format the value of it's attribute 'costo'
+Paquete should be possible to assign to it many categorias
+Servicio should have associations for one 'subcategoria', 'plaza', for many 'conceptos', 'paquetes'
+Metaconcepto should be possible to assign many categorias to it
+Metaconcepto should be possible to assign many conceptos to it
+Metaconcepto should delete the conceptos which are linked to it
+MetaconceptosController POST/create action with invalid input should not save the instance
+MetaconceptosController POST/create action with invalid input should re-render new form
+MetaconceptosController POST/create action with valid input should create the Metaconcepto instance
+MetaconceptosController POST/create action with valid input should save the Metaconcepto instance
+MetaconceptosController POST/create action with valid input should get redirected to the Metaconcepto model list page
+MetaconceptosController POST/create action with valid input should assign Metaconcepto instance
+MetaconceptosController e should render Metaconcepto new page
+MetaconceptosController e should render the Metaconcepto index action
+MetaconceptosController PUT/update action with valid attributes should retrieve the correct metaconcepto based on it's ID
+MetaconceptosController PUT/update action with valid attributes should have found metaconcepto instance
+MetaconceptosController PUT/update action with valid attributes should correctly change attributes
+MetaconceptosController PUT/update action with valid attributes should redirect_to metaconcepto show page
+MetaconceptosController GET/show action should call the metaconcepto action succesfully
+MetaconceptosController GET/show action should find the metaconcepto
+MetaconceptosController GET/show action should render Metaconcepto show page
+MetaconceptosController GET/show action should retrieve the object to be shown
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered kills existing login
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered authorizes me
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered logs me in
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered does not make new token
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered does refresh token
+SesionesController on successful login, my request cookie token is valid, and ask not to be remembered sets an auth cookie
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered kills existing login
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered authorizes me
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered logs me in
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered does not make new token
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered does refresh token
+SesionesController on successful login, my request cookie token is valid, and ask to be remembered sets an auth cookie
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered kills existing login
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered authorizes me
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered logs me in
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered does not make new token
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered does not refresh token
+SesionesController on successful login, my request cookie token is different, and ask not to be remembered kills user token
+SesionesController on successful login, my request cookie token is different, and ask to be remembered kills existing login
+SesionesController on successful login, my request cookie token is different, and ask to be remembered authorizes me
+SesionesController on successful login, my request cookie token is different, and ask to be remembered logs me in
+SesionesController on successful login, my request cookie token is different, and ask to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is different, and ask to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is different, and ask to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is different, and ask to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is different, and ask to be remembered makes a new token
+SesionesController on successful login, my request cookie token is different, and ask to be remembered does not refresh token
+SesionesController on successful login, my request cookie token is different, and ask to be remembered sets an auth cookie
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered kills existing login
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered authorizes me
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered logs me in
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered does not make new token
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered does not refresh token
+SesionesController on successful login, my request cookie token is expired, and ask not to be remembered kills user token
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered kills existing login
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered authorizes me
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered logs me in
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered makes a new token
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered does not refresh token
+SesionesController on successful login, my request cookie token is expired, and ask to be remembered sets an auth cookie
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered kills existing login
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered authorizes me
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered logs me in
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered does not make new token
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered does not refresh token
+SesionesController on successful login, my request cookie token is nil, and ask not to be remembered kills user token
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered kills existing login
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered authorizes me
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered logs me in
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered greets me nicely
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered sets/resets/expires cookie
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered sends a cookie
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered does not reset my session
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered makes a new token
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered does not refresh token
+SesionesController on successful login, my request cookie token is nil, and ask to be remembered sets an auth cookie
+SesionesController Logging in by cookie logs in with cookie
+SesionesController Logging in by cookie fails cookie login with bad cookie
+SesionesController Logging in by cookie fails cookie login with no cookie
+SesionesController Logging in by cookie fails expired cookie login
+EstadosController GET/new action should success
+EstadosController GET/new action should generate a new instance
+EstadosController GET/new action should successfuly replace html id
 /administraciones/index actions for model estado should render partial _new_estado on action new
+
+Pending:
+
+Concepto should return in a human readable format the value of it's attribute 'vigente_desde' (Not Yet Implemented)
+./spec/models/concepto_spec.rb:54
+
+Concepto should return in a human readable format the value of it's attribute 'vigente_hasta' (Not Yet Implemented)
+./spec/models/concepto_spec.rb:56
+
+Metaconcepto should generate a tipo 'a' form for it's input attributes if it's tipo is 'a' (Not Yet Implemented)
+./spec/models/metaconcepto_spec.rb:49
+
+Metaconcepto should generate a tipo 'b' form for it's input attributes if it's tipo is 'b' (Not Yet Implemented)
+./spec/models/metaconcepto_spec.rb:51
+
+MetaconceptosController handling of PUT actions should succesfully update a Metaconcepto given it's ID and update attributes with values (Not Yet Implemented)
+./spec/controllers/metaconceptos_controller_spec.rb:159
+
+MetaconceptosController handling of DELETE actions should succesfully delete a Metaconcepto given it's ID (Not Yet Implemented)
+./spec/controllers/metaconceptos_controller_spec.rb:94
+
+MetaconceptosController e should an ID and then render Metaconcepto edit page (Not Yet Implemented)
+./spec/controllers/metaconceptos_controller_spec.rb:76
