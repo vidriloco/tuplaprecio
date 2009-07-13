@@ -17,12 +17,11 @@ class Metaconcepto < ActiveRecord::Base
   end
   
   def metaservicios_
-    mservicios_nombres=metaservicios.inject("") do |cdna, mservicio|
-      cdna<<"#{mservicio.nombre}, "
-      cdna
+    return "-" if metaservicios.blank?
+    @mregreso=metaservicios.inject([]) do |mem, met|
+      mem << "#{met.nombre} "
     end
-    return "-" if mservicios_nombres.blank?
-    mservicios_nombres.chop.chop    
+    @mregreso
   end
   
   def posicion_

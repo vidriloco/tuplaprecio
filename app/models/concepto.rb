@@ -5,6 +5,8 @@ class Concepto < ActiveRecord::Base
   
   belongs_to :metaconcepto
   belongs_to :servicio
+  
+  validates_presence_of :metaconcepto_id
   validates_numericality_of :costo, :if => :metaconcepto_es_tipo_a?, :unless => :no_disponible?
   validates_numericality_of :valor, :if => :metaconcepto_es_tipo_b?, :unless => :no_disponible?
   validates_presence_of :costo, :if => :metaconcepto_es_tipo_a?, :unless => :no_disponible?
@@ -24,6 +26,7 @@ class Concepto < ActiveRecord::Base
     metaconcepto.tipo.eql? "B"
   end
   
+  # Método que devuelve el estado de disponibilidad de un concepto
   def no_disponible?
     return true unless disponible
     false

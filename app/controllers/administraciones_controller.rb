@@ -73,6 +73,7 @@ class AdministracionesController < ApplicationController
   
   def limpia_bd
     @modelos = MODELOS
+    #modelos de administrador
     @modelos.each do |modelo|
       if modelo.eql? "usuario"
         modelo.capitalize.constantize.limpia_todos_excepto(current_user)
@@ -82,6 +83,11 @@ class AdministracionesController < ApplicationController
         modelo.capitalize.constantize.destroy_all
       end
     end    
+    
+    #modelos de encargado-agente
+    ["paquete", "servicio"].each do |modelo|
+      modelo.capitalize.constantize.destroy_all
+    end
       
     render :partial => "modelo_barras"
   end

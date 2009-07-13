@@ -40,8 +40,8 @@ module ApplicationHelper
   
   # Devuelve la salida (en HTML) para la barra de navegación superior izquierda
   def logged_in_as
-    return "<p><b>No logeado</b>" if current_user.nil?
-    "<p>#{Usuario.salida_usuario(current_user)} | #{link_to 'Cerrar Sesión', :controller => :sesiones, :action => :destroy}</p></p>"
+    return "<p><b>No logeado</b></p>" if current_user.nil?
+    "<p>#{Usuario.salida_usuario(current_user)} | #{link_to 'Cerrar Sesión', :controller => :sesiones, :action => :destroy}</p>"
   end
   
   # Método auxiliar que genera un diccionario con pares de valores. Utilizado para generar opciones para los select forms.
