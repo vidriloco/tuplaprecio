@@ -19,6 +19,10 @@ class Servicio < ActiveRecord::Base
     ["tipo_de_servicio", "nombre_del_servicio"]
   end
   
+  def self.atributos_exportables
+    []
+  end
+  
   def self.cambia(atributo)
     atributo.humanize
   end
