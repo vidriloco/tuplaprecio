@@ -5,6 +5,7 @@ class BusquedasController < ApplicationController
     @resultados = Hash.new
     
     @cosa_a_buscar=params[:query]
+    render(:nothing => true) && return if @cosa_a_buscar.blank?
     trozos_de_busqueda=@cosa_a_buscar.split(" ")
     
     ["Servicio", "Plaza", "Paquete", "Estado"].each do |modelo|
