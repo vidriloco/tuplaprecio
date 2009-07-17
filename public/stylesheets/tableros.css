@@ -49,9 +49,9 @@ body { background-color: #1C1B3D; color: #333; }
 
 #resultados {
   width: 1180px;
-  background-color:#000;
+  background-color:#1d1c45;
   text-align:center;
-  color:#F2C44E;
+  color:#D1D2F2;
   padding: 10px;
 }
 
@@ -64,11 +64,23 @@ body { background-color: #1C1B3D; color: #333; }
   text-align:center;
 }
 
+.resultado ul {
+	margin-left: 30px;
+	margin-top:5px;
+	margin-bottom:10px;
+}
+
+.resultado ul li {
+	color:#ACBCBA;
+}
+
 #cuenta_resultados {
-  width: 800px;
-  background-color:#000;
+  width: 1180px;
+  background-color:#1d1c45;
   padding: 5px;
   padding-left: 15px;	
+  text-align:center;
+  color:#7072CD;
 }
 
 .boton_derecha {

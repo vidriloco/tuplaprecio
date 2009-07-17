@@ -5,41 +5,49 @@
  
  
 <div id="resultados_contenedor">
-    <div id="resultados" onclick="$('resultados_contenedor').fade()"><h3>Resultados de Búsqueda</h3></div>
+    <div id="resultados" class="inlined"><h3>Resultados de Búsqueda</h3></div>
+    <%= image_tag "delete.png", :onclick => "$('resultados_contenedor').fade()", :class=> 'inlined', 
+                                :style => "position:absolute; top: 120px; right: 40px;" %>
     <br/>
     <br/>
     <% @resultados.each_key do |key| %>
         <% if key.eql?("Estado") %>
             <% @estados = @resultados.delete(key) %>
             <% unless @estados.empty? %>
-                        <%= javascript_tag "Nifty('#estado');" %>
-                        <div id="estado" class="resultado">
-                        <% if @estados.size == 1 %>
-                            <h4>Estado</h4>
-                        <% else %>
-                            <h4>Estados</h4>
-                        <% end %>
+                    <%= javascript_tag "Nifty('#estado');" %>
+                    <div id="estado" class="resultado">
+                        <div>
+                            <% if @estados.size == 1 %>
+                                <h4>Estado</h4>
+                            <% else %>
+                                <h4>Estados</h4>
+                            <% end %>
                         </div>
+                        <ul>
                         <% @estados.each do |estado| %>
-                            <%= estado.nombre %>
+                            <li><%= estado.nombre %></li>
                         <% end %>
+                        </ul>
+                    </div>
             <% end %>
         <% elsif key.eql?("Plaza") %>
             <% @plazas = @resultados.delete(key) %>
             <% unless @plazas.empty? %>
-                        <%= javascript_tag "Nifty('#plaza');" %>
-                        <div id="plaza" class="resultado">
-                        <% if @plazas.size == 1 %>
-                            <h4>Plaza</h4>
-                        <% else %>
-                            <h4>Plazas</h4>
-                        <% end %>
+                    <%= javascript_tag "Nifty('#plaza');" %>
+                    <div id="plaza" class="resultado">
+                        <div>
+                            <% if @plazas.size == 1 %>
+                                <h4>Plaza</h4>
+                            <% else %>
+                                <h4>Plazas</h4>
+                            <% end %>
                         </div>
-                        <% @plazas.each do |plaza| %>
-                            <%= plaza.nombre %>
-                        <% end %>
+                        <ul>
+                            <% @plazas.each do |plaza| %>
+                                <li><%= plaza.nombre %></li>
+                            <% end %>
+                        </ul>
                     </div>
-                </div>
             <% end %>
         <% elsif key.eql?("Paquete") %>
             <% @paquetes = @resultados.delete(key) %>
@@ -75,6 +83,7 @@
     <% end %>
         
     <% cuenta = @servicios.size + @estados.size + @paquetes.size + @plazas.size %>
+    <br/>
     <div id="cuenta_resultados">
         <% if cuenta == 1 %>
             Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
