@@ -1,6 +1,6 @@
 <% if @servicios.empty? %>
-    <%= javascript_tag "Nifty('#paquete');" %> 
-    <div class="empty" id="paquete"><p><p>No hay servicios que mostrar</p></div>
+    <%= javascript_tag "Nifty('#servicio');" %> 
+    <div class="empty" id="servicio"><p>No hay servicios que mostrar</p></div>
 <% else %>
     <%= render :partial => "servicios/listing_servicios", :object => @servicios %>
 <% end %>

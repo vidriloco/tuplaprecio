@@ -344,4 +344,10 @@ p.mensaje_error {
 	font-weight:bold;
 }
 
+.plaza_titulo {
+	padding: 5px;
+	color:#99A9CE;
+	background-color:#3C406A;
+}
+
 
