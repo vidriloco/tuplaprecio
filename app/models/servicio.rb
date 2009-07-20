@@ -85,7 +85,7 @@ class Servicio < ActiveRecord::Base
   end
   
   def conceptos_asociados_en_orden
-    Concepto.find :all, :conditions => {:servicio_id => id}, :include => 'metaconcepto', :order => "metaconceptos.posicion ASC"
+    Concepto.find :all, :select => "id, concepto, costo, disponible, valor", :conditions => {:servicio_id => id}, :include => 'metaconcepto', :order => "metaconceptos.posicion ASC"
   end
   
   protected

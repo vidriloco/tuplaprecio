@@ -7,7 +7,6 @@
         </tr>
     </table>
 <% end %>
-<div class="contenedor_servicios_conceptos">
     <table class="agente_servicios">
     <tr>
         <% Servicio.atributos_agente.each do |atributo| %>
@@ -19,30 +18,39 @@
         <% end %>
     </tr>
     </table>
+    <table width="1200">
+        <tr>
+            <td width="50%">
+            <div class="contenedor_servicios_conceptos">
     
-    <table class="agente_servicios_conceptos">
-        <thead>
-            <tr>
-                <th style="width:250px;">Concepto</th>
-                <th style="width:50px;">Disponible</th>
-                <th style="width:50px;">Costo</th>
-                <th style="width:50px;">Valor</th>
-                <th style="max-width:700px;">Comentarios</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% servicio.conceptos_asociados_en_orden.each do |c| %>
-                <% unless c.no_disponible? %>
-                    <tr class="servicio_distingible">
-                        <td style="text-align:left; padding-left:10px;"><%=h c.metaconcepto.nombre %></td>
-                        <td style="width:10px;"><%=h c.disponibilidad %></td>
-                        <td style="width:10px;"><%=h c.costo_ %></td>
-                        <td style="width:10px;"><%=h c.valor_ %></td>
-                        <td style="max-width:150px; text-align:left; padding-left:10px;"><%=h c.comentarios %></td>
-                    </tr>
-                <% end %>
-            <% end %>
-        </tbody>
+                <table class="agente_servicios_conceptos">
+                    <thead>
+                        <tr>
+                            <th width="60%">Concepto</th>
+                            <th width="20%">Costo</th>
+                            <th width="20%">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% servicio.conceptos_asociados_en_orden.each do |c| %>
+                            <% unless c.no_disponible? %>
+                                <tr class="servicio_distingible" onmouseover="<%= remote_function(:update => 'comentarios', 
+                                                                                  :url => {:action => 'muestra_comentario',
+                                                                                  :id => c.id}) %>">
+                                    <td style="padding-left: 10px; text-align:left;"><%=h c.metaconcepto.nombre %></td>
+                                    <td><%=h c.costo_ %></td>
+                                    <td><%=h c.valor_ %></td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+            </td>
+            <td width="50%">
+                <div id="comentarios">
+                </div>
+            </td>
+        </tr>
     </table>
-</div>
 <% end %>

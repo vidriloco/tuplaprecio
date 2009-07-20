@@ -209,12 +209,11 @@ tr.paquete_distingible:hover {
 
 .agente_servicios_conceptos {
 	margin-bottom: 5px;
-	width:1200px;
+	width:595px;
 }
 
 .agente_servicios_conceptos tr th {
 	font-size:11px;
-	width: 500px;
 	color:#708DB8;
 }
 
@@ -226,8 +225,10 @@ tr.paquete_distingible:hover {
 
 .contenedor_servicios_conceptos {
 	border:1px solid #5F73B5;
-	width: 1200px;
+	width: 595px;
 	margin-bottom: 10px;
+	margin-left:2.5px;
+	display:inline-block;
 }
 
 .encargado_modelo_titulo {
@@ -350,4 +351,12 @@ p.mensaje_error {
 	background-color:#3C406A;
 }
 
+#comentarios {
+	margin: 20px;
+}
 
+#dentro_de_comentarios {
+	color:#555D99;
+	background-color: #272B58;
+	padding: 10px;
+}

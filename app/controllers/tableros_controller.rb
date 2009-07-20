@@ -117,4 +117,13 @@ class TablerosController < ApplicationController
     end
   end
   
+  def muestra_comentario
+    @concepto_comentario = Concepto.find(params[:id].gsub(/\D/,'') , :select => "comentarios")
+    if @concepto_comentario.comentarios.blank?
+      render(:nothing => true)
+    else
+      render :partial => "comentario"
+    end
+  end
+  
 end
