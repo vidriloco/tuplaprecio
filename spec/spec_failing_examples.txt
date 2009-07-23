@@ -1,19 +1,9 @@
-Concepto should require that it's attribute 'costo' is a number if it's associated metaconcepto is of 'tipo' 'A'
-Concepto should require that it's attribute 'valor' is a number if it's associated metaconcepto is of 'tipo' 'B'
-Concepto should be possible to build a new instance of concepto tipo 'A' provided the correct values
-Concepto should be possible to build a new instance of concepto tipo 'B' provided the correct values
-Concepto should return the value of it's attribute 'costo' in a human readable format
-Concepto should require that it's attribute 'valor' is not blank if it's associated metaconcepto is of 'tipo' 'B'
-Concepto should require that it's attribute 'costo' is not nil if it's associated metaconcepto is of 'tipo' 'A'
 Paquete should return in a human readable format the value of it's attribute 'costo_1'
 Paquete should return in a human readable format the value of it's attribute 'costo'
 Paquete should return in a human readable format the value of it's attribute 'costo'
 Paquete should return in a human readable format the value of it's attribute 'costo'
 Paquete should be possible to assign to it many categorias
 Servicio should have associations for one 'subcategoria', 'plaza', for many 'conceptos', 'paquetes'
-Metaconcepto should be possible to assign many categorias to it
-Metaconcepto should be possible to assign many conceptos to it
-Metaconcepto should delete the conceptos which are linked to it
 MetaconceptosController POST/create action with invalid input should not save the instance
 MetaconceptosController POST/create action with invalid input should re-render new form
 MetaconceptosController POST/create action with valid input should create the Metaconcepto instance
@@ -114,24 +104,10 @@ SesionesController Logging in by cookie logs in with cookie
 SesionesController Logging in by cookie fails cookie login with bad cookie
 SesionesController Logging in by cookie fails cookie login with no cookie
 SesionesController Logging in by cookie fails expired cookie login
-EstadosController GET/new action should success
-EstadosController GET/new action should generate a new instance
-EstadosController GET/new action should successfuly replace html id
 /administraciones/index actions for model estado should render partial _new_estado on action new
+Metaconcepto should return a list of all the nombres of the metaservicios this metaconcepto is assigned to
 
 Pending:
-
-Concepto should return in a human readable format the value of it's attribute 'vigente_desde' (Not Yet Implemented)
-./spec/models/concepto_spec.rb:54
-
-Concepto should return in a human readable format the value of it's attribute 'vigente_hasta' (Not Yet Implemented)
-./spec/models/concepto_spec.rb:56
-
-Metaconcepto should generate a tipo 'a' form for it's input attributes if it's tipo is 'a' (Not Yet Implemented)
-./spec/models/metaconcepto_spec.rb:49
-
-Metaconcepto should generate a tipo 'b' form for it's input attributes if it's tipo is 'b' (Not Yet Implemented)
-./spec/models/metaconcepto_spec.rb:51
 
 MetaconceptosController handling of PUT actions should succesfully update a Metaconcepto given it's ID and update attributes with values (Not Yet Implemented)
 ./spec/controllers/metaconceptos_controller_spec.rb:159

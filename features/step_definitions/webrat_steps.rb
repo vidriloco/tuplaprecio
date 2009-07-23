@@ -94,7 +94,16 @@ Then /^I should see "([^\"]*)"$/ do |text|
   response.should contain(text)
 end
 
+Then /^I should see \/([^\/]*)\/$/ do |regexp|
+  regexp = Regexp.new(regexp)
+  response.should contain(regexp)
+end
+
 Then /^I should not see "([^\"]*)"$/ do |text|
+  response.should_not contain(text)
+end
+
+Then /^I should not see \/([^\/]*)\/$/ do |regexp|
   response.should_not contain(text)
 end
 
@@ -108,6 +117,10 @@ end
     
 Then /^the "([^\"]*)" checkbox should be checked$/ do |label|
   field_labeled(label).should be_checked
+end
+
+Then /^the "([^\"]*)" checkbox should not be checked$/ do |label|
+  field_labeled(label).should_not be_checked
 end
 
 Then /^I should be on (.+)$/ do |page_name|

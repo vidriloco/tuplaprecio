@@ -1,5 +1,4 @@
 --colour
 --format progress
---format failing_examples:spec/spec_failing_examples.txt
 --loadby mtime
 --reverse

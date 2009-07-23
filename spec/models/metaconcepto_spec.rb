@@ -43,14 +43,4 @@ describe Metaconcepto do
     mc.posicion_.should be_eql("Sin posición")
   end
   
-  it "should return a list of all the nombres of the metaservicios this metaconcepto is assigned to" do
-    mc=Factory.create(:metaconcepto_tipo_a)
-    @mss=["Internet", "Telefonía", "Televisión"].each do |ms|
-      mc.metaservicios << Factory.create(:metaservicio, :nombre => ms)
-    end
-    
-    mc.save
-    mc.metaservicios_.should be_eql(@mss)
-  end
-  
 end

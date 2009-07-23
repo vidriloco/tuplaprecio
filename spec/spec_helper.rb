@@ -4,12 +4,10 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
 require 'spec/autorun'
 require 'spec/rails'
-require "webrat"
-include AuthenticatedTestHelper
 
-Webrat.configure do |config|
-  config.mode = :rails
-end
+# Requires supporting files with custom matchers and macros, etc,
+# in ./support/ and its subdirectories.
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
@@ -18,6 +16,7 @@ Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  config.include Webrat::Matchers, :type => :views
 
   include Webrat::Methods
 
@@ -50,16 +49,8 @@ Spec::Runner.configure do |config|
   # config.mock_with :rr
   #
   # == Notes
-  # 
+  #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
-end
-
-shared_examples_for "one" do
-  
-  it "should be equal to 1" do
-    "1".should be_eql("1")
-  end
-  
 end
 
 shared_examples_for "admin only" do
