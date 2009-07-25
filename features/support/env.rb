@@ -6,12 +6,8 @@ require 'cucumber/rails/world'
 # Comment out the next line if you don't want Cucumber Unicode support
 require 'cucumber/formatter/unicode'
 
-World do 
-  Cucumber::Rails::World.new 
-end 
-
 require 'factory_girl'
-Dir.glob("#{RAILS_ROOT}/factories/*.rb")).each {|f| require f }
+Dir.glob("#{RAILS_ROOT}/factories/*.rb").each {|f| require f }
 
 # Comment out the next line if you don't want transactions to
 # open/roll back around each scenario
