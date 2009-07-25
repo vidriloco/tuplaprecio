@@ -10,6 +10,7 @@ class Usuario < ActiveRecord::Base
   
   belongs_to :rol
   belongs_to :plaza
+  has_one :log
 
   validates_presence_of     :login,   :message => "no puede estar vacío"
   validates_length_of       :login,    :within => 4 ..40, :message => "es muy corto (mínimo 4 caracteres)"

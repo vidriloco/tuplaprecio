@@ -9,6 +9,8 @@ class AdministracionesController < ApplicationController
     controller.usuario_es?(:administrador, :encargado)
   end
   
+  before_filter :exporta_usuario_actual, :only => [:entrada_rb, :limpia_bd]
+  
   MODELOS= ["estado", "plaza", "metaconcepto", "metaservicio", "metasubservicio", "zona", "usuario"]
   
   # GET /administraciones
@@ -91,5 +93,10 @@ class AdministracionesController < ApplicationController
       
     render :partial => "modelo_barras"
   end
+  
+  private
+    def exporta_usuario_actual
+      Thread.current['usuario'] = current_user.id
+    end
   
 end

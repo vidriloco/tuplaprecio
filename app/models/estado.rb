@@ -5,7 +5,7 @@ class Estado < ActiveRecord::Base
   
   validates_presence_of :nombre, :message => "no puede ser vacío"
     
-  has_many :plazas
+  has_many :plazas, :dependent => :destroy
     
   def self.atributos
     ["nombre", "plazas_"]
