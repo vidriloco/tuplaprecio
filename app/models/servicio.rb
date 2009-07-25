@@ -5,11 +5,31 @@ class Servicio < ActiveRecord::Base
   
   belongs_to :plaza
   belongs_to :metasubservicio
-  has_many :conceptos, :validate => false
-  
+  has_many   :conceptos, :validate => false, :dependent => :destroy
+  has_many   :logs, :as => :recurso
+   
   validates_presence_of :metasubservicio_id, :message => "no puede ir en blanco"
   validates_uniqueness_of :metasubservicio_id, :scope => :plaza_id
   validate :atributos_de_conceptos
+    
+  after_create do |servicio|
+    servicio.registra_en_log(:crear)
+  end
+  
+  after_update do |servicio|
+    servicio.registra_en_log(:modificar)
+  end
+    
+  def registra_en_log(accion)
+    usuario_id = Thread.current['usuario']
+    if Usuario.find(usuario_id).es_encargado?
+      if accion.eql?(:crear) 
+        Log.create!(:usuario_id => usuario_id, :accion => accion.to_s, :recurso => self)
+      elsif accion.eql?(:modificar)
+        Log.create!(:usuario_id => usuario_id, :accion => accion.to_s, :recurso => self)
+      end
+    end
+  end
     
   def self.atributos
     ["plaza_", "tipo_de_servicio", "nombre_del_servicio", "número_de_conceptos"]
