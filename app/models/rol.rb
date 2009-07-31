@@ -7,7 +7,8 @@ class Rol < ActiveRecord::Base
   
   attributes_to_serialize :nombre, :associated => [:usuarios]
   
-  validates_presence_of :nombre, :message => "no puede ser vacío"
+  validates_presence_of :nombre
+  validates_uniqueness_of :nombre
   
   def self.atributos
     ["nombre", "usuarios_"]

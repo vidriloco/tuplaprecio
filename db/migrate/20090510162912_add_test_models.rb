@@ -1,9 +1,10 @@
 class AddTestModels < ActiveRecord::Migration
   def self.up
-     rol1=Rol.create(:nombre=>"Administrador")
-     rol2=Rol.create(:nombre=>"Agente")
-     rol3=Rol.create(:nombre=>"Encargado")
-     
+    unless RAILS_ENV=='test'
+      rol1=Rol.create(:nombre=>"Administrador")
+      rol2=Rol.create(:nombre=>"Agente")
+      rol3=Rol.create(:nombre=>"Encargado")
+    end
      
 
      usuario1=Usuario.new(:login => 'administrador', :email => 'admin@example.com', :password => 'administrador', :password_confirmation => 'administrador', :nombre => "Genáro Martinez")

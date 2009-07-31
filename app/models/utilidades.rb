@@ -6,7 +6,7 @@ require 'migrador'
 class Utilidades
         
   MODELOS = ["Estado", "Zona", "Plaza", "Paquete",
-         "Metaservicio", "Metasubservicio", "Servicio", "Metaconcepto", "Concepto"]  
+         "Metaservicio", "Metasubservicio", "Servicio", "Metaconcepto", "Concepto", "Rol", "Usuario"]  
   
   def self.genera_zip(archivo_salida="salida_csv")
     t = Tempfile.new("#{@archivo_salida}")
@@ -147,6 +147,18 @@ class Utilidades
       f.write cadena_guardados
     end
     t.path
+  end
+  
+  def self.limpia_bd(current_user)
+    MODELOS.each do |modelo|
+      if modelo.eql? "Usuario"
+        modelo.capitalize.constantize.limpia_todos_excepto(current_user)
+      elsif modelo.eql? "Rol"
+        modelo.capitalize.constantize.limpia_todos_excepto(current_user.rol)        
+      else
+        modelo.capitalize.constantize.destroy_all
+      end
+    end    
   end
   
   def self.migracion_importa_rb(archivo)
