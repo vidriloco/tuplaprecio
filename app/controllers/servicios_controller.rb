@@ -15,9 +15,9 @@ class ServiciosController < ApplicationController
   end
 
   def create
-    @servicio = Servicio.new(params[:servicio])
+    @servicio = Servicio.new(params[:servicio].merge(:plaza => current_user.plaza))
     params[:conceptos].each_value { |concepto| @servicio.conceptos.build(concepto) } if params.has_key?(:conceptos)
-    @plaza = current_user.plaza
+    #@plaza = current_user.plaza
     
     respond_to do |format|
       format.js do
@@ -43,48 +43,30 @@ class ServiciosController < ApplicationController
 
   # GET /servicios/1/edit
   def edit
-    @plaza = current_user.plaza
-    @metaservicios = Metaservicio.all
-    @servicio= Servicio.find(params[:id].gsub(/\D/,''), :include => [{:metasubservicio => {:metaservicio => :metaconceptos}}, :conceptos])
-    
-    # Trata el caso en el que se hayan añadido más metaconceptos al metaservicio.
-    # Averigua cuál es la diferencia entre los metaconceptos del metaservicio y la instancia del servicio ligado al metaservicio,
-    # después actualiza los conceptos del servicio.
-    metaconceptos=@servicio.metasubservicio.metaservicio.metaconceptos.size
-    conceptos = @servicio.conceptos.size
-    if conceptos < metaconceptos
-      metaconceptos_agregables=@servicio.metasubservicio.metaservicio.metaconceptos.last(metaconceptos-conceptos) 
-      metaconceptos_agregables.each do |mc|
-        concepto = Concepto.create
-        concepto.metaconcepto=mc
-        @servicio.conceptos << concepto
-      end
+    super do
+      @plaza = current_user.plaza
+      @metaservicios = Metaservicio.all
+      @servicio= Servicio.find(params[:id].gsub(/\D/,''), :include => [{:metasubservicio => {:metaservicio => :metaconceptos}}, :conceptos])
+      @metasubservicios = @servicio.actualiza_conceptos
     end
-    @servicio.save
-    @metasubservicios = @servicio.metasubservicio.metaservicio.metasubservicios
-    @from_edit="EDIT"
-    super
   end
   
   def update
     @servicio = Servicio.find(params[:id].gsub(/\D/,''))
-    if params.has_key?(:conceptos)
-      params[:conceptos].each_key do |concepto_key| 
-        @servicio.conceptos.find(concepto_key).update_attributes(params[:conceptos]["#{concepto_key}"]) 
-      end
-    end
-    
+    @servicio.adjunta_conceptos(params[:conceptos])
     respond_to do |format|
-      format.js do
-        if @servicio.update_attributes(params[:servicio])
+      if @servicio.update_attributes(params[:servicio])
+        format.js do
           render :update do |page|
             page['servicios'].replace_html :partial => 'tableros/index_modelo_barra', 
                                            :locals => {:modelo => 'servicio'}
             page['servicios'].visual_effect :appear
             page << "Nifty('div#servicios');"
           end
-        else
-          @errores=@servicio.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
+        end
+      else
+        @errores=@servicio.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, " ; h }
+        format.js do
           render :update do |page|    
             page["errores_servicio"].replace_html :partial => "compartidos/errores_modelo", 
                                                   :locals => {:modelo => "servicio"} 
@@ -119,24 +101,19 @@ class ServiciosController < ApplicationController
         format.js do
           render :update do |page|
             page["conceptos_forma"].visual_effect :fade
-            page["metasubservicio_forma"].visual_effect :fade
           end
         end
       end
     else
-      @metaservicio = Metaservicio.find(params[:id].gsub(/\D/,''))
-      @metaconceptos = @metaservicio.metaconceptos
+      @metaservicio = Metasubservicio.find(params[:id].gsub(/\D/,'')).metaservicio
+      @metaconceptos = Metaconcepto.find(:all, :conditions => {:metaservicios => {:id => @metaservicio.id}}, :joins => :metaservicios, :order => 'posicion ASC')
       @servicio = Servicio.new
       @metaconceptos.size.times { @servicio.conceptos.build }
-      metasubservicios = @metaservicio.metasubservicios
       respond_to do |format|
         format.js do
           render :update do |page|
             page["conceptos_forma"].replace_html :partial => "conceptos_forma"
             page["conceptos_forma"].visual_effect :appear
-            page["metasubservicio_forma"].replace_html :partial => "metasubservicio_forma", 
-                                                       :locals => { :metasubservicios => metasubservicios }
-            page["metasubservicio_forma"].visual_effect :appear
           end
         end
       end

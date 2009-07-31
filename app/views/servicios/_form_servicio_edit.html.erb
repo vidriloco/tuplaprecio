@@ -1,0 +1,13 @@
+<div id="errores_servicio" class="errorExplanation" style="display:none"></div>
+
+<p>
+   <%= label_tag :metaservicio, "Tipo de Servicio" %><br />
+   <%= select_tag('servicio[metasubservicio_id]', option_groups_from_collection_for_select(@metaservicios, :metasubservicios, :nombre, :id, :nombre, @servicio.metasubservicio.id), 
+                  {:onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value")}) %>
+</p>
+  
+<div id="conceptos_forma">
+    <% if @servicio.conceptos.size != 0 %>
+        <%= render :partial => "conceptos_forma_edit" %>    
+    <% end %>
+</div>

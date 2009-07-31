@@ -74,23 +74,9 @@ class AdministracionesController < ApplicationController
   end
   
   def limpia_bd
+    Utilidades.limpia_bd(current_user)
     @modelos = MODELOS
-    #modelos de administrador
-    @modelos.each do |modelo|
-      if modelo.eql? "usuario"
-        modelo.capitalize.constantize.limpia_todos_excepto(current_user)
-      elsif modelo.eql? "rol"
-        modelo.capitalize.constantize.limpia_todos_excepto(current_user.rol)        
-      else
-        modelo.capitalize.constantize.destroy_all
-      end
-    end    
-    
-    #modelos de encargado-agente
-    ["paquete", "servicio"].each do |modelo|
-      modelo.capitalize.constantize.destroy_all
-    end
-      
+  
     render :partial => "modelo_barras"
   end
   

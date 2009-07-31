@@ -59,7 +59,12 @@ class ApplicationController < ActionController::Base
   def edit
     modelo_pluralized = @current_controller.split("Controller")[0]
     modelo = modelo_pluralized.singularize
-    instance_variable_set("@#{modelo}", modelo.capitalize.constantize.find(params[:id].gsub(/\D/,'')))
+    
+    if block_given?
+       yield
+    else
+      instance_variable_set("@#{modelo}", modelo.capitalize.constantize.find(params[:id].gsub(/\D/,'')))
+    end
     
     respond_to do |format|
        format.js do

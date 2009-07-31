@@ -1,26 +1,13 @@
 <div id="errores_servicio" class="errorExplanation" style="display:none"></div>
 
-<%= f.hidden_field :plaza_id, :value => @plaza.id %>
+<!-- Inserts a whitespace on selector -->
+<% @metaservicios.insert(0,Metaservicio.new) %>
 
-<% if !defined?(@from_edit) && !@from_edit.eql?("EDIT") %>
-    <% @metaservicios.insert(0,Metaservicio.new) %>
-<% end %>
 
 <p>
    <%= label_tag :metaservicio, "Tipo de Servicio" %><br />
-   <%= select_tag(:id, options_from_collection_for_select(@metaservicios, :id, :nombre), { :onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value")}) %>
+   <%= select_tag('servicio[metasubservicio_id]', option_groups_from_collection_for_select(@metaservicios, :metasubservicios, :nombre, :id, :nombre, 0), 
+                  {:onchange => remote_function(:url => {:action => 'cambios_de_div'}, :with => "'id='+this.value")}) %>
 </p>
-
-<div id="metasubservicio_forma">
-    <% if defined?(@from_edit) && @from_edit.eql?("EDIT") %>
-        <%= render :partial => "metasubservicio_forma", :locals => {:metasubservicios => @metasubservicios} %>
-    <% end %>
-</div>
   
-<div id="conceptos_forma">
-    <% if defined?(@from_edit) && @from_edit.eql?("EDIT") %>
-        <% if @servicio.conceptos.size != 0 %>
-            <%= render :partial => "conceptos_forma_edit" %>    
-        <% end %>
-    <% end %>
-</div>
+<div id="conceptos_forma"></div>

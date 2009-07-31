@@ -1,21 +1,15 @@
 
-    <div class='form'>
-        
-        <% form_tag sesion_path do -%>
-            <p><%= label_tag 'login' %><br />
-            <%= text_field_tag 'login', @login, :class => "text" %></p>
+<div class='form'>
+    <% form_tag sesion_path do -%>
+        <p><%= label_tag 'login' %><br />
+        <%= text_field_tag 'login', nil, :class => "text" %></p>
 
-            <p><%= label_tag 'password', 'Contraseña' %><br/>
-            <%= password_field_tag 'password', nil, :class => "text" %></p>
+        <p><%= label_tag 'password', 'Contraseña' %><br/>
+        <%= password_field_tag 'password', nil, :class => "text" %></p>
 
-            <!-- Uncomment this if you want this functionality
-            <p><%= label_tag 'remember_me', 'Remember me' %>
-            <%= check_box_tag 'remember_me', '1', @remember_me %></p>
-            -->
-
-            <p><%= submit_tag 'Iniciar Sesión' %></p>
-        <% end -%>
-    </div>
+        <p><%= submit_tag 'Iniciar Sesión' %></p>
+    <% end -%>
+</div>
 
 <% content_for 'rightH' do %>
     <p>&nbsp;</p>

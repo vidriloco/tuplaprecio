@@ -4,6 +4,8 @@ class PaquetesController < ApplicationController
     controller.usuario_es?(:encargado)
   end
   
+  before_filter :exporta_usuario_actual, :only => [:create, :update, :destroy]
+  
   # GET /paquetes
   # GET /paquetes.xml
   def index
@@ -91,5 +93,10 @@ class PaquetesController < ApplicationController
       page << "Nifty('div#paquetes');"
     end
   end
+  
+  private
+    def exporta_usuario_actual
+      Thread.current['usuario'] = current_user.id
+    end
 
 end
