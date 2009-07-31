@@ -10,5 +10,6 @@
     inflect.irregular 'administracion', 'administraciones'
     inflect.irregular 'sesion', 'sesiones'
     inflect.irregular 'rol', 'roles'
+    inflect.irregular 'clon', 'clones'
 #   inflect.uncountable %w( fish sheep )
 end

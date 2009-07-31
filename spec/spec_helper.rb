@@ -88,3 +88,43 @@ shared_examples_for "admin only" do
     response.should_not redirect_to(new_sesion_url)
   end
 end
+
+#Filters helper spec methods from http://www.elctech.com/tutorials/spec-ing-before-filters-in-rails
+
+module Spec
+  module Rails
+    module Filters
+
+      def before_filter(name)
+        self.class.before_filter.detect { |f| f.method == name }
+      end
+      
+      def run_filter(filter_method, params={})
+        self.params = params
+        instance_eval filter_method.to_s
+      end
+      
+      def before_filters
+        return self.class.before_filter.collect { |f| f.method }
+      end
+
+    end
+    
+    module BeforeFilters
+      
+      def has_options?(expected_options)
+        expected_options.each do |key, values|
+          expected_options[key] = Array(values).map(&:to_s).to_set
+        end
+        
+        options == expected_options
+      end
+      
+    end
+    
+  end
+end
+
+ActionController::Base.send(:include, Spec::Rails::Filters) 
+ActionController::Filters::BeforeFilter.send(:include, Spec::Rails::BeforeFilters)
+

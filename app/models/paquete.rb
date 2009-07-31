@@ -1,5 +1,6 @@
 class Paquete < ActiveRecord::Base
   include Compartido
+  include LogMethods
   
   acts_as_reportable
   

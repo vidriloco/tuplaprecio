@@ -1,34 +1,41 @@
 class Servicio < ActiveRecord::Base
   include Compartido
+  include LogMethods
   
   acts_as_reportable
   
   belongs_to :plaza
   belongs_to :metasubservicio
   has_many   :conceptos, :validate => false, :dependent => :destroy
-  has_many   :logs, :as => :recurso
-   
+  has_many   :logs, :as => :recurso  
+     
   validates_presence_of :metasubservicio_id, :message => "no puede ir en blanco"
   validates_uniqueness_of :metasubservicio_id, :scope => :plaza_id
   validate :atributos_de_conceptos
     
-  after_create do |servicio|
-    servicio.registra_en_log(:crear)
-  end
-  
-  after_update do |servicio|
-    servicio.registra_en_log(:modificar)
-  end
-    
-  def registra_en_log(accion)
-    usuario_id = Thread.current['usuario']
-    if Usuario.find(usuario_id).es_encargado?
-      if accion.eql?(:crear) 
-        Log.create!(:usuario_id => usuario_id, :accion => accion.to_s, :recurso => self)
-      elsif accion.eql?(:modificar)
-        Log.create!(:usuario_id => usuario_id, :accion => accion.to_s, :recurso => self)
+  # Método auxiliar en controlador servicios acción edit
+  # Trata el caso en el que se hayan añadido más metaconceptos al metaservicio.
+  # Averigua cuál es la diferencia entre los metaconceptos del metaservicio y la instancia del servicio ligado al metaservicio,
+  # después actualiza los conceptos del servicio.
+  def actualiza_conceptos
+    metaservicio = self.metasubservicio.metaservicio
+    metaconceptos= metaservicio.metaconceptos
+    conceptos = self.conceptos
+    if conceptos.size < metaconceptos.size
+      metaconceptos_agregables=metaconceptos.last(metaconceptos.size-conceptos.size) 
+      metaconceptos_agregables.each do |mc|
+        concepto = Concepto.create(:metaconcepto => mc)
+        self.conceptos << concepto
       end
     end
+    return metaservicio.metasubservicios
+  end  
+    
+  # Metodo auxiliar en controlador servicios acción update para tratar con los conceptos asociados  
+  def adjunta_conceptos(hash)
+    return false if hash.nil?
+    
+    hash.each_key { |key| self.conceptos.find(key).update_attributes(hash[key]) } 
   end
     
   def self.atributos
