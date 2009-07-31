@@ -1,3 +1,3 @@
 Factory.define :metaservicio do |ms|
-  ms.nombre "Algún Metasubservicio"
+  ms.sequence(:nombre) { |n| "algun metaservicio con numero #{n}" }
 end
