@@ -4,7 +4,7 @@ class CreateLogs < ActiveRecord::Migration
       t.integer :usuario_id
       t.string :accion
       t.references :recurso, :polymorphic => true
-      t.timestamps
+      t.timestamp :fecha_de_creacion
     end
   end
 
