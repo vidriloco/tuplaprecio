@@ -53,6 +53,7 @@ class LogsController < ApplicationController
   end
   
   def logs_a_pdf
+    return if session['logs'].nil?
     @logs = session['logs'].map {|log_id| Log.find(log_id)}
     
     pdf_doc = Utilidades.genera_pdf_log(render_to_string(:partial => 'logs_a_pdf'))
