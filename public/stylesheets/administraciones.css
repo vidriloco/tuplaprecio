@@ -1,3 +1,5 @@
+body { background-color: #292C3D; color: #333; }
+
 pre {
   background-color: #eee;
   padding: 10px;
@@ -33,11 +35,12 @@ input.boton_justificado {
 }
 
 #migracion {
-  background-color:#FFAB60;	
+  background-color:#FF8036;	
 }
 
 #logger {
-  background-color:#FF6B30;	
+  background-color:#C2FF5E;	
+  text-align: center;
 }
 
 .bloque {
@@ -45,13 +48,13 @@ input.boton_justificado {
 }
 
 .bloque h4 {
- margin-top:5px;
- margin-bottom: 10px;
+ margin-top:14px;
+ margin-bottom: 14px;
  text-align: center;
 }
 
 .bloque div {
- background-color:#EC9F59;	
+ background-color:#FF8345;	
  margin: 5px;
  padding: 5px;
 }
@@ -239,35 +242,6 @@ input.boton_justificado {
 #a_value1:hover a {
 	font-size: 10px;
 	color: #fff;
-}
-
-
-/* paginacion */
-
-.pagination{
-	margin-top: 10px;
-	background-color:#E0E24E;
-	padding: 5px;
-	text-align: center;
-	margin-bottom:10px;
-	width: 250px;
-}
-
-.pagination_form {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.pagination_form .current {
-	background-color:#9AB289;
-	padding: 5px;
-	margin: 2px;
-}
-
-.pagination_form a {
-	background-color:#C8E7B2;
-	padding: 5px;
-	margin: 2px;	
 }
 
 /* formularios */

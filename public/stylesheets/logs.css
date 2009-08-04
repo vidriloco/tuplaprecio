@@ -1,0 +1,129 @@
+body { background-color: #292C3D; color: #333; }
+
+.logs_container {
+	width: 600px;
+	background-color:#65D454;
+	padding: 10px;
+}
+
+.logs_container * {
+	font-size: 11px;
+}
+
+.logs table tr th {
+	width: 150px;
+}
+
+.logs table tr td {
+	width: 150px;
+	text-align: center;
+}
+
+#contenedor_izq_admin {
+  display: inline-block;
+  margin: 10px 0px 5px 0px;
+  width: 500px;
+  float:left;
+}
+
+#contenedor_der_admin {
+  display: inline-block;
+  margin: 10px 0px 5px 0px;
+  width: 550px;
+  float: right;
+}
+
+#seleccion {
+	width: 10px;
+}
+
+#opciones {
+	width: 210px;
+}
+
+#titulos {
+	margin-bottom: 10px;
+	background-color:#71E16D;
+}
+
+#titulo_detalles {
+	width: 525px;
+	background-color:#BBDEDC;
+	text-align: center;
+	padding: 2px;
+}
+
+#contenedor_detalles {
+	background-color:#A3CCD5;
+	padding: 10px;	
+}
+
+#contenedor_detalles ul {
+	margin-top: 10px;
+	margin-left: 30px;
+	font-size: 10px;
+}
+
+#conceptos {
+	background-color:#A6D2DC;
+	padding: 10px;
+	margin-top: 5px;
+}
+
+#conceptos *{
+	font-size: 9px;
+}
+
+#conceptos table tr th{
+	width: 150px;
+}
+
+#conceptos table tr td{
+	width: 150px;
+	text-align:center;
+}
+
+.s {
+	background-color:#8CBBCB;
+}
+
+#conceptos p {
+	font-weight: bold;
+	text-align: center;
+}
+
+.anuncio p{
+	font-size: 10px;
+}
+
+/* paginacion */
+
+.pagination{
+	margin-top: 10px;
+	padding: 5px;
+	text-align: center;
+	margin-bottom:10px;
+	width: 250px;
+}
+
+.pagination {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.pagination .current {
+	background-color:#3DB23A;
+	padding: 5px;
+	margin: 2px;
+	font-weight: bold;
+}
+
+.pagination a {
+	background-color:#84E764;
+	padding: 5px;
+	margin: 2px;	
+}
+
+#controles_en_logs tr td{
+	width: 50%;
+}
