@@ -1,10 +1,10 @@
 
 
 <% content_for :contenedor_izq_admin do %>
+<div class='logs_container'>
     <% if @logs.empty? %>
         <h3>No hay registros aún sobre las acciones realizadas sobre la aplicación</h3>
     <% else %>
-        <div class='logs_container'>
             <div class='logs' id='titulos'>
                 <table>
                     <tr>
@@ -22,8 +22,8 @@
                     <%= render :partial => 'log_records_list' %>
                 </div>
             </div>
-        </div>
     <% end %>
+</div>
     
     
 <% end %>

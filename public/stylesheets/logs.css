@@ -127,3 +127,17 @@ body { background-color: #292C3D; color: #333; }
 #controles_en_logs tr td{
 	width: 50%;
 }
+
+#rightH {
+	width: 700px;
+	background-color: #4F5055;
+}
+
+#rightmostH {
+	width:  90px;
+	background-color: #D9DA7F;
+}
+
+#rightmostH p {
+	font-weight: bold;
+}
