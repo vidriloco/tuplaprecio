@@ -44,17 +44,20 @@ class AdministracionesController < ApplicationController
     end
   end
   
+  # Acción que se encarga de generar un archivo delimitado por comas
   def salida_csv
     nombre="backup_bd_en_csv"
     path = Utilidades.genera_zip(nombre)
     send_file path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{nombre}.zip"
   end
   
+  # Acción que se encarga de generar un archivo en código ruby con los objetos contenidos en la base de datos
   def salida_rb
     path = Utilidades.migracion_exporta_rb
     send_file path, :disposition => 'attachment', :filename => "copia_de_seguridad_#{DateTime.now.to_s(:short)}.rb"
   end
   
+  # Acción que se encargado de recibir un archivo en código ruby con definición de objetos para integrarlo a la base de datos
   def entrada_rb
     @modelos = MODELOS
     archivo=params[:zipo]
@@ -71,8 +74,10 @@ class AdministracionesController < ApplicationController
         end
       end
     end
+
   end
   
+  # Acción destructiva sobre la base de datos
   def limpia_bd
     Utilidades.limpia_bd(current_user)
     @modelos = MODELOS
