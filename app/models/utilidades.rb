@@ -3,6 +3,9 @@ require 'zip/zipfilesystem'
 
 require 'fastercsv'
 require 'migrador'
+
+require "htmldoc"
+
 class Utilidades
         
   MODELOS = ["Estado", "Zona", "Plaza", "Paquete",
@@ -167,4 +170,17 @@ class Utilidades
     f.close
     eval(datos)
   end
+
+  def self.genera_pdf_log(log)
+   document = PDF::HTMLDoc.new
+   document.set_option :left, '2cm'
+   document.set_option :right, '2cm'
+   document.set_option :header, "Registros de acciones seleccionados"
+   document.set_option :webpage, true
+   document.set_option :footer, ".1."
+   document.set_option :landscape, true
+   document << log.toutf_8
+   document.generate
+  end
+
 end
