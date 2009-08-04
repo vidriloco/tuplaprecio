@@ -117,6 +117,7 @@ class TablerosController < ApplicationController
     end
   end
   
+  # Muestra el contenido del comentario del concepto
   def muestra_comentario
     @concepto_comentario = Concepto.find(params[:id].gsub(/\D/,'') , :select => "comentarios")
     if @concepto_comentario.comentarios.blank?

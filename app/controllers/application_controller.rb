@@ -179,10 +179,5 @@ class ApplicationController < ActionController::Base
     def instantiate_controller_and_action_names
       @current_action = action_name
       @current_controller = controller_name
-    end
-    
-    def admin_logged_in?
-      @usuario = Usuario.find(session[:usuario_id])
-      return true if Administracion.nivel_de(@usuario.rol.nombre).eql?("nivel 1")
     end    
 end

@@ -35,7 +35,7 @@
                         <% servicio.conceptos_asociados_en_orden.each do |c| %>
                             <% unless c.no_disponible? %>
                                 <tr class="servicio_distingible" onmouseover="<%= remote_function(:update => 'comentarios', 
-                                                                                  :url => {:action => 'muestra_comentario',
+                                                                                  :url => {:controller => 'tableros', :action => 'muestra_comentario',
                                                                                   :id => c.id}) %>">
                                     <td style="padding-left: 10px; text-align:left;"><%=h c.metaconcepto.nombre %></td>
                                     <td><%=h c.costo_ %></td>

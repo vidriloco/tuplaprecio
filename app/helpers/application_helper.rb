@@ -119,4 +119,5 @@ module ApplicationHelper
   def es_paginable?(objeto)
     return objeto.instance_of?(WillPaginate::Collection)
   end
+  
 end

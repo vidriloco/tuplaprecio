@@ -7,7 +7,21 @@
 <% content_for :contenedor_der_admin do %>
     <div id="migracion" class="bloque">
             <h4>Migración de Base de Datos</h4>
-            
+            <script language="JavaScript" type="text/javascript">
+                <!--
+                function validate(id){
+                    valid = true;
+                    
+                    if ( $(id).value == "" )
+                    {
+                        alert('Debes seleccionar un archivo que cargar');
+                        valid = false;
+                    }
+
+                    return valid;
+                }
+                //-->
+            </script>
             <div>
                 <% form_tag 'administraciones/entrada_rb',
                               :multipart => true, 
@@ -18,7 +32,7 @@
                             <td><b>Restaurar Copía de seguridad: </b></td>   
                        
                             <td><%= file_field_tag "zipo" -%></td>
-                            <td><%= submit_tag 'Cargar' -%></td>
+                            <td><%= submit_tag 'Cargar', :onclick => "return validate('zipo');" -%></td>
                         </tr>
                     </table>
                 <% end %>
@@ -64,8 +78,10 @@
               </table>
             </div>
     </div>
-    
-    <!--<div id="logger" class="bloque"></div>-->
+    <br/>
+    <div id="logger" class="bloque">
+        <p>Ir a <%= link_to "Sección de Logs de la aplicación", logs_path %></p>
+    </div>
 <% end %>
 
 <% content_for :anuncios_cambiantes do %>
