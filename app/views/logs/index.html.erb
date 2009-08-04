@@ -1,0 +1,34 @@
+
+
+<% content_for :contenedor_izq_admin do %>
+    <% if @logs.empty? %>
+        <h3>No hay registros aún sobre las acciones realizadas sobre la aplicación</h3>
+    <% else %>
+        <div class='logs_container'>
+            <div class='logs' id='titulos'>
+                <table>
+                    <tr>
+                        <th id='seleccion'></th>
+                        <th>Usuario</th>
+                        <th>Acción</th>
+                        <th>Objeto</th>
+                        <th>Fecha</th>
+                        <th id='opciones'>Opciones</th>
+                    </tr>
+                </table>
+            </div>
+            <div class='logs' id='log_records'>
+                <div id='log_records_list'>
+                    <%= render :partial => 'log_records_list' %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+    
+    
+<% end %>
+
+<% content_for :contenedor_der_admin do %>
+    <div id='detalles'></div>
+
+<% end %>

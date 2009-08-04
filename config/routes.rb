@@ -8,7 +8,6 @@ ActionController::Routing::Routes.draw do |map|
   map.tablero_nivel_dos '/principal_dos', :controller => 'tableros', :action => 'index_nivel_dos'
 
   map.connect '/sesion', :controller => 'sesiones', :action => 'create'
-
   
   map.busqueda_inicial '/busqueda', :controller => 'busquedas', :action => 'inicial'
   
@@ -16,9 +15,11 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :usuarios
 
-  map.resource :sesion
+  map.resources :sesiones
 
-  map.resources :administraciones, :collection => { :ver => :get }
+  map.resources :logs
+
+  map.resources :administraciones
   
   map.resources :busquedas
 

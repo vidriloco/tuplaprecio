@@ -1,0 +1,99 @@
+<%= javascript_tag "Nifty('div#contenedor_detalles');" %>
+
+<div id='contenedor_detalles'>
+    <div id='titulo_detalles'>
+        <h3><%= @objeto_type.gsub("Clon", "") %></h3>
+    </div>
+    
+    <% if @objeto.nil? %>
+        <div class='anuncio'><p>El objeto de tipo <%= @objeto_type %> ya no está disponible.</p> 
+            <p>Posiblemente haya sido eliminado, y por tanto existe un registro de dicha eliminación.</p></div>
+    <% else %>
+        <ul>
+            <% case @objeto_type when "Servicio" %>
+                <li><b>Plaza: </b><%= @objeto.plaza_ %></li>
+                <li><b>Metasubservicio: </b><%= @objeto.nombre_del_servicio %></li>
+                <li><b>Metaservicio: </b><%= @objeto.tipo_de_servicio %></li>
+                <li><b>Conceptos: </b><%= @objeto.conceptos.count %></li>            
+            <% when "Paquete" %>
+                <li><b>Plaza: </b><%= @objeto.plaza.nombre %></li>
+                <li><b>Zona: </b><%= @objeto.zona_ %></li>
+                <li><b>Costo (1-10): </b><%= @objeto.costo_primer_mitad_de_mes %></li>
+                <li><b>Costo (11-31): </b><%= @objeto.costo_segunda_mitad_de_mes %></li>
+                <li><b>Costo Real: </b><%= @objeto.costo_real_ %></li>
+                <li><b>Ahorro: </b><%= @objeto.ahorro_ %></li>
+                <li><b>Servicios: </b><%= @objeto.servicios_incluídos %></li>
+            <% when "PaqueteClon" %>
+                <li><b>Plaza: </b><%= @objeto.plaza_nombre %></li>
+                <li><b>Zona: </b><%= @objeto.zona_nombre %></li>
+                <li><b>Costo (1-10): </b><%= @objeto.costo_primer_mitad_de_mes %></li>
+                <li><b>Costo (11-31): </b><%= @objeto.costo_segunda_mitad_de_mes %></li>
+                <li><b>Costo Real: </b><%= @objeto.costo_real_ %></li>
+                <li><b>Ahorro: </b><%= @objeto.ahorro_ %></li>
+                <li><b>Servicios: </b><%= @objeto.servicios_incluidos %></li>            
+            <% when "ServicioClon" %>
+                <li><b>Plaza: </b><%= @objeto.plaza_nombre %></li>
+                <li><b>Metasubservicio: </b><%= @objeto.metasubservicio_nombre %></li>
+                <li><b>Metaservicio: </b><%= @objeto.metaservicio_nombre %></li>
+                <li><b>Conceptos: </b><%= @objeto.concepto_clones.count %></li>            
+            <% end %>
+        </ul>
+    
+    
+        <% if @objeto_type.eql?("Servicio") %>
+            <div id='conceptos'>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Valor</th>
+                        <th>Costo</th>
+                        <th>Disponible</th>
+                    </tr>
+                </table>
+                <% @objeto.conceptos.each_with_index do |concepto, index| %>
+                    <% if index.odd? %>
+                        <div>
+                    <% else %>
+                        <div class='s'>
+                    <% end %>
+                    <table>
+                        <tr>
+                            <td><%= concepto.metaconcepto.nombre %></td>
+                                <td><%= concepto.valor_ %></td>
+                                <td><%= concepto.costo_ %></td>
+                            <td><%= concepto.disponibilidad %></td>
+                        </tr>
+                    </table>
+                    <p><%= concepto.comentarios %></p></div>
+                <% end %>
+            </div>
+        <% elsif @objeto_type.eql?("ServicioClon")%>
+            <div id='conceptos'>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Valor</th>
+                        <th>Costo</th>
+                        <th>Disponible</th>
+                    </tr>
+                </table>
+                <% @objeto.concepto_clones.each_with_index do |concepto, index| %>
+                    <% if index.odd? %>
+                        <div>
+                    <% else %>
+                        <div class='s'>
+                    <% end %>
+                    <table>
+                        <tr>
+                            <td><%= concepto.metaconcepto_nombre %></td>
+                            <td><%= concepto.valor_ %></td>
+                            <td><%= concepto.costo_ %></td>
+                            <td><%= concepto.disponibilidad %></td>
+                        </tr>
+                    </table>
+                    <p><%= concepto.comentarios %></p></div>
+                <% end %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

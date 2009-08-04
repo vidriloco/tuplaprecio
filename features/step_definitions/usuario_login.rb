@@ -6,6 +6,9 @@ Cuando /^lleno el formulario de login con datos de administrador$/ do
   visit '/login'
   fill_in "login", :with => @administrador.login
   fill_in "password", :with => @administrador.password
+end
+
+Y /^hago click en el botón iniciar sesión$/ do
   click_button "Iniciar Sesión"
 end
 
@@ -22,7 +25,6 @@ Cuando /^lleno el formulario de login con datos de encargado$/ do
   visit '/login'
   fill_in "login", :with => @encargado.login
   fill_in "password", :with => @encargado.password
-  click_button "Iniciar Sesión"
 end
 
 Entonces /^soy enviado a la vista de un encargado$/ do
@@ -41,7 +43,6 @@ Cuando /^lleno el formulario de login con datos de agente$/ do
   visit '/login'
   fill_in "login", :with => @agente.login
   fill_in "password", :with => @agente.password
-  click_button "Iniciar Sesión"
 end
 
 Entonces /^soy enviado a la vista de un agente$/ do

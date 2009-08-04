@@ -1,0 +1,30 @@
+<table>
+    <% @logs.each do |log| %>
+        <tr id="<%= "log_#{log.id}" %>">
+            <td id='seleccion'>
+                <%= check_box_tag "", log.id, existe_en_sesion('logs', log.id.to_s), :onchange =>  remote_function(:url => {:action => :log_a_session, :id => log.id}) %>
+            </td>
+            <td><%= log.usuario.login %></td>
+            <td><%= log.accion %></td>
+            <td><%= log.recurso_type %></td>
+            <td><%= log.fecha_de_creacion.to_s(:short) %></td>
+            <td id='opciones'>
+                <%= button_to_remote "Detalles", :url => {:action => :show, :id => log}, 
+                                                 :method => :get, 
+                                                 :update => 'detalles' %> | 
+                <%= button_to_remote "Eliminar", :url => {:action => :destroy, :id => log}, 
+                                                 :confirm => "¿Deseas eliminar éste log?", 
+                                                 :method => :delete %>
+            </td>
+        </tr>
+    <% end %>
+</table>
+
+
+<table id='controles_en_logs'>
+    <tr>
+        <td><%= button_to "Generar PDF", :action => 'logs_a_pdf' %>con los registros seleccionados</td>
+
+        <td><%= will_paginate @logs, :renderer => 'RemoteLinkRenderer', :previous_label => "Anterior", :next_label => "Siguiente", :class => 'pagination' %></td>
+    </tr>
+</table>
