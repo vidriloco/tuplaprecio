@@ -141,3 +141,11 @@ body { background-color: #292C3D; color: #333; }
 #rightmostH p {
 	font-weight: bold;
 }
+
+.notice {
+	text-align:center;
+	font-size: 10px;
+	background-color:#B94F49;
+	padding: 3px;
+	margin-bottom: 5px;
+}

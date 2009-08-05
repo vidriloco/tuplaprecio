@@ -54,7 +54,8 @@ class LogsController < ApplicationController
   
   def logs_a_pdf
     if session['logs'].nil?
-      render(:nothing => true) 
+      flash[:notice] = "No seleccionaste ningún registro para incluir en el PDF"
+      redirect_to(logs_path)
       return
     end
     @logs = session['logs'].map {|log_id| Log.find(log_id)}

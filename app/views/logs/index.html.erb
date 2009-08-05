@@ -1,6 +1,11 @@
 
 
 <% content_for :contenedor_izq_admin do %>
+
+<% if flash[:notice] %>
+      <div id='mensaje' class="notice" onclick="$('mensaje').fade()"><%= flash[:notice] %></div>
+<% end %>
+
 <div class='logs_container'>
     <% if @logs.empty? %>
         <h3>No hay registros aún sobre las acciones realizadas sobre la aplicación</h3>
@@ -24,7 +29,6 @@
             </div>
     <% end %>
 </div>
-    
     
 <% end %>
 
