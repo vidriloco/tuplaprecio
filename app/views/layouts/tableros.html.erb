@@ -16,6 +16,7 @@
       Nifty('#barra_estado_plaza_actual');
       Nifty('#servicios');
       Nifty('#paquetes');
+      Nifty('#in_footer', 'top');
       }
   <% end %>
 
@@ -37,26 +38,28 @@
 		    <%= yield(:rightH) || "<p><b>#{controller.controller_name.singularize.capitalize}</b></p>" %>
 		</div>
 		
-		<div id="anuncios"></div>
-		<div id="detalles"></div>
-		
-		<% if current_user.es_agente? %>    
-		    <div id='selector_de_estados' class='header'>
-                <%= yield(:selector_de_estados) %>
-            </div>
-		    <div id='barra_de_busqueda' class='header'>
-                <%= yield(:busqueda) %>
-    		</div> 
-		<% end %>
-		
-		
+	
 		
 		<div id='container'> 
             <%= yield %>
         </div>
         
-        <!--<p style="color: green"><%= flash[:notice] %></p>-->
+        
     </div>
+    <% if current_user.es_agente? %>    
+        <div id='body'></div>
+        <div id='footer'>
+            <div id='in_footer'>
+    		    <div id='selector_de_estados' class='header'>
+                    <%= yield(:selector_de_estados) %>
+                </div>
+    		    <div id='barra_de_busqueda' class='header'>
+                    <%= yield(:busqueda) %>
+        		</div> 
+		    </div>
+	    </div>
+	<% end %>
+	
 
 </body>
 </html>

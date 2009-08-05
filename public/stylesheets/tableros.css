@@ -4,7 +4,7 @@
 
 /* búsqueda */
 
-body { background-color: #1C1B3D; color: #333; }
+body { background-color: #1C1B3D; color: #333; margin: 0; padding: 0; height: 100%;}
 
 
 #barra_de_informacion_de_plaza {
@@ -13,9 +13,10 @@ body { background-color: #1C1B3D; color: #333; }
 
 #barra_de_busqueda {
   padding: 10px;
-  width: 405px;
+  width: 305px;
   margin-bottom: 5px;
   color:#6A7BAA;
+  margin:10px;
 }
 
 #barra_de_busqueda #query {
@@ -28,16 +29,19 @@ body { background-color: #1C1B3D; color: #333; }
 } 
 
 #selector_de_estados {
-  background-color:#ED9635;
+  background-color:#3F3F9E;
+  margin: 10px;
   padding:10px;
   padding-top: 12.5px;
   padding-bottom:12.5px;
-  width: 750px;
+  width: 600px;
+  color:#6A7BAA;
+
 }
 
 .enfasis_en_selector {
   font-weight: bold;
-  background-color:#FFA03A;	
+  background-color:#4748BC;	
   padding: 5px;
   margin-right: 5px;
 }
@@ -359,4 +363,25 @@ p.mensaje_error {
 	color:#555D99;
 	background-color: #272B58;
 	padding: 10px;
+}
+
+#container {min-height:100%;}
+
+#body {
+   padding:10px;
+   padding-bottom:60px;   /* Height of the footer */
+}
+#footer {
+   position:fixed;
+   bottom:0;
+   height:60px;   /* Height of the footer */
+   width: 100%;
+}
+
+#in_footer {
+	background-color:#2E2A69;
+	width: 1100px;
+ 	margin-left: auto;
+	margin-right: auto;
+	
 }
