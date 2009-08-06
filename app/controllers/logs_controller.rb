@@ -5,8 +5,8 @@ class LogsController < ApplicationController
   end
   
   def index
-    @logs = Log.paginate(:all, :page => params[:page], :per_page => 3)
-    
+    @logs = Log.paginate(:all, :page => params[:page], :per_page => 15)
+    session['logs'] = Array.new
     respond_to do |format|
       format.html
       format.js {
@@ -40,10 +40,6 @@ class LogsController < ApplicationController
   end
   
   def log_a_session
-    if session['logs'].nil?
-      session['logs'] = Array.new
-    end
-    
     if session['logs'].index(params[:id]).nil?
       session['logs'] << params[:id]
     else
@@ -53,15 +49,27 @@ class LogsController < ApplicationController
   end
   
   def logs_a_pdf
-    if session['logs'].nil?
+    if session['logs'].empty?
       flash[:notice] = "No seleccionaste ningún registro para incluir en el PDF"
       redirect_to(logs_path)
       return
     end
     @logs = session['logs'].map {|log_id| Log.find(log_id)}
     
-    pdf_doc = Utilidades.genera_pdf_log(render_to_string(:partial => 'logs_a_pdf'))
-    send_data pdf_doc, :filename => "registros_acciones.pdf", :disposition => 'attachment', :type => :pdf
+    pdf_doc = Utilidades.genera_pdf(@logs)
+    send_data pdf_doc.render, :filename => "registros_acciones.pdf", :disposition => 'attachment', :type => :pdf
     
+  end
+  
+  def logs
+    if session['logs'].empty?
+      flash[:notice] = "No seleccionaste ningún registro para incluir en el PDF"
+      redirect_to(logs_path)
+      return
+    else
+      respond_to do |format|
+        format.pdf
+      end
+    end
   end
 end

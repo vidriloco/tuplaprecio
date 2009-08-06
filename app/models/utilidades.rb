@@ -4,7 +4,10 @@ require 'zip/zipfilesystem'
 require 'fastercsv'
 require 'migrador'
 
-require "htmldoc"
+require "rubygems"
+
+require "pdf/writer"
+require 'pdf/simpletable'
 
 class Utilidades
         
@@ -175,12 +178,146 @@ class Utilidades
    document = PDF::HTMLDoc.new
    document.set_option :left, '2cm'
    document.set_option :right, '2cm'
-   document.set_option :header, "Registros de acciones seleccionados"
+   document.set_option :path, "#{RAILS_ROOT}/public/"
+   document.set_option :header, "Reporte de modificaciones en sistema de precios de cablecom"
    document.set_option :webpage, true
-   document.set_option :footer, ".1."
+   document.set_option :footer, "Éste reporte fue obtenido por el administrador del sistema"
    document.set_option :landscape, true
    document << log.toutf_8
    document.generate
   end
+  
+  def self.genera_pdf(logs)
+    pdf = PDF::Writer.prepress(:top_margin => 150, :bottom_margin => 60)
+    
+    pdf.open_object do |heading| 
+      pdf.save_state 
+      
+      pdf.select_font "Times-Roman"
+      
+      pdf.stroke_color! Color::Black 
+      pdf.stroke_style! PDF::Writer::StrokeStyle::DEFAULT 
+      pdf.image "#{RAILS_ROOT}/public/images/cablecom.jpg", :resize => 0.46
+      
+      pdf.add_text_wrap(270, pdf.y+25, 400, "<i>Reporte de modificaciones de precios de Cablecom</i>", 15)
+      pdf.add_text_wrap(350, pdf.y, 300, "<i>Reporte generado <b>#{I18n.localize(Time.now, :format => :short)}</b></i>", 12)
+
+      pdf.line(pdf.absolute_left_margin, pdf.y-15, pdf.absolute_right_margin, pdf.y-15).stroke 
+      
+      pdf.restore_state 
+      pdf.close_object 
+      pdf.add_object(heading, :all_pages) 
+    end
+    
+    pdf.open_object do |footer| 
+      pdf.save_state 
+      
+      pdf.select_font "Times-Roman"
+      
+      pdf.stroke_color! Color::Black 
+      pdf.stroke_style! PDF::Writer::StrokeStyle::DEFAULT 
+      
+      pdf.line(pdf.absolute_left_margin, pdf.absolute_bottom_margin + 10, pdf.absolute_right_margin, pdf.absolute_bottom_margin + 10).stroke 
+      
+      pdf.add_text(pdf.absolute_x_middle-145, pdf.absolute_bottom_margin, "<i>Éste Reporte fue obtenido por el Administrador del sistema</i>".toutf_8, 12)
+
+      
+      pdf.restore_state 
+      pdf.close_object 
+      pdf.add_object(footer, :all_pages) 
+    end
+    
+    pdf.select_font "Helvetica"
+    
+    pdf.text " ", :spacing => 2
+    
+    table=Proc.new do |recurso, hoja|
+      PDF::SimpleTable.new do |tab|
+        tab.title = "Conceptos"
+        tab.bold_headings = true
+        tab.heading_font_size = 10
+
+        tab.column_order.push(*%w(c1 c2 c3 c4))
+        
+        tab.columns["c1"] = PDF::SimpleTable::Column.new("c1") { |col|
+                  col.heading = " Nombre "
+                }
+                tab.columns["c2"] = PDF::SimpleTable::Column.new("c2") { |col|
+                  col.heading = "Valor "
+                }
+                tab.columns["c3"] = PDF::SimpleTable::Column.new("c3") { |col|
+                  col.heading = " Costo "
+                }
+                tab.columns["c4"] = PDF::SimpleTable::Column.new("c4") { |col|
+                  col.heading = "Disponible  "
+                }
+        tab.show_lines    = :all
+        tab.show_headings = true
+        tab.orientation   = :center
+        tab.position      = :center
+               
+        if recurso.instance_of? Servicio
+          data= recurso.conceptos.map do |concepto|
+            {"c1" => concepto.metaconcepto.nombre.toutf_8, "c2" => concepto.valor_, "c3" => concepto.costo_, "c4" => concepto.disponibilidad.toutf_8 }
+          end
+        else
+          data= recurso.concepto_clones.map do |concepto|
+            {"c1" => concepto.metaconcepto_nombre.toutf_8, "c2" => concepto.valor_, "c3" => concepto.costo_, "c4" => concepto.disponibilidad.toutf_8 }
+          end
+        end
+        
+        
+        
+        tab.data.replace data
+        tab.render_on(hoja)
+      end
+    end
+    
+    logs.each_with_index do |log, index|
+      recurso = log.recurso
+      
+      pdf.text "<i><b>#{log.recurso_type.gsub("Clon", "").toutf_8}</b> #{index+1}</i> (#{log.accion.toutf_8}) <i>por</i> #{log.usuario.login.toutf_8} : <b>#{I18n.localize(log.fecha_de_creacion, :format => :short)}</b>", :font_size => 12
+      pdf.text " ", :spacing => 1
+      
+      
+      if recurso.nil?
+          pdf.text "Los datos del registro de éste documento no están disponibles. \n <b>Probablemente #{log.recurso_type.gsub("Clon", "")}</b> haya sido eliminado".toutf_8, :justification => :center, :spacing => 1
+      elsif recurso.instance_of? Paquete
+          pdf.text "<b>Plaza</b>: #{recurso.plaza.nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Zona</b>: #{recurso.zona_.toutf_8}", :font_size => 10
+          pdf.text "<b>Costo (1-10)</b>: #{recurso.costo_primer_mitad_de_mes.toutf_8}", :font_size => 10
+          pdf.text "<b>Costo (11-31)</b>: #{recurso.costo_segunda_mitad_de_mes.toutf_8}", :font_size => 10
+          pdf.text "<b>Costo Real</b>: #{recurso.costo_real_.toutf_8}", :font_size => 10
+          pdf.text "<b>Ahorro</b>: #{recurso.ahorro_.toutf_8}", :font_size => 10
+          pdf.text "<b>Servicios</b>: #{recurso.servicios_incluídos.toutf_8}", :font_size => 10
+      elsif recurso.instance_of? PaqueteClon
+          pdf.text "<b>Plaza</b>: #{recurso.plaza_nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Zona</b>: #{recurso.zona_nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Costo (1-10)</b>: #{recurso.costo_primer_mitad_de_mes.toutf_8}", :font_size => 10
+          pdf.text "<b>Costo (11-31)</b>: #{recurso.costo_segunda_mitad_de_mes.toutf_8}", :font_size => 10
+          pdf.text "<b>Costo Real</b>: #{recurso.costo_real_.toutf_8}", :font_size => 10
+          pdf.text "<b>Ahorro</b>: #{recurso.ahorro_.toutf_8}", :font_size => 10
+          pdf.text "<b>Servicios</b>: #{recurso.servicios_incluidos.toutf_8}", :font_size => 10
+      elsif recurso.instance_of? Servicio
+          pdf.text "<b>Plaza</b>: #{recurso.plaza_.toutf_8}", :font_size => 10
+          pdf.text "<b>Subservicio:</b>: #{recurso.nombre_del_servicio.toutf_8}", :font_size => 10
+          pdf.text "<b>Servicio:</b>: #{recurso.tipo_de_servicio.toutf_8}", :font_size => 10
+          pdf.text "<b>Conceptos:</b>: #{recurso.conceptos.count}", :font_size => 10
+          table.call(recurso, pdf)
+      elsif recurso.instance_of? ServicioClon
+          pdf.text "<b>Plaza</b>: #{recurso.plaza_nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Subservicio:</b>: #{recurso.metasubservicio_nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Servicio:</b>: #{recurso.metaservicio_nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Conceptos:</b>: #{recurso.concepto_clones.count}", :font_size => 10
+          pdf.text " ", :spacing => 1
+          table.call(recurso, pdf)
+      end
+      pdf.text "\n\n"
+    end
+    
+    return pdf
+  end
+    
+    
 
 end

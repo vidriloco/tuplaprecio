@@ -7,7 +7,7 @@
             <td><%= log.usuario.login %></td>
             <td><%= log.accion %></td>
             <td><%= log.recurso_type %></td>
-            <td><%= log.fecha_de_creacion.to_s(:short) %></td>
+            <td><%= I18n.localize(log.fecha_de_creacion, :format => :short) %></td>
             <td id='opciones'>
                 <%= button_to_remote "Detalles", :url => {:action => :show, :id => log}, 
                                                  :method => :get, 
@@ -23,7 +23,7 @@
 
 <table id='controles_en_logs'>
     <tr>
-        <td><%= button_to "Generar PDF", :action => 'logs_a_pdf' %>con los registros seleccionados</td>
+        <td><%= button_to "Generar PDF con seleccionados", :action => 'logs_a_pdf' %></td>
 
         <td><%= will_paginate @logs, :renderer => 'RemoteLinkRenderer', :previous_label => "Anterior", :next_label => "Siguiente", :class => 'pagination' %></td>
     </tr>

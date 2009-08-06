@@ -12,8 +12,8 @@
         <ul>
             <% case @objeto_type when "Servicio" %>
                 <li><b>Plaza: </b><%= @objeto.plaza_ %></li>
-                <li><b>Metasubservicio: </b><%= @objeto.nombre_del_servicio %></li>
-                <li><b>Metaservicio: </b><%= @objeto.tipo_de_servicio %></li>
+                <li><b>Servicio: </b><%= @objeto.tipo_de_servicio %></li>
+                <li><b>Subservicio: </b><%= @objeto.nombre_del_servicio %></li>
                 <li><b>Conceptos: </b><%= @objeto.conceptos.count %></li>            
             <% when "Paquete" %>
                 <li><b>Plaza: </b><%= @objeto.plaza.nombre %></li>
@@ -33,8 +33,8 @@
                 <li><b>Servicios: </b><%= @objeto.servicios_incluidos %></li>            
             <% when "ServicioClon" %>
                 <li><b>Plaza: </b><%= @objeto.plaza_nombre %></li>
-                <li><b>Metasubservicio: </b><%= @objeto.metasubservicio_nombre %></li>
-                <li><b>Metaservicio: </b><%= @objeto.metaservicio_nombre %></li>
+                <li><b>Servicio: </b><%= @objeto.metaservicio_nombre %></li>
+                <li><b>Subservicio: </b><%= @objeto.metasubservicio_nombre %></li>
                 <li><b>Conceptos: </b><%= @objeto.concepto_clones.count %></li>            
             <% end %>
         </ul>
