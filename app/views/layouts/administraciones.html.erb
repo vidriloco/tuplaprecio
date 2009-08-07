@@ -13,6 +13,7 @@
     Nifty("div.header");
     Nifty("div.modelo_barra_admin"); 
     Nifty("div.bloque");
+    Nifty("div#recordatorio");
     Nifty("div.modelo_relacionado_admin");
     Nifty("div.form_container", "tr bottom");
     Nifty("h3.container_title","top");
@@ -25,7 +26,10 @@
 <body>
     <div id="wrapper">  
         <div class="header" id="leftH">
-    	    <%= logged_in_as %>	 
+            <%= link_to_remote logged_in_as, :url => {:controller => 'usuarios', 
+    	                                              :action => 'detalles_usuario', :id => current_user},
+    	                                     :update => "usuario_config", :with => "'read=true'", 
+    	                                     :complete => visual_effect(:appear, "usuario_config") %>
     	</div>
     		 
 		<div class="header" id="rightH">
@@ -34,7 +38,7 @@
 		
 		<div id="anuncios">
 		    <%= yield(:anuncios_cambiantes) %>
-		</div>
+		</div>	    
 		 
 		<div id="contenedor_izq_admin"> 
             <%= yield(:contenedor_izq_admin) %>

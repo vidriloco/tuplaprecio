@@ -9,6 +9,8 @@
     
     <% form_remote_for(:usuario, @usuario, :url => usuario_path(@usuario), :html => {:method => :put}) do |f| -%>
 
+    <%= f.hidden_field :config_usuario, :value => true %>
+    
     <p><%= label_tag 'email' %><br/>
     <%= f.text_field :email %></p>
 

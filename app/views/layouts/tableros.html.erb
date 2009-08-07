@@ -12,6 +12,7 @@
       NiftyLoad=function(){
       Nifty("div.header");
       Nifty("div#sesion");
+      Nifty("div#recordatorio");
       Nifty('div.modelo_barra_admin'); 
       Nifty('#barra_estado_plaza_actual');
       Nifty('#servicios');
@@ -24,11 +25,11 @@
 <body>
     <div id="wrapper">  
         <div class='header' id='leftH'>
-            <% if current_user.es_encargado? || current_user.es_administrador? %>
+            <% if current_user.es_encargado? %>
     	    <%= link_to_remote logged_in_as, :url => {:controller => 'usuarios', 
     	                                              :action => 'detalles_usuario', :id => current_user},
-    	                                     :update => "detalles", :with => "'read=true'", 
-    	                                     :complete => visual_effect(:appear, "detalles") %>	 
+    	                                     :update => "usuario_config", :with => "'read=true'", 
+    	                                     :complete => visual_effect(:appear, "usuario_config") %>	 
     	    <% else %>
     	        <%= logged_in_as%>	 
     	    <% end %>
@@ -37,8 +38,6 @@
 		<div class='header' id='rightH'>
 		    <%= yield(:rightH) || "<p><b>#{controller.controller_name.singularize.capitalize}</b></p>" %>
 		</div>
-		
-	
 		
 		<div id='container'> 
             <%= yield %>

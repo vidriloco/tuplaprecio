@@ -12,6 +12,6 @@
     <div style="border: 1px solid #9D81F9; margin-bottom: 5px;"></div>
     
     <%= button_to_remote "Modificar", :url => {:controller => "usuarios", :action => "detalles_usuario"}, 
-                                      :update => "detalles", :with => "'modify_one=true'" %> 
-    <b><%= link_to_remote "Cerrar" , '', :onClick => "$('detalles').fade();" %></b>
+                                      :update => "usuario_config", :with => "'modify_one=true'" %> 
+    <b><%= link_to_remote "Cerrar" , '', :onClick => "$('usuario_config').fade();" %></b>
 </div>

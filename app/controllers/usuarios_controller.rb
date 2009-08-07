@@ -106,38 +106,38 @@ class UsuariosController < ApplicationController
       if Usuario.authenticate(current_user.login, params[:password])
         @usuario = current_user
         render :update do |page|
-          page["detalles"].replace_html :partial => 'form_usuario_usuario'
+          page["usuario_config"].replace_html :partial => 'form_usuario_usuario'
         end
       else
         render :update do |page|
           @mensaje = "No fue posible autenticarte con la contraseña proporcionada"
-          page["anuncios"].replace_html :partial => "usuario_mensaje", :locals => {:correcto => false}
+          page["usuario_config_anuncios"].replace_html :partial => "usuario_mensaje", :locals => {:correcto => false}
           page << "Nifty('#mensaje_mal');"
-          page["anuncios"].visual_effect(:appear)
+          page["usuario_config_anuncios"].visual_effect(:appear)
         end
       end
     end
   end
   
   def update
-    if current_user.es_encargado?
+    if params[:usuario][:config_usuario]
       @usuario=Usuario.find(params[:id])
       if @usuario.update_attributes(params[:usuario])
         @mensaje = "Las modificaciones a tú cuenta fueron correctamente guardadas"
         render :update do |page|
-          page["detalles"].visual_effect(:fade)
-          page["anuncios"].replace_html :partial => "usuario_mensaje", :locals => {:correcto => true}
-          page["anuncios"].visual_effect(:appear)
+          page["usuario_config"].visual_effect(:fade)
+          page["usuario_config_anuncios"].replace_html :partial => "usuario_mensaje", :locals => {:correcto => true}
+          page["usuario_config_anuncios"].visual_effect(:appear)
           page << "Nifty('#mensaje_bien');"
         end
       else
         @mensaje = "Las modificaciones a tú cuenta no han sido guardadas"
         @errores = @usuario.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, "; h }
         render :update do |page|
-          page["anuncios"].replace_html :partial => "usuario_mensaje", :locals => {:correcto => false}
+          page["usuario_config_anuncios"].replace_html :partial => "usuario_mensaje", :locals => {:correcto => false}
           page["errores_usuario"].replace_html :partial => "usuario_errores"
           page["errores_usuario"].visual_effect(:appear)
-          page["anuncios"].visual_effect(:appear)
+          page["usuario_config_anuncios"].visual_effect(:appear)
           page << "Nifty('#mensaje_mal');"
         end
       end

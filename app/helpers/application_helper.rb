@@ -120,4 +120,18 @@ module ApplicationHelper
     return objeto.instance_of?(WillPaginate::Collection)
   end
   
+  
+  #Método auxiliar para recordar a los usuarios sobre el cambio de contraseña dada la última vez que ésta haya sido cambiada
+  def informa_estado_de_contrasena
+    case current_user.estado_de_la_informacion
+      when :igual then
+        msg="No has cambiado la contraseña de tú cuenta desde que ésta fue creada. Te sugerimos cambies tú contraseña regularmente."
+        return "<div id='recordatorio' onclick=\"$('recordatorio').fade()\">#{msg}</div>"
+      when :antigua then
+        msg="Hace al menos un mes que no cambias tu contraseña. Te sugerimos cambies tú contraseña regularmente."
+        return "<div id='recordatorio' onclick=\"$('recordatorio').fade()\">#{msg}</div>"
+      else
+    end
+  end
+  
 end

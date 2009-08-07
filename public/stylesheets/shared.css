@@ -149,3 +149,47 @@ a:hover { font-style: italic;  }
   display:inline-block;
   width: 70px;	
 }
+
+#detalles_usuario {
+	width: 500px;
+	background-color:#6B5BF7;
+	padding:15px;
+	color:#D1C8FC;
+	margin-bottom: 5px;
+}
+
+#detalles_usuario h4 {
+	color:#B7A5FA;
+	text-align: center;
+}
+
+#detalles_usuario p {
+	font-size: 10px;
+}
+
+.mensaje_c {
+	width:530px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.mensaje_c p {
+	font-size: 13px;
+	text-align: center;
+}
+
+#mensaje_bien {
+	background-color:#90B724;
+}
+
+#mensaje_mal {
+	background-color:#DF5850;
+}
+
+#recordatorio {
+	font-size:11px;
+	background-color:#C1EB92;
+	padding: 5px;
+	text-align:center;
+	margin-bottom: 8px;
+}

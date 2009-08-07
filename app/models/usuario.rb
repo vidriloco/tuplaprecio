@@ -123,6 +123,16 @@ class Usuario < ActiveRecord::Base
     rol.nil?
   end
   
+  def estado_de_la_informacion
+    if self.updated_at == self.created_at
+      :igual
+    elsif self.updated_at < Time.now.months_ago(1)
+      :antigua
+    else
+      :actualizada
+    end
+  end
+  
   #Metodo que se encarga de guardar un usuario sin hacer una verificación sobre los atributos password y email si
   #el parametro es 'true' (significando que es un administrador quién está guardando)
   def guarda(bol)
