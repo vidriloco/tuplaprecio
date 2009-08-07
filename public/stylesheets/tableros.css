@@ -190,14 +190,6 @@ body { background-color: #1C1B3D; color: #333; margin: 0; padding: 0; height: 10
 	height:10px;
 }
 
-tr.servicio_distingible:hover {
-	background-color:#3a3883;
-}
-
-tr.paquete_distingible:hover {
-	background-color:#2C3069;
-}
-
 .agente_servicios tr td {
 	font-size:11px;
 	text-align:center;
@@ -214,27 +206,46 @@ tr.paquete_distingible:hover {
 }
 
 .agente_servicios_conceptos {
-	margin-bottom: 5px;
-	width:595px;
+	width: 1195px;
 }
 
-.agente_servicios_conceptos tr th {
-	font-size:11px;
-	color:#708DB8;
-}
-
-.agente_servicios_conceptos tr td {
-	font-size:12px;
+.agente_servicios_conceptos td {
+	width:200px;
 	text-align:center;
-	color:#99C0FF;
+	color:#B7B7F4;
 }
+
+.agente_servicios_conceptos th {
+	color:#C6C6C6;
+	width:200px;
+}
+
+.agente_servicios_conceptos th.nombre {
+	width: 700px;
+}
+
+.agente_servicios_conceptos td.nombre {
+	width: 700px;
+	text-align: left;
+	padding-left: 10px;
+}
+
 
 .contenedor_servicios_conceptos {
-	border:1px solid #5F73B5;
-	width: 595px;
-	margin-bottom: 10px;
-	margin-left:2.5px;
-	display:inline-block;
+	border: 1px solid #B1AED6;
+	width:1196px;
+}
+
+.contenedor_servicios_conceptos p { 
+	text-align: left;
+	font-size: 10px;
+	font-weight: bold;
+	color:#807fa8;
+	padding-left: 20px;
+}
+
+.s {
+	background-color:#222751;
 }
 
 .encargado_modelo_titulo {
@@ -320,16 +331,6 @@ p.mensaje_error {
 	padding: 5px;
 	color:#99A9CE;
 	background-color:#3C406A;
-}
-
-#comentarios {
-	margin: 20px;
-}
-
-#dentro_de_comentarios {
-	color:#555D99;
-	background-color: #272B58;
-	padding: 10px;
 }
 
 #container {min-height:100%;}

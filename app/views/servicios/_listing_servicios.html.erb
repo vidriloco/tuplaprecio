@@ -18,39 +18,30 @@
         <% end %>
     </tr>
     </table>
-    <table width="1200">
-        <tr>
-            <td width="50%">
-            <div class="contenedor_servicios_conceptos">
-    
-                <table class="agente_servicios_conceptos">
-                    <thead>
-                        <tr>
-                            <th width="60%">Concepto</th>
-                            <th width="20%">Costo</th>
-                            <th width="20%">Valor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% servicio.conceptos_asociados_en_orden.each do |c| %>
-                            <% unless c.no_disponible? %>
-                                <tr class="servicio_distingible" onmouseover="<%= remote_function(:update => 'comentarios', 
-                                                                                  :url => {:controller => 'tableros', :action => 'muestra_comentario',
-                                                                                  :id => c.id}) %>">
-                                    <td style="padding-left: 10px; text-align:left;"><%=h c.metaconcepto.nombre %></td>
-                                    <td><%=h c.costo_ %></td>
-                                    <td><%=h c.valor_ %></td>
-                                </tr>
-                            <% end %>
-                        <% end %>
-                    </tbody>
+    <div class="contenedor_servicios_conceptos">
+        <table class='agente_servicios_conceptos'>
+            <tr>
+                <th class='nombre'>Nombre</th>
+                <th>Valor</th>
+                <th>Costo</th>
+            </tr>
+        </table>
+        <% servicio.conceptos_asociados_en_orden.each_with_index do |concepto, index| %>
+            <% unless concepto.no_disponible? %>
+                <% if index.odd? %>
+                    <div>
+                <% else %>
+                    <div class='s'>
+                <% end %>
+                <table class='agente_servicios_conceptos'>
+                    <tr>
+                        <td class='nombre'><%= concepto.metaconcepto.nombre %></td>
+                        <td><%= concepto.valor_ %></td>
+                        <td><%= concepto.costo_ %></td>
+                    </tr>
                 </table>
-            </div>
-            </td>
-            <td width="50%">
-                <div id="comentarios">
-                </div>
-            </td>
-        </tr>
-    </table>
+                <p><%= concepto.comentarios %></p></div>
+            <% end %>
+        <% end %>
+    </div>
 <% end %>
