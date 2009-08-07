@@ -148,6 +148,7 @@ class Utilidades
     end
     
     t = Tempfile.new("migracion_db_ruby.rb")
+    Backup.actualiza_hash(cadena_de_salida+cadena_guardados)
     File.open(t.path, "wb") do |f|
       f.write cadena_de_salida
       f.write cadena_guardados
@@ -171,7 +172,12 @@ class Utilidades
     f=File.open(archivo.path)
     datos = f.read
     f.close
-    eval(datos)
+    if Backup.hash_es_el_mismo(datos)
+      eval(datos)
+      true
+    else
+      false
+    end
   end
 
   def self.genera_pdf_log(log)

@@ -61,15 +61,27 @@ class AdministracionesController < ApplicationController
   def entrada_rb
     @modelos = MODELOS
     archivo=params[:zipo]
-    Utilidades.migracion_importa_rb(archivo)
-    responds_to_parent do
-      respond_to do |format|
-        format.js do
-          render :update do |page|
-            page["modelo_barras_admin"].replace_html :partial => "modelo_barras"
-            page << "Nifty('div.mensaje_barra');"
-            page["a_4"].hide
-            page["a_3"].visual_effect :appear
+    if Utilidades.migracion_importa_rb(archivo)
+      responds_to_parent do
+        respond_to do |format|
+          format.js do
+            render :update do |page|
+              page["modelo_barras_admin"].replace_html :partial => "modelo_barras"
+              page << "Nifty('div.mensaje_barra');"
+              page["a_4"].hide
+              page["a_3"].visual_effect :appear
+            end
+          end
+        end
+      end
+    else
+      responds_to_parent do
+        respond_to do |format|
+          format.js do
+            render :update do |page|
+              page["a_4"].hide
+              page["a_5"].visual_effect :appear
+            end
           end
         end
       end
