@@ -96,7 +96,8 @@ body { background-color: #1C1B3D; color: #333; margin: 0; padding: 0; height: 10
 .modelo_barra_encargado {
   width: 1200px;
   margin-bottom: 15px;
-  background-color: #6F75F8;
+  background-color: #383381;
+  color: #717EA1;
 }
 
 #contenedor_cambiante {
@@ -151,7 +152,8 @@ body { background-color: #1C1B3D; color: #333; margin: 0; padding: 0; height: 10
   width: 1200px;
   margin-top:5px;
   margin-bottom: 15px;
-  background-color: #EEB558;
+  background-color:#E39C3D;
+  color:#FFF4BF;
 }
 
 .agente_paquetes {

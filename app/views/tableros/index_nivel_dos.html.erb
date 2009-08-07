@@ -4,7 +4,7 @@
 <%= informa_estado_de_contrasena %>
 
 <div id='barra_estado_plaza_actual'>
-    <p align="center"><span class="plaza_nombre"><%= @plaza.nombre %></span> <b>en</b> <%= @plaza.estado.nombre %></p>
+    <p align="center"><span class="plaza_nombre"><b>Plaza:</b> <%= @plaza.nombre %> </span>&nbsp;&nbsp;&nbsp; <b>Estado: </b> <%= @plaza.estado.nombre %></p>
 </div>
 
 <%= render :partial => "encargado_modelo_barras" %>

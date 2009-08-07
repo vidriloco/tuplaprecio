@@ -12,6 +12,7 @@
       NiftyLoad=function(){
       Nifty("div.header");
       Nifty("div#sesion");
+      Nifty("div#empresa_header", "bottom");
       Nifty("div#recordatorio");
       Nifty('div.modelo_barra_admin'); 
       Nifty('#barra_estado_plaza_actual');
@@ -24,6 +25,16 @@
 </head>
 <body>
     <div id="wrapper">  
+        
+        <div class='header_footer' id='empresa_header'>
+            <table class='header_footer_legends'>
+                <tr>
+                    <td class='left'>Sistema de precios Cablecom</td>
+                    <td class='right'>Call Center Nacional Cablecom <i>01800-0303000</i></td>
+                </tr>
+            </table>
+        </div>
+        
         <div class='header' id='leftH'>
             <% if current_user.es_encargado? %>
     	    <%= link_to_remote logged_in_as, :url => {:controller => 'usuarios', 
