@@ -3,6 +3,7 @@
                     Nifty('#plaza_titulo_paquete', 'bl tl');
                     Nifty('#plaza_titulo_servicio', 'tl');
                     Nifty('#listado_de_preservicios', 'bottom tr');
+                    Nifty('#listado_de_prepaquetes', 'bottom tr');
                     Nifty('#paquetes', 'br tr')" %>
 
 <table>
@@ -11,14 +12,12 @@
         <td class='titulo_en_agente' id='paquetes'><h4>Paquetes</h4></td>                  
     </tr>
 </table>
-<% if @paquetes.empty? %>
-    <%= javascript_tag "Nifty('#paquete');" %> 
-    <div class="empty" id="paquete"><p>No hay paquetes que mostrar</p></div>
-<% else %>
-    <%= render :partial => "paquetes/listing_paquetes", :object => @paquetes %>
-<% end %>
 
+<div id='listado_de_prepaquetes' class='inlined'>
+    <%= render :partial => "paquetes/lista_de_paquetes_por_zona" %>
+</div>
 
+<div id='plaza_paquetes'></div>
 
 <table>
     <tr>
@@ -28,7 +27,7 @@
 </table>
 
 <div id='listado_de_preservicios' class='inlined'>
-    <%= render :partial => 'lista_de_metaservicios', :locals => {:metaservicios => @metaservicios} %> 
+    <%= render :partial => 'lista_de_metaservicios' %> 
 </div>
 
 <div id='plaza_servicios'></div>

@@ -28,6 +28,10 @@ body { background-color: #1C1B3D; color: #333; margin: 0; padding: 0; height: 10
 	margin-right:5px;
 } 
 
+#zona_seleccionada {
+	margin-left: 20px;
+}
+
 #selector_de_estados {
   background-color:#3F3F9E;
   margin: 10px;
@@ -114,6 +118,12 @@ body { background-color: #1C1B3D; color: #333; margin: 0; padding: 0; height: 10
 }
 
 #listado_de_preservicios {
+  width: 1200px;
+  margin-bottom: 15px;
+  background-color: #ee7538;
+}
+
+#listado_de_prepaquetes {
   width: 1200px;
   margin-bottom: 15px;
   background-color: #ee7538;
@@ -344,12 +354,28 @@ p.mensaje_error {
    bottom:0;
    height:60px;   /* Height of the footer */
    width: 100%;
+   background-color:#262664;
 }
 
-#in_footer {
+.in_footer {
 	background-color:#2E2A69;
 	width: 1100px;
  	margin-left: auto;
 	margin-right: auto;
 	
+}
+
+#resultados a {
+	font-size: 12px;
+	color:#FF6D46;
+}
+
+.s:hover, .n:hover {
+	background-color:#2F2F51;
+}
+
+.amigable {
+	position: absolute;
+	margin-bottom: 10px;
+	margin-left: 100px;
 }

@@ -56,8 +56,10 @@ class TablerosController < ApplicationController
     render(:nothing => true) && return if plaza_id.blank?
     @plaza = Plaza.find plaza_id
     cookies['plaza'] = {:value => @plaza.id}
-    @paquetes = @plaza.paquetes
-    @metaservicios = Metaservicio.all
+    
+    @metaservicios = Metaservicio.find(:all)
+    @zonas = Zona.find(:all)
+    
     respond_to do |format|
       format.js do   
         render :update do |page|
@@ -88,12 +90,11 @@ class TablerosController < ApplicationController
   
   # Click en link 'atrás' en el listado de metasubservicios, recarga y después despliega la lista de metaservicios
   def recarga_metaservicios
-    metaservicios = Metaservicio.all
+    @metaservicios = Metaservicio.all
     respond_to do |format|
       format.js do
         render :update do |page|
-          page['listado_de_preservicios'].replace_html :partial => 'lista_de_metaservicios', 
-                                                       :locals => {:metaservicios => metaservicios}
+          page['listado_de_preservicios'].replace_html :partial => 'lista_de_metaservicios'
           page['listado_de_preservicios'].visual_effect :appear
           page << "Nifty('#listado_de_preservicios', 'bottom tr');"
         end
@@ -125,6 +126,15 @@ class TablerosController < ApplicationController
     else
       render :partial => "comentario"
     end
+  end
+  
+  def zona_seleccionada
+    id = params[:id].gsub(/\D/,'')
+    plaza_id = cookies['plaza'].gsub(/\D/,'')
+    
+    @zona = Zona.find(id)
+    @paquetes = Paquete.find(:all, :conditions => {:zona_id => id, :plaza_id => plaza_id})
+    render :partial => 'paquetes/listing_paquetes'
   end
   
 end

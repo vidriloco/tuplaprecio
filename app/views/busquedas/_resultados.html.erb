@@ -5,9 +5,7 @@
  
  
 <div id="resultados_contenedor">
-    <div id="resultados" class="inlined"><h3>Resultados de Búsqueda</h3></div>
-    <%= image_tag "delete_a.png", :size => "30x30", :onclick => "$('resultados_contenedor').fade()", :class=> 'inlined', 
-                                :style => "position:absolute; top: 120px; right: 40px;" %>
+    <div id="resultados" class="inlined"><h3>Resultados de Búsqueda | <%= link_to_remote "Ocultar",'#', :onclick => "$('resultados_contenedor').fade()" %></h3></div>
     <br/>
     <br/>
     <% @resultados.each_key do |key| %>

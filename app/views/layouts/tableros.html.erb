@@ -31,6 +31,7 @@
                 <tr>
                     <td class='left'>Sistema de precios Cablecom</td>
                     <td class='right'>Call Center Nacional Cablecom <i>01800-0303000</i></td>
+                    <td class='right'><%= image_tag('cablecom.png', :size => '90x40') %></td>
                 </tr>
             </table>
         </div>
@@ -56,6 +57,7 @@
         
         
     </div>
+    
     <% if current_user.es_agente? %>    
         <div id='body'></div>
         <div id='footer'>
@@ -64,9 +66,12 @@
                     <%= yield(:selector_de_estados) %>
                 </div>
     		    <div id='barra_de_busqueda' class='header'>
-                    <%= yield(:busqueda) %>
+                    <%= yield(:busqueda) %>    
         		</div> 
+        		<%= image_tag('triple-play.png', :size => '145x65', :class => 'amigable') %>
+                
 		    </div>
+		    
 	    </div>
 	<% end %>
 	

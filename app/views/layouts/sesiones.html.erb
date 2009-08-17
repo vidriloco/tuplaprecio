@@ -11,7 +11,7 @@
   <% javascript_tag do %>
       NiftyLoad=function(){
       Nifty("div.header");
-      Nifty("div#sesion");
+      Nifty("div.sesion");
       Nifty("div#footer");
       }
   <% end %>
@@ -28,18 +28,23 @@
 		</div>
 
 		
-		<div id='sesion'> 
+		<div class='sesion' id='login_box'> 
             <%= yield %>
+            <%= image_tag('triple-play-2.png', :size => '400x100', :class => 'amigable') %>
+    		
+        </div>
+        
+        <div class='sesion' id='imagenes'>
+            <%= image_tag "mapa_mexico.png", :size => '400x400' %>
         </div>
         
         <!--<p style="color: green"><%= flash[:notice] %></p>-->
     </div>
     
-    <div id="footer"><p>
-        <a href="http://validator.w3.org/check?uri=referer"><img
-            src="http://www.w3.org/Icons/valid-xhtml10-blue"
-            alt="Valid XHTML 1.0 Transitional" height="31" width="88" border="false" /></a>
-    </p></div>
+    <div id="footer"><div class='in_footer'><p>
+        <%= link_to image_tag("valid-xhtml10-blue.png", :border => false), 
+                              "http://validator.w3.org/check?uri=referer" %>
+    </p></div></div>
 
 </body>
 </html>

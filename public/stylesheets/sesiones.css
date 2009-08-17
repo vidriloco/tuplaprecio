@@ -1,21 +1,24 @@
-body { background-color: #232323; color: #B9B9B9;}
+body { background-color: #232323; color: #B9B9B9; height: 100%;}
 
-#sesion{
-	background-color: #3B3F4F;
-	margin-left:auto;
-	margin-right:auto;
+.sesion{
 	margin-top:100px;
-	margin-bottom:100px;
-	width: 360px;
-	padding: 50px;
 }
 
-#sesion .form label {
+#login_box {
+	float:right;
+	margin-right: 30px;
+	background-color: #3B3F4F;
+	width: 360px;
+	padding: 50px;
+	padding-bottom: 10px;
+}
+
+#login_box .form label {
 	font-weight: bold;
 	font-size: 15px;
 }
 
-#sesion .form input.text {
+#login_box .form input.text {
 	margin: 10px;
 	border: 0;
 	font-size:20px;
@@ -23,13 +26,37 @@ body { background-color: #232323; color: #B9B9B9;}
 	color:#51586A;
 }
 
-#footer {
+#imagenes {
+	float: left;
+	margin-top: 40px;
+	margin-left: 30px;
+}
+
+.in_footer {
 	border: 1px solid #343748;
-	margin-bottom:0px;
-	width:93px;
-	margin-left:auto;
-	margin-right:auto;
 	float: center;
+	margin-left:auto;
+	margin-right: auto;
+	width:93px;
+
+}
+
+#cablecom {
+	position: fixed;
+	left: 230px;
+	top: 80px;
+}
+
+#footer {
+   position:fixed;
+   bottom:0;
+   height:60px;   /* Height of the footer */
+   width: 100%;
+}
+
+.amigable {
+	position: relative;
+	margin-top: 10px;
 }
 
 
