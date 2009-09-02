@@ -1,8 +1,6 @@
 class Concepto < ActiveRecord::Base
   include Compartido
   
-  acts_as_reportable
-  
   belongs_to :metaconcepto
   belongs_to :servicio
   

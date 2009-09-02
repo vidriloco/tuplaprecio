@@ -1,8 +1,6 @@
 class Plaza < ActiveRecord::Base
   include Compartido
   
-  acts_as_reportable
-  
   belongs_to :estado
   has_many :paquetes
   has_many :usuarios, :autosave => true, :dependent => :nullify

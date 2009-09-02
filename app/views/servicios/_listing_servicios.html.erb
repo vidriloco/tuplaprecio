@@ -1,46 +1,53 @@
 
 <% @servicios.each do |servicio| %>
-<% if @bs.eql?(1) %>
-    <table class="agente_servicios">
-        <tr>
-            <td style="background-color:#1C1B3D; color:#F5A325;"><b><%= servicio.plaza.nombre %></b></td>
-        </tr>
-    </table>
-<% end %>
-    <table class="agente_servicios">
-    <tr>
-        <% Servicio.atributos_agente.each do |atributo| %>
-            <% if Servicio.es_evaluable(atributo) %>
-                <td><%=h eval servicio.send(atributo) -%></td>
-            <% else %>
-                <td><%=h servicio.send(atributo) -%></td>
-            <% end %>
-        <% end %>
-    </tr>
-    </table>
+<div class='agente_servicios'>
+    <% if @bs.eql?(1) %>
+            <p>
+               <span class='p'><%= servicio.plaza.nombre %></span>   
+               <span class='t'><%= servicio.tipo_de_servicio %></span>  
+               <span class='n'><%= servicio.nombre_del_servicio %></span>
+            </p>
+    <% else %>
+            <p>
+               <span class='t'><%= servicio.tipo_de_servicio %></span>  
+               <span class='n'><%= servicio.nombre_del_servicio %></span>
+            </p>
+    <% end %>
+</div>
+
+
     <div class="contenedor_servicios_conceptos">
-        <table class='agente_servicios_conceptos'>
-            <tr>
-                <th class='nombre'>Nombre</th>
-                <th>Cantidad</th>
-                <th>Costo</th>
-            </tr>
-        </table>
         <% servicio.conceptos_asociados_en_orden.each_with_index do |concepto, index| %>
             <% unless concepto.no_disponible? %>
-                <% if index.odd? %>
-                    <div class='n'>
+                <% if index.even? %>
+                    <div class='n' id='agente_servicios_conceptos'>
                 <% else %>
-                    <div class='s'>
+                    <div class='s' id='agente_servicios_conceptos'>
                 <% end %>
-                <table class='agente_servicios_conceptos'>
-                    <tr>
-                        <td class='nombre'><%= concepto.metaconcepto.nombre %></td>
-                        <td><%= concepto.valor_ %></td>
-                        <td><%= concepto.costo_ %></td>
-                    </tr>
-                </table>
-                <p><%= concepto.comentarios %></p></div>
+                    <div onmouseover="<%= "$('concepto_#{concepto.id}').appear()" %>">
+                        <table class='concepto_tabla'>
+                            <tr>
+                                <td class='nombre_metaconcepto'><%= concepto.metaconcepto.nombre %></td>
+                                <% if concepto.costo_.eql?("-") %>
+                                    <td class='cantidad_numerica'><%= concepto.valor_ %></td>
+                                <% elsif concepto.valor_.eql?("-") %>
+                                    <td class='valor_numerico'><%= concepto.costo_ %></td>
+                                <% end %>
+                            </tr>
+                        </table>
+                         <div id='<%= "concepto_#{concepto.id}" %>' style="display: none;" 
+                              class='comentario_container_concepto'>
+                                <% unless concepto.comentarios.blank? %>
+                                <p class='concepto_comentario'>
+                                    <%= concepto.comentarios %> 
+                                </p> 
+                                <p class='concepto_comentario'>
+                                    <%= link_to_function "Ocultar Comentario", "$('concepto_#{concepto.id}').fade()" %>
+                                </p>
+                                <% end %>
+                            </div>
+                    </div>
+                </div>
             <% end %>
         <% end %>
     </div>

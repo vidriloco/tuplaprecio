@@ -1,7 +1,7 @@
 class FuncionesLog < ActiveRecord::Migration
   def self.up
     execute "SET TIME ZONE DEFAULT;"
-    execute "CREATE LANGUAGE plpgsql;"
+    #execute "CREATE LANGUAGE plpgsql;"
     execute "CREATE FUNCTION clona_recurso(varchar, integer, integer) RETURNS INTEGER AS $$
       DECLARE
         id_salida integer;
@@ -46,10 +46,10 @@ class FuncionesLog < ActiveRecord::Migration
 
   def self.down
     execute "DROP FUNCTION clona_recurso(varchar, integer, integer);"
-    begin
-      execute "DROP LANGUAGE plpgsql;"
-    rescue
-      execute "DROP LANGUAGE plpgsql CASCADE;"
-    end
+    #begin
+    #  execute "DROP LANGUAGE plpgsql;"
+    #rescue
+    #  execute "DROP LANGUAGE plpgsql CASCADE;"
+    #end
   end
 end

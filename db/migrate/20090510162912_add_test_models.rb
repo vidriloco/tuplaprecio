@@ -1,4 +1,5 @@
 class AddTestModels < ActiveRecord::Migration
+  require 'rol'
   def self.up
     unless RAILS_ENV=='test'
       rol1=Rol.create(:nombre=>"Administrador")

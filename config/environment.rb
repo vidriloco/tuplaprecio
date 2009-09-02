@@ -59,6 +59,5 @@ Rails::Initializer.run do |config|
 end
 
 Mime::Type.register 'application/pdf', :pdf
-require 'htmldoc'
 
 require "will_paginate"

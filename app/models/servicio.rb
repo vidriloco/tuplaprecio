@@ -2,8 +2,6 @@ class Servicio < ActiveRecord::Base
   include Compartido
   include LogMethods
   
-  acts_as_reportable
-  
   belongs_to :plaza
   belongs_to :metasubservicio
   has_many   :conceptos, :validate => false, :dependent => :destroy

@@ -6,8 +6,6 @@ class Usuario < ActiveRecord::Base
   include Authentication::ByCookieToken
   include Compartido
   
-  acts_as_reportable
-  
   belongs_to :rol
   belongs_to :plaza
   has_one :log

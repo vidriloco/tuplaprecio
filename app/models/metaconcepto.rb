@@ -1,8 +1,6 @@
 class Metaconcepto < ActiveRecord::Base
   include Compartido
   
-  acts_as_reportable
-  
   has_many :conceptos, :dependent => :destroy
   has_and_belongs_to_many :metaservicios
   

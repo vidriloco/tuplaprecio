@@ -1,8 +1,6 @@
 class Estado < ActiveRecord::Base
   include Compartido
   
-  acts_as_reportable
-  
   validates_presence_of :nombre, :message => "no puede ser vacío"
     
   has_many :plazas, :dependent => :destroy

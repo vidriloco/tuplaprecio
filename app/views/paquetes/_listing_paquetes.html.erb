@@ -11,8 +11,8 @@
             <tr>
                 <% if @bs.eql?(1) %>
                     <th style="color:#646AD0;">Plaza</th>
-                    <th>Zona</th>
                 <% end %>
+                <th>Zona</th>
                 <th>Tipo de Paquete</th>
                 <th style="width:500px">Televisión</th>
                 <th style="width:500px">Telefonía</th>
@@ -28,8 +28,8 @@
             <tr class="paquete_distingible">
                 <% if @bs.eql?(1) %>
                     <td style="color:#646AD0;"><%= paquete.plaza.nombre %></td>
-                    <td><%= paquete.zona_ %></td>
                 <% end %>
+                <td><%= paquete.zona_ %></td>
                 <td><%= paquete.tipo_de_paquete %></td>
                 <td><%= paquete.television %></td>
                 <td><%= paquete.telefonia %></td>

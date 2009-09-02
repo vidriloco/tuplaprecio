@@ -1,8 +1,6 @@
 class Administracion < ActiveRecord::Base
   include Compartido
   
-  acts_as_reportable  
-  
   def agrega_nuevo_usuario(usuario)
     unless self.usuarios.exists? usuario
       self.usuarios << usuario

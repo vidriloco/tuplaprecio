@@ -1,8 +1,6 @@
 class Zona < ActiveRecord::Base
   include Compartido
   
-  acts_as_reportable
-  
   has_many :paquetes
   
   validates_presence_of :nombre, :message => "no puede ser vacío"

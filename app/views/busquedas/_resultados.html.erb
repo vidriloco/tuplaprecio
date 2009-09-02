@@ -1,11 +1,23 @@
 <% javascript_tag do %>
     Nifty('#resultados');
-    Nifty('#cuenta_resultados');
+    Nifty('td.leyenda');
 <% end %>
  
- 
 <div id="resultados_contenedor">
-    <div id="resultados" class="inlined"><h3>Resultados de Búsqueda | <%= link_to_remote "Ocultar",'#', :onclick => "$('resultados_contenedor').fade()" %></h3></div>
+    <div id="resultados"><h3>Resultados de la Búsqueda</h3></div>
+    <table id='tabla_informativa_resultados'>
+        <tr>
+            <td></td>
+            <td id='cuenta_resultados' class='leyenda'>
+                <% if @cuenta == 1 %>
+                    Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
+                <% else %>
+                    Encontrados <b><%= @cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
+                <% end %>
+                (<%= link_to_remote "Ocultar Resultados de la Búsqueda",'#', :onclick => "$('resultados_contenedor').fade()" %>)
+            </td>
+        </tr>
+    </table>
     <br/>
     <br/>
     <% @resultados.each_key do |key| %>
@@ -79,14 +91,20 @@
             <% end %>
         <% end %>        
     <% end %>
+    
+    <table id='tabla_informativa_resultados'>
+        <tr>
+            <td></td>
+            <td id='cuenta_resultados' class='leyenda'>
+                <% if @cuenta == 1 %>
+                    Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
+                <% else %>
+                    Encontrados <b><%= @cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
+                <% end %>
+                (<%= link_to_remote "Ocultar Resultados de la Búsqueda",'#', :onclick => "$('resultados_contenedor').fade()" %>)
+            </td>
+        </tr>
+    </table>
         
-    <% cuenta = @servicios.size + @estados.size + @paquetes.size + @plazas.size %>
-    <br/>
-    <div id="cuenta_resultados">
-        <% if cuenta == 1 %>
-            Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
-        <% else %>
-            Encontrados <b><%= cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
-        <% end %>
-    </div>
+
 </div>

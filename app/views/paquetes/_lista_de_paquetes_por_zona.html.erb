@@ -4,10 +4,5 @@
         <b><%= link_to_remote 'Atrás', :url => {:action => :recarga_metaservicios} %></b>
     </div>
 <% else %>
-    <% @zonas.each do |z| %>
-        <div id='preservicio' class='inlined'>
-            <%= link_to_remote "#{z.nombre}", :url => {:controller => 'tableros', :action => 'zona_seleccionada', :id => z.id}, :update => 'plaza_paquetes' %>
-        </div>
-    <% end %>
     
 <% end %>

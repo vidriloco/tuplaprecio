@@ -58,7 +58,8 @@ class TablerosController < ApplicationController
     cookies['plaza'] = {:value => @plaza.id}
     
     @metaservicios = Metaservicio.find(:all)
-    @zonas = Zona.find(:all)
+    
+    @paquetes = Paquete.find(:all, :conditions => {:plaza_id => plaza_id}, :order => "numero_de_servicios DESC")
     
     respond_to do |format|
       format.js do   
@@ -126,15 +127,6 @@ class TablerosController < ApplicationController
     else
       render :partial => "comentario"
     end
-  end
-  
-  def zona_seleccionada
-    id = params[:id].gsub(/\D/,'')
-    plaza_id = cookies['plaza'].gsub(/\D/,'')
-    
-    @zona = Zona.find(id)
-    @paquetes = Paquete.find(:all, :conditions => {:zona_id => id, :plaza_id => plaza_id})
-    render :partial => 'paquetes/listing_paquetes'
   end
   
 end

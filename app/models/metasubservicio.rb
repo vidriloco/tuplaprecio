@@ -1,8 +1,6 @@
 class Metasubservicio < ActiveRecord::Base
   include Compartido
   
-  acts_as_reportable
-  
   belongs_to :metaservicio
   has_many :servicios, :dependent => :destroy
   
