@@ -45,10 +45,11 @@
         </table> 
         <div id="<%= "#{modelo}_show_#{objeto.id}" %>"> </div>
     <% end %>
-<% elsif modelo.eql? "paquete" %>
+<% else %>
   <table class="generica_encargado">
         <tr>
             <% atributos.each do |atributo| %>
+                <!-- Aplicación de un método que genera un cambio de presentación al usuario de un atributo del modelo -->
                 <th><%= modelo.capitalize.constantize.cambia(atributo) %></th>
             <% end %>
             <th></th>
@@ -74,7 +75,7 @@
 
            </tr>
         <% end %>
-   </table> 
+   </table>  
 <% end %>     
   <b><p style="text-align:center;">
     <%= link_to_remote "Cerrar", :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},

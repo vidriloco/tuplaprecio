@@ -1,0 +1,2 @@
+module CoberturasHelper
+end

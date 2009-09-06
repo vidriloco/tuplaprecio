@@ -1,0 +1,17 @@
+<h3 class='encargado_modelo_titulo'>Cobertura</h3>
+<div class='container_admin'>
+    
+<div class='form'>
+
+<% form_remote_for(:cobertura, @cobertura, :url => cobertura_path(@cobertura), :html => {:method => :put}) do |f| %>
+
+  <%= render :partial => 'form_cobertura', :locals => {:f => f, :plaza => @plaza} %>
+  <p>
+    <%= f.submit 'Guardar cambios' %> | <%= link_to_remote "Cerrar", 
+                                          :url => {:controller => 'administraciones', :action => 'restaura_modelo_barra'},
+                                          :with => "'modelo=#{modelo}'" %>
+  </p>
+<% end %>
+</div>
+
+</div>

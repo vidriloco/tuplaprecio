@@ -12,7 +12,7 @@ class TablerosController < ApplicationController
     controller.usuario_es?(:encargado)
   end
   
-  
+  # Acción ligada a la página principal para usuarios de tipo agente
   def index_nivel_tres
     @usuario = current_user
     @estados = Estado.all
@@ -22,10 +22,12 @@ class TablerosController < ApplicationController
     end
   end
   
+  # Acción ligada a la página principal para usuarios de tipo encargado
   def index_nivel_dos
     @usuario = current_user
     @plaza = @usuario.plaza
-    @modelos=["servicio", "paquete"]
+    # Modelos a los que un encargado tendrá posibilidad de modificar
+    @modelos=["servicio", "paquete", "cobertura"]
   end
   
   # Responde con un cambio en el selector de plazas cada vez que se selecciona un estado

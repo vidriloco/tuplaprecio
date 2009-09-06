@@ -35,7 +35,19 @@
                 <li><b>Plaza: </b><%= @objeto.plaza_nombre %></li>
                 <li><b>Servicio: </b><%= @objeto.metaservicio_nombre %></li>
                 <li><b>Subservicio: </b><%= @objeto.metasubservicio_nombre %></li>
-                <li><b>Conceptos: </b><%= @objeto.concepto_clones.count %></li>            
+                <li><b>Conceptos: </b><%= @objeto.concepto_clones.count %></li>
+            <% when "CoberturaClon" %>
+                <li><b>Plaza: </b><%= @objeto.plaza_nombre %></li>
+                <li><b>Nombre: </b><%= @objeto.nombre %></li> 
+                <li><b>Número de nodo: </b><%= @objeto.numero_de_nodo %></li>
+                <li><b>Calle: </b><%= @objeto.calle %></li>
+                <li><b>Colonia: </b><%= @objeto.colonia %></li>
+            <% when "Cobertura" %>
+                <li><b>Plaza: </b><%= @objeto.plaza.nombre %></li>
+                <li><b>Nombre: </b><%= @objeto.nombre %></li>
+                <li><b>Número de nodo: </b><%= @objeto.numero_de_nodo %></li>
+                <li><b>Calle: </b><%= @objeto.calle %></li>
+                <li><b>Colonia: </b><%= @objeto.colonia %></li>
             <% end %>
         </ul>
     

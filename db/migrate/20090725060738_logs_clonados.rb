@@ -36,6 +36,14 @@ class LogsClonados < ActiveRecord::Migration
       t.string  :zona_nombre
     end
     
+    create_table :cobertura_clones do |t|
+      t.string :nombre
+      t.integer :numero_de_nodo
+      t.string :colonia
+      t.string :calle
+      t.string :plaza_nombre
+      t.string :estado_nombre
+    end
     
   end
 
@@ -43,5 +51,6 @@ class LogsClonados < ActiveRecord::Migration
     drop_table :paquete_clones
     drop_table :concepto_clones
     drop_table :servicio_clones 
+    drop_table :cobertura_clones
   end
 end

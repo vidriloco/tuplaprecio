@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  nombre: MyString
+  numero_de_nodo: 1
+  colonia: MyString
+  calle: MyString
+
+two:
+  nombre: MyString
+  numero_de_nodo: 1
+  colonia: MyString
+  calle: MyString

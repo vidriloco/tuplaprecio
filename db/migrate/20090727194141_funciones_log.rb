@@ -37,6 +37,14 @@ class FuncionesLog < ActiveRecord::Migration
           plazas.estado_id = estados.id AND
           paquetes.zona_id = zonas.id
           RETURNING paquete_clones.id INTO id_salida;
+        ELSIF $1 = 'coberturas' THEN
+          INSERT INTO cobertura_clones (nombre, numero_de_nodo, colonia, calle, plaza_nombre, estado_nombre)
+          SELECT coberturas.nombre, coberturas.numero_de_nodo, coberturas.colonia, coberturas.calle, plazas.nombre, estados.nombre
+          FROM coberturas, plazas, estados WHERE
+          coberturas.id = $2 AND
+          coberturas.plaza_id = plazas.id AND
+          plazas.estado_id = estados.id
+          RETURNING cobertura_clones.id INTO id_salida;
     		END IF;
     		RETURN id_salida;
     	END;
