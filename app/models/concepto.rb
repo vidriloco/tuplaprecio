@@ -9,10 +9,14 @@ class Concepto < ActiveRecord::Base
   validates_numericality_of :valor, :if => :metaconcepto_es_tipo_b?, :unless => :no_disponible?
   validates_presence_of :costo, :if => :metaconcepto_es_tipo_a?, :unless => :no_disponible?
   validates_presence_of :valor, :if => :metaconcepto_es_tipo_b?, :unless => :no_disponible?
-    
+  
+  # Atributos cuyos valores relativos a cada instancia de éste modelo serán traducidos a código ruby en un archivo para exportar como copia de seguridad
   def self.atributos_exportables
     [:disponible, :valor, :costo, :comentarios]
-  end  
+  end
+  
+  # Necesario para poder obtener CSVs de éste modelo
+  acts_as_reportable  
   
   def metaconcepto_es_tipo_a?
     return true if metaconcepto.nil?

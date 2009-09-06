@@ -3,10 +3,14 @@ class Plaza < ActiveRecord::Base
   
   belongs_to :estado
   has_many :paquetes
+  has_many :coberturas
   has_many :usuarios, :autosave => true, :dependent => :nullify
   has_many :servicios
       
   validates_presence_of :nombre, :estado_id, :message => "no puede ser vacío"
+  
+  # Necesario para poder obtener CSVs de éste modelo
+  acts_as_reportable
   
   def self.atributos
     ["nombre", "estado_", "usuarios_", "paquetes_", "servicios_"]

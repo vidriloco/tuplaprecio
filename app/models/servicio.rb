@@ -10,6 +10,9 @@ class Servicio < ActiveRecord::Base
   validates_presence_of :metasubservicio_id, :message => "no puede ir en blanco"
   validates_uniqueness_of :metasubservicio_id, :scope => :plaza_id
   validate :atributos_de_conceptos
+  
+  # Necesario para poder obtener CSVs de éste modelo
+  acts_as_reportable
     
   # Método auxiliar en controlador servicios acción edit
   # Trata el caso en el que se hayan añadido más metaconceptos al metaservicio.
@@ -36,6 +39,7 @@ class Servicio < ActiveRecord::Base
     hash.each_key { |key| self.conceptos.find(key).update_attributes(hash[key]) } 
   end
     
+  # Atributos de éste modelo presentes al momento de desplegar instancias de éste modelo  
   def self.atributos
     ["plaza_", "tipo_de_servicio", "nombre_del_servicio", "número_de_conceptos"]
   end  
@@ -44,6 +48,7 @@ class Servicio < ActiveRecord::Base
     ["tipo_de_servicio", "nombre_del_servicio"]
   end
   
+  # Atributos cuyos valores relativos a cada instancia de éste modelo serán traducidos a código ruby en un archivo para exportar como copia de seguridad
   def self.atributos_exportables
     []
   end

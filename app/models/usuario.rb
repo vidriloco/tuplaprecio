@@ -33,10 +33,15 @@ class Usuario < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :nombre, :password, :password_confirmation, :rol_id, :plaza_id
 
+  # Necesario para poder obtener CSVs de éste modelo
+  acts_as_reportable
+  
+  # Atributos de éste modelo presentes al momento de desplegar instancias de éste modelo
   def self.atributos
     ["nombre", "login", "email", "con_rol"]
   end
   
+  # Atributos cuyos valores relativos a cada instancia de éste modelo serán traducidos a código ruby en un archivo para exportar como copia de seguridad
   def self.atributos_exportables
     [:nombre, :login, :email, :crypted_password, :salt, :rol_id, :plaza_id]
   end
@@ -121,6 +126,7 @@ class Usuario < ActiveRecord::Base
     rol.nil?
   end
   
+  # Método que permite saber que tan viejos son los atributos de un usuario
   def estado_de_la_informacion
     if self.updated_at == self.created_at
       :igual

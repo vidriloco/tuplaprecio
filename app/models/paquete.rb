@@ -9,6 +9,9 @@ class Paquete < ActiveRecord::Base
   validates_presence_of :zona, :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "no puede ser vacío"
   validates_numericality_of :costo_1_10, :costo_11_31, :costo_real, :ahorro, :message => "debe ser numérico"
   
+  # Necesario para poder obtener CSVs de éste modelo
+  acts_as_reportable
+  
   before_validation do |paquete|
     cuenta=0
     
@@ -21,16 +24,19 @@ class Paquete < ActiveRecord::Base
   
   validates_numericality_of :numero_de_servicios, :greater_than => 1
   
+  # Atributos de éste modelo presentes al momento de desplegar instancias de éste modelo
   def self.atributos
     ["tipo_de_paquete", "zona_", "servicios_incluídos", "costo_primer_mitad_de_mes", "costo_segunda_mitad_de_mes", "costo_real_", "ahorro_"]
   end
   
+  # Método que genera una versión leíble para el usuario de un atributo del modelo
   def self.cambia(atributo)
     dicc = {'costo_primer_mitad_de_mes' => 'Costo (1 al día 10)', 'costo_segunda_mitad_de_mes' => 'Costo (11 al fin de mes)'}
     return dicc[atributo] unless dicc[atributo].nil?
     atributo.humanize
   end
   
+  # Atributos cuyos valores relativos a cada instancia de éste modelo serán traducidos a código ruby en un archivo para exportar como copia de seguridad
   def self.atributos_exportables
     [:costo_1_10, :costo_11_31, :costo_real, :ahorro, :numero_de_servicios, :television, :telefonia, :internet]
   end

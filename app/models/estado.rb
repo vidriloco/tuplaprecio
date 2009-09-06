@@ -4,6 +4,9 @@ class Estado < ActiveRecord::Base
   validates_presence_of :nombre, :message => "no puede ser vacío"
     
   has_many :plazas, :dependent => :destroy
+  
+  # Necesario para poder obtener CSVs de éste modelo
+  acts_as_reportable
     
   def self.atributos
     ["nombre", "plazas_"]

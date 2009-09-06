@@ -11,7 +11,7 @@ require 'pdf/simpletable'
 
 class Utilidades
         
-  MODELOS = ["Estado", "Zona", "Plaza", "Paquete",
+  MODELOS = ["Estado", "Zona", "Plaza", "Paquete", "Cobertura",
          "Metaservicio", "Metasubservicio", "Servicio", "Metaconcepto", "Concepto", "Rol", "Usuario"]  
   
   def self.genera_zip(archivo_salida="salida_csv")
@@ -53,7 +53,7 @@ class Utilidades
   def self.migracion_exporta_rb(modelos_hash=nil)
     
     if modelos_hash.nil?
-      modelos_hash = {:plaza => [:paquete, :servicio, :usuario],
+      modelos_hash = {:plaza => [:paquete, :servicio, :cobertura, :usuario],
                       :rol => [:usuario],
                       :estado => [:plaza], 
                       :zona => [:paquete],
@@ -237,6 +237,8 @@ class Utilidades
     
     pdf.text " ", :spacing => 2
     
+    
+    # función de generación de la tabla de Conceptos para modelos de tipo Servicio en el PDF
     table=Proc.new do |recurso, hoja|
       PDF::SimpleTable.new do |tab|
         tab.title = "Conceptos"
@@ -317,6 +319,18 @@ class Utilidades
           pdf.text "<b>Conceptos:</b>: #{recurso.concepto_clones.count}", :font_size => 10
           pdf.text " ", :spacing => 1
           table.call(recurso, pdf)
+      elsif recurso.instance_of? Cobertura
+          pdf.text "<b>Plaza</b> #{recurso.plaza.nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Nombre</b> #{recurso.nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Número de nodo</b> #{recurso.numero_de_nodo}".toutf_8, :font_size => 10
+          pdf.text "<b>Calle</b> #{recurso.calle.toutf_8}", :font_size => 10
+          pdf.text "<b>Colonia</b> #{recurso.colonia.toutf_8}", :font_size => 10
+      elsif recurso.instance_of? CoberturaClon
+          pdf.text "<b>Plaza</b> #{recurso.plaza_nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Nombre</b> #{recurso.nombre.toutf_8}", :font_size => 10
+          pdf.text "<b>Número de nodo</b> #{recurso.numero_de_nodo}".toutf_8, :font_size => 10
+          pdf.text "<b>Calle</b> #{recurso.calle.toutf_8}", :font_size => 10
+          pdf.text "<b>Colonia</b> #{recurso.colonia.toutf_8}", :font_size => 10
       end
       pdf.text "\n\n"
     end
