@@ -1,22 +1,29 @@
 
 <% @servicios.each do |servicio| %>
-<div class='agente_servicios'>
-    <% if @bs.eql?(1) %>
-            <p>
-               <span class='p'><%= servicio.plaza.nombre %></span>   
-               <span class='t'><%= servicio.tipo_de_servicio %></span>  
-               <span class='n'><%= servicio.nombre_del_servicio %></span>
-            </p>
-    <% else %>
-            <p>
-               <span class='t'><%= servicio.tipo_de_servicio %></span>  
-               <span class='n'><%= servicio.nombre_del_servicio %></span>
-            </p>
-    <% end %>
-</div>
+    <div class='agente_servicios'>
+        <% if @bs.eql?(1) %>
+                <p>
+                   <span class='p'><%= servicio.plaza.nombre %></span>   
+                   <span class='t'><%= servicio.tipo_de_servicio %></span>  
+                   <span class='n'><%= servicio.nombre_del_servicio %></span>
+                </p>
+        <% else %>
+                <p>
+                   <span class='t'><%= servicio.tipo_de_servicio %></span>  
+                   <span class='n'><%= servicio.nombre_del_servicio %></span>
+                </p>
+        <% end %>
+    </div>
 
 
     <div class="contenedor_servicios_conceptos">
+        <table class='concepto_tabla'>
+            <tr>
+                <th class='nombre_metaconcepto'>Nombre</th>
+                <th class='cantidad_numerica'>Cantidad</th>
+                <th class='valor_numerico'>Costo</th>
+            </tr>
+        </table>
         <% servicio.conceptos_asociados_en_orden.each_with_index do |concepto, index| %>
             <% unless concepto.no_disponible? %>
                 <% if index.even? %>
@@ -24,15 +31,21 @@
                 <% else %>
                     <div class='s' id='agente_servicios_conceptos'>
                 <% end %>
-                    <div onmouseover="<%= "$('concepto_#{concepto.id}').appear()" %>">
+                    <div>
                         <table class='concepto_tabla'>
                             <tr>
-                                <td class='nombre_metaconcepto'><%= concepto.metaconcepto.nombre %></td>
-                                <% if concepto.costo_.eql?("-") %>
-                                    <td class='cantidad_numerica'><%= concepto.valor_ %></td>
-                                <% elsif concepto.valor_.eql?("-") %>
-                                    <td class='valor_numerico'><%= concepto.costo_ %></td>
-                                <% end %>
+                                <td class='nombre_metaconcepto'>
+                                    <p class='concepto_comentario'>
+                                        <%= concepto.metaconcepto.nombre %> 
+                                        <% unless concepto.comentarios.blank? %>
+                                        <%= link_to_function "Ver Comentario", 
+                                            "$('concepto_#{concepto.id}').appear(); $('#{concepto.id}_ver_link').fade()", 
+                                            :id => "#{concepto.id}_ver_link" %>
+                                        <% end %>
+                                    </p>
+                                </td>
+                                <td class='cantidad_numerica'><%= concepto.valor_ %></td>
+                                <td class='valor_numerico'><%= concepto.costo_ %></td>
                             </tr>
                         </table>
                          <div id='<%= "concepto_#{concepto.id}" %>' style="display: none;" 
@@ -42,7 +55,9 @@
                                     <%= concepto.comentarios %> 
                                 </p> 
                                 <p class='concepto_comentario'>
-                                    <%= link_to_function "Ocultar Comentario", "$('concepto_#{concepto.id}').fade()" %>
+                                    <%= link_to_function "Ocultar Comentario", 
+                                        "$('concepto_#{concepto.id}').fade(); $('#{concepto.id}_ver_link').appear()", 
+                                        :id => "#{concepto.id}_oculta_link" %>
                                 </p>
                                 <% end %>
                             </div>

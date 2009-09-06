@@ -243,7 +243,6 @@ div#agente_servicios_conceptos table.concepto_tabla tr {
 div#agente_servicios_conceptos table.concepto_tabla td.nombre_metaconcepto {
 	text-align: left;
 	padding: 10px;
-	font-size: 13px;
 	color:#757799;
 	width: 900px;
 }
@@ -252,20 +251,43 @@ div#agente_servicios_conceptos table.concepto_tabla td.valor_numerico {
 	font-size: 17px;
 	font-weight: bold;
 	color:#757799;
+	width: 100px;
 }
 
 div#agente_servicios_conceptos table.concepto_tabla td.cantidad_numerica {
 	font-size: 17px;
 	font-weight: bold;
 	color:#A7AFEA;
+	width: 70px;
+}
+
+.concepto_tabla tr th {
+	color:#9892C1;
+	text-transform: uppercase;
+	font-size: 10px;
+}
+
+.concepto_tabla th.nombre_metaconcepto {
+	width: 900px;
+}
+
+.concepto_tabla th.valor_numerico {
+	width: 100px;
+}
+
+.concepto_tabla th.cantidad_numerica {
+	width: 70px;
 }
 
 div.comentario_container_concepto {
 	width: 900px;
+	margin-left: 20px;
 }
 
 p.concepto_comentario a {
 	color:#995F3A;
+	font-weight: normal;
+	font-size: 10px;
 }
 
 .contenedor_servicios_conceptos {
