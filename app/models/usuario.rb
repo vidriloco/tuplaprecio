@@ -143,4 +143,23 @@ class Usuario < ActiveRecord::Base
       false
     end
   end  
+  
+  # Metodo que se encarga de actualizar los atributos de un usuario desde la vista de administrador.
+  def actualiza_atributos_con(hash, estado)
+    # Validación de atributos de plaza, estado y rol.
+    if hash[:rol_id].blank?
+      self.errors.add(:rol, "Rol no puede ir vacío")
+    elsif Rol.find(hash[:rol_id]).nombre.eql?("Encargado")
+      if hash[:plaza_id].blank?
+        self.errors.add(:plaza, "Plaza no puede ir vacía")
+      end
+      if estado.blank?
+        self.errors.add(:estado, "Estado no puede ir vacío")
+      end
+    end
+    
+    return false unless self.errors.empty?
+    self.update_attributes(hash.merge({:password => "cablecom_#{hash[:login]}", :password_confirmation => "cablecom_#{hash[:login]}"}))
+  end
+  
 end

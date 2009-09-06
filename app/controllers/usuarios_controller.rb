@@ -141,8 +141,31 @@ class UsuariosController < ApplicationController
           page << "Nifty('#mensaje_mal');"
         end
       end
-    else
-      super
+    elsif current_user.es_administrador?
+      @usuario=Usuario.find(params[:id])
+      respond_to do |format|
+        format.js do
+          # Administrador actualiza
+          if @usuario.actualiza_atributos_con(params[:usuario], params[:estado])
+            render :update do |page|
+              page['usuarios'].replace_html :partial => "administraciones/index_modelo_barra", 
+                                                    :locals => {:modelo => 'usuario'}
+              page['usuarios'].visual_effect :appear
+              page << "Nifty('div#usuarios');"
+            end
+          else
+            @errores=@usuario.errors.inject({}) { |h, par| (h[par.first] || h[par.first] = String.new) << "#{par.last}, "; h }
+
+            render :update do |page|
+              page["errores_usuario"].replace_html :partial => "compartidos/errores_modelo", 
+                                                    :locals => {:modelo => 'usuario'} 
+              page["errores_usuario"].appear                                    
+              page["errores_usuario"].visual_effect :highlight, :startcolor => "#AB0B00", :endcolor => "#E6CFD1"
+              page << "Nifty('#errores_usuario h3', 'top');"                                              
+            end
+          end 
+        end
+      end
     end
   end
 
