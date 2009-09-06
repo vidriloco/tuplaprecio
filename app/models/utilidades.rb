@@ -10,16 +10,18 @@ require "pdf/writer"
 require 'pdf/simpletable'
 
 class Utilidades
-        
+  # Variable de clase con los modelos que se han de exportar a rb, exportar a csv, ó bien purgar.      
   MODELOS = ["Estado", "Zona", "Plaza", "Paquete", "Cobertura",
          "Metaservicio", "Metasubservicio", "Servicio", "Metaconcepto", "Concepto", "Rol", "Usuario"]  
   
+  # Método que genera un archivo zip que contiene archivos de tipo CSV con los registros de cada tupla en la BD
   def self.genera_zip(archivo_salida="salida_csv")
     t = Tempfile.new("#{@archivo_salida}")
     
     Zip::ZipOutputStream.open(t.path) do |zipfile|
        
        MODELOS.each do |modelo|
+        # Invoca método de ruport para generar una tabla excluyendo los atributos en :except 
         salida = modelo.constantize.report_table(:all, :except => [:updated_at, :created_at]).as(:csv)
         zipfile.put_next_entry("#{modelo}.csv")
         zipfile.print salida
@@ -29,6 +31,8 @@ class Utilidades
     t.path  
   end
   
+  # Método que lee un archivo CSV y lo incorpora a la base de datos a través de ActiveRecord.
+  # Método NO Funcional para tal objetivo, pues se pierden las referencias entre objetos.
   def self.unzip_archivo(archivo_entrada) 
     
     Zip::ZipFile.open(archivo_entrada.path, Zip::ZipFile::CREATE) do |zipfile|
@@ -50,6 +54,8 @@ class Utilidades
   
   # {:plaza => [:paquete, :servicio], :zona => [:paquete], :servicio => [:concepto], :metasubservicio => [:servicio], 
   #  :metaconcepto => [:concepto], :metaconcepto => [:metaservicio], :estado => [:plaza]} 
+  # Método que exporta un conjunto de instancias de modelos relacionados a una representación de dicha relación mediante
+  # código ruby, haciéndo uso de ActiveRecord.
   def self.migracion_exporta_rb(modelos_hash=nil)
     
     if modelos_hash.nil?
@@ -92,6 +98,7 @@ class Utilidades
     end
     
     #funcion para generar codigo ruby de cada tupla en la tabla modelo
+    # segunda pasada en la que se escriben a las instancias asociadas
     liga_modelos = Proc.new do |modelo_has_many, modelo_belongs_to|
       puts "Escribiendo asociado: #{modelo_belongs_to} a: #{modelo_has_many}"
     
@@ -156,6 +163,7 @@ class Utilidades
     t.path
   end
   
+  # Método de purga de la base de datos. Excluye de ser eliminado al usuario actual y a su rol asociado.
   def self.limpia_bd(current_user)
     MODELOS.each do |modelo|
       if modelo.eql? "Usuario"
@@ -168,10 +176,14 @@ class Utilidades
     end    
   end
   
+  # Método que lee un archivo escrito en código ruby y evalua su contenido.
+  # Se espera que tal archivo contenga código relacíonado a registros de una base de datos antigua
+  # que se incorporaran a la base de datos actual mediante ActiveRecord.
   def self.migracion_importa_rb(archivo)
     f=File.open(archivo.path)
     datos = f.read
     f.close
+    # Verificar si el archivo se mantuvo intacto desde que se generó.
     if Backup.hash_es_el_mismo(datos)
       eval(datos)
       true
@@ -193,6 +205,8 @@ class Utilidades
    document.generate
   end
   
+  # Método que genera un archivo PDF en base a los logs seleccionados, que le son pasados como
+  # parámetros a éste método.
   def self.genera_pdf(logs)
     pdf = PDF::Writer.prepress(:top_margin => 150, :bottom_margin => 60)
     
@@ -281,6 +295,7 @@ class Utilidades
       end
     end
     
+    # De cada log hay que obtener su tipo y entonces sus atributos
     logs.each_with_index do |log, index|
       recurso = log.recurso
       
