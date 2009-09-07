@@ -4,7 +4,9 @@
                     Nifty('#plaza_titulo_servicio', 'tl');
                     Nifty('#listado_de_preservicios', 'bottom tr');
                     Nifty('#listado_de_prepaquetes', 'bottom tr');
-                    Nifty('#paquetes', 'br tr')" %>
+                    Nifty('#paquetes', 'br tr');
+                    Nifty('#coberturas', 'tr br');
+                    Nifty('#plaza_titulo_cobertura', 'tl bl')" %>
 
 <table>
     <tr>
@@ -30,3 +32,13 @@
 
 <div id='plaza_servicios'></div>
 
+<table>
+    <tr>
+        <td class='plaza_titulo' id='plaza_titulo_cobertura'><%= @plaza.nombre %></td>  
+        <td class='titulo_en_agente' id="coberturas"><h4>Coberturas</h4></td>
+    </tr>
+</table>
+
+<div id='plaza_coberturas'>
+    <%= render :partial => "coberturas/listing_coberturas" %>
+</div>

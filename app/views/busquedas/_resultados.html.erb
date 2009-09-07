@@ -89,22 +89,37 @@
             <% @bs = 1 %>
             <%= render :partial => "servicios/listing_servicios" %>
             <% end %>
+        <% elsif key.eql?("Cobertura") %>
+            <% @coberturas = @resultados.delete(key) %>
+            <% unless @coberturas.empty? %>
+                    <%= javascript_tag "Nifty('#cobertura');" %>
+                    <div id="cobertura" class="resultado">
+                    <% if @coberturas.size == 1 %>
+                        <h4>Cobertura</h4>
+                    <% else %>
+                        <h4>Cobertura</h4>
+                    <% end %>
+                    </div>
+            <% @bs = 1 %>
+            <%= render :partial => "coberturas/listing_coberturas" %>
+            <% end %>
         <% end %>        
     <% end %>
     
-    <table id='tabla_informativa_resultados'>
-        <tr>
-            <td></td>
-            <td id='cuenta_resultados' class='leyenda'>
-                <% if @cuenta == 1 %>
-                    Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
-                <% else %>
-                    Encontrados <b><%= @cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
-                <% end %>
-                (<%= link_to_remote "Ocultar Resultados de la Búsqueda",'#', :onclick => "$('resultados_contenedor').fade()" %>)
-            </td>
-        </tr>
-    </table>
-        
+    <% if @cuenta > 0 %>
+        <table id='tabla_informativa_resultados'>
+            <tr>
+                <td></td>
+                <td id='cuenta_resultados' class='leyenda'>
+                    <% if @cuenta == 1 %>
+                        Encontrado <b>1 resultado</b> que contiene <i><%=h @cosa_a_buscar %></i>
+                    <% else %>
+                        Encontrados <b><%= @cuenta %> resultados</b> que contienen <i><%=h @cosa_a_buscar %></i>
+                    <% end %>
+                    (<%= link_to_remote "Ocultar Resultados de la Búsqueda",'#', :onclick => "$('resultados_contenedor').fade()" %>)
+                </td>
+            </tr>
+        </table>
+    <% end %>    
 
 </div>

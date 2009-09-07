@@ -79,6 +79,7 @@ class Paquete < ActiveRecord::Base
     return "$ #{ahorro.to_s(2)}"
   end
   
+  # Implementación de búsqueda para éste modelo
   def self.busca(algo)
     resultados = ["Paquete"]
     

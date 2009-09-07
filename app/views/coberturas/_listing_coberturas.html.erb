@@ -1,0 +1,31 @@
+<% if @coberturas.empty? %>
+    <%= javascript_tag "Nifty('#cobertura');" %> 
+    <div class="empty" id="cobertura"><p>No hay coberturas que mostrar</p></div>
+<% else %>
+    <table class="agente_paquetes_o_coberturas">
+        <thead>
+            <tr>
+                <% if @bs.eql?(1) %>
+                    <th style="color:#646AD0;">Plaza</th>
+                <% end %>
+                <th style="width:250px">Nombre</th>
+                <th>Número de Nodo</th>
+                <th style="width:500px">Calle</th>
+                <th style="width:250px">Colonia</th>
+            </tr>
+        <thead>
+        <tbody>    
+            <% @coberturas.each do |cobertura| %>
+                <tr class="paquete_o_cobertura_distingible">
+                    <% if @bs.eql?(1) %>
+                        <td style="color:#646AD0;"><%= cobertura.plaza.nombre %></td>
+                    <% end %>
+                    <td><%= cobertura.nombre %></td>
+                    <td><%= cobertura.numero_de_nodo %></td>
+                    <td><%= cobertura.calle %></td>
+                    <td><%= cobertura.colonia %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% end %>

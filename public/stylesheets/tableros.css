@@ -185,20 +185,20 @@ body { background-color: #1C1B3D; color: #333; margin: 0; padding: 0; height: 10
   color:#FFF4BF;
 }
 
-.agente_paquetes {
+.agente_paquetes_o_coberturas {
 	width:1200px;
 	margin-top:10px;
 	margin-bottom:30px;
 }
 
-.agente_paquetes tr th {
+.agente_paquetes_o_coberturas tr th {
 	color:#D26C40;
 	width: 200px;
 	height:10px;
 	font-size:11px;
 }
 
-.agente_paquetes tr td {
+.agente_paquetes_o_coberturas tr td {
 	font-size: 11px;
 	color:#974F2A;
 	text-align: center;

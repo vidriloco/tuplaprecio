@@ -8,7 +8,7 @@ class BusquedasController < ApplicationController
     render(:nothing => true) && return if @cosa_a_buscar.blank?
     trozos_de_busqueda=@cosa_a_buscar.split(" ")
     @cuenta = 0
-    ["Servicio", "Plaza", "Paquete", "Estado"].each do |modelo|
+    ["Servicio", "Plaza", "Paquete", "Estado", "Cobertura"].each do |modelo|
       resultados_en_bruto = modelo.constantize.busca(trozos_de_busqueda)
       @resultados[resultados_en_bruto.delete_at(0)] = resultados_en_bruto
       @cuenta += resultados_en_bruto.size

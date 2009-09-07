@@ -62,6 +62,7 @@ class TablerosController < ApplicationController
     @metaservicios = Metaservicio.find(:all)
     
     @paquetes = Paquete.find(:all, :conditions => {:plaza_id => plaza_id}, :order => "numero_de_servicios DESC")
+    @coberturas = Cobertura.find(:all, :conditions => {:plaza_id => plaza_id})
     
     respond_to do |format|
       format.js do   

@@ -58,7 +58,7 @@ class Plaza < ActiveRecord::Base
     resultados = [self.to_s]
     fragmento = "plazas.nombre ILIKE ? OR estados.nombre ILIKE ?"
     if algo.length > 1
-      campo="plazas.nombre ILIKE ? OR estados.nombre ILIKE ? OR"
+      campo="plazas.nombre ILIKE ? OR estados.nombre ILIKE ? OR "
       campo=campo*(algo.length-1) + " #{fragmento}"
       array_condition=[campo]
       algo.each do |a|

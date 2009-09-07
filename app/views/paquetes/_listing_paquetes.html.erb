@@ -1,12 +1,8 @@
-<% unless @zona.nil? %>
-    <div id='zona_seleccionada'><h4><%= @zona.nombre %></h4></div>
-<% end %>
-
 <% if @paquetes.empty? %>
     <%= javascript_tag "Nifty('#paquete');" %> 
     <div class="empty" id="paquete"><p>No hay paquetes que mostrar</p></div>
 <% else %>
-    <table class="agente_paquetes">
+    <table class="agente_paquetes_o_coberturas">
         <thead>
             <tr>
                 <% if @bs.eql?(1) %>
@@ -25,7 +21,7 @@
         <thead>
         <tbody>    
         <% @paquetes.each do |paquete| %>
-            <tr class="paquete_distingible">
+            <tr class="paquete_o_cobertura_distingible">
                 <% if @bs.eql?(1) %>
                     <td style="color:#646AD0;"><%= paquete.plaza.nombre %></td>
                 <% end %>
